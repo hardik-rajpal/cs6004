@@ -1,28 +1,63 @@
 class HelloWorld extends java.lang.Object
 {
+/*HelloWorld.java*/
+/*soot.tagkit.KeyTag@f4fd58c*/
+/*soot.tagkit.KeyTag@6ddcb56f*/
+/*soot.tagkit.KeyTag@4aaae2db*/
 
     void <init>()
     {
         HelloWorld r0;
 
         r0 := @this: HelloWorld;
+/*@this: HelloWorld: NonNull*/
+/*r0: NonNull*/
 
         specialinvoke r0.<java.lang.Object: void <init>()>();
+/*r0: NonNull*/
 
         return;
     }
 
     public static void main(java.lang.String[])
     {
-        java.io.PrintStream $r0;
-        java.lang.String[] r1;
+        java.io.PrintStream $r0, $r2;
+        HelloWorld $r1;
+        java.lang.String[] r3;
+        java.lang.NullPointerException r4;
 
-        r1 := @parameter0: java.lang.String[];
+        r3 := @parameter0: java.lang.String[];
+/*@parameter0: java.lang.String[]: Nullness Unknown*/
+/*r3: Nullness Unknown*/
 
         $r0 = <java.lang.System: java.io.PrintStream out>;
+/*<java.lang.System: java.io.PrintStream out>: Nullness Unknown*/
+/*$r0: Nullness Unknown*/
 
         virtualinvoke $r0.<java.io.PrintStream: void println(java.lang.String)>("Hello, World!");
+/*"Hello, World!": NonNull*/
+/*$r0: Nullness Unknown*/
 
-        return;
+        $r1 = new HelloWorld;
+/*new HelloWorld: NonNull*/
+/*$r1: NonNull*/
+
+        specialinvoke $r1.<HelloWorld: void <init>()>();
+/*$r1: NonNull*/
+
+        $r2 = <java.lang.System: java.io.PrintStream out>;
+/*<java.lang.System: java.io.PrintStream out>: Nullness Unknown*/
+/*$r2: Nullness Unknown*/
+
+        r4 = new java.lang.NullPointerException;
+/*new java.lang.NullPointerException: NonNull*/
+/*r4: NonNull*/
+
+        specialinvoke r4.<java.lang.NullPointerException: void <init>(java.lang.String)>("This statement would have triggered an Exception: $stack6 = virtualinvoke l2.<java.lang.Object: boolean equals(java.lang.Object)>(l1)");
+/*"This statement would have triggered an Exception: $stack6 = virtualinvoke l2.<java.lang.Object: boolean equals(java.lang.Object)>(l1)": NonNull*/
+/*r4: NonNull*/
+
+        throw r4;
+/*r4: NonNull*/
     }
 }

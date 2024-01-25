@@ -1,10 +1,11 @@
 public class tc1{
     public static void main(String args[]){
-        int x,y,z;
+        int x,y,z,w;
         y = 0;
         z = 1;
         x = y+1;
         z = x+2;
+        w = 1;
         if(x<3){
             z = z+1;
         }
