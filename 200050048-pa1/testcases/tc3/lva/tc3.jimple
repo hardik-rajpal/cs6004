@@ -1,0 +1,170 @@
+public class tc3 extends java.lang.Object
+{
+/*tc3.java*/
+/*[inner=tc3$Node, outer=tc3, name=Node,flags=9]*/
+/*soot.tagkit.InnerClassAttribute@353c9f00*/
+
+    public void <init>()
+    {
+        tc3 r0;
+
+        r0 := @this: tc3;
+/*Live Variable: r0*/
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static void main()
+    {
+        tc3$Node $r0, $r6, $r9, $r10, $r11, r12;
+        java.lang.StringBuilder $r2, $r4, $r5, $r7;
+        java.io.PrintStream $r3;
+        int $i0, $i1, $i2, i3;
+        java.lang.String $r8;
+
+        $r0 = new tc3$Node;
+/*Live Variable: $r0*/
+
+        specialinvoke $r0.<tc3$Node: void <init>()>();
+/*Live Variable: $r0*/
+
+        r12 = $r0;
+/*Live Variable: $r0*/
+/*Live Variable: r12*/
+
+        i3 = 0;
+/*Live Variable: $r0*/
+/*Live Variable: i3*/
+/*Live Variable: r12*/
+
+     label1:
+        if i3 >= 10 goto label2;
+/*Live Variable: $r0*/
+/*Live Variable: i3*/
+/*Live Variable: r12*/
+
+        $r11 = new tc3$Node;
+/*Live Variable: $r0*/
+/*Live Variable: i3*/
+/*Live Variable: r12*/
+/*Live Variable: $r11*/
+
+        specialinvoke $r11.<tc3$Node: void <init>()>();
+/*Live Variable: $r0*/
+/*Live Variable: i3*/
+/*Live Variable: r12*/
+/*Live Variable: $r11*/
+
+        r12.<tc3$Node: tc3$Node next> = $r11;
+/*Live Variable: $r0*/
+/*Live Variable: i3*/
+/*Live Variable: r12*/
+
+        r12.<tc3$Node: int val> = i3;
+/*Live Variable: $r0*/
+/*Live Variable: i3*/
+/*Live Variable: r12*/
+
+        r12 = r12.<tc3$Node: tc3$Node next>;
+/*Live Variable: $r0*/
+/*Live Variable: r12*/
+/*Live Variable: i3*/
+
+        i3 = i3 + 1;
+/*Live Variable: $r0*/
+/*Live Variable: i3*/
+/*Live Variable: r12*/
+
+        goto label1;
+/*Live Variable: $r0*/
+/*Live Variable: i3*/
+/*Live Variable: r12*/
+
+     label2:
+        if i3 != 10 goto label3;
+/*Live Variable: $r0*/
+/*Live Variable: i3*/
+
+        $r9 = new tc3$Node;
+/*Live Variable: $r0*/
+/*Live Variable: i3*/
+/*Live Variable: $r9*/
+
+        specialinvoke $r9.<tc3$Node: void <init>()>();
+/*Live Variable: $r0*/
+/*Live Variable: i3*/
+/*Live Variable: $r9*/
+
+        $r0.<tc3$Node: tc3$Node next> = $r9;
+/*Live Variable: $r0*/
+/*Live Variable: i3*/
+
+        $r10 = $r0.<tc3$Node: tc3$Node next>;
+/*Live Variable: $r0*/
+/*Live Variable: $r10*/
+/*Live Variable: i3*/
+
+        $i2 = i3 * i3;
+/*Live Variable: $r0*/
+/*Live Variable: $r10*/
+/*Live Variable: $i2*/
+
+        $r10.<tc3$Node: int val> = $i2;
+/*Live Variable: $r0*/
+
+     label3:
+        $r3 = <java.lang.System: java.io.PrintStream out>;
+/*Live Variable: $r3*/
+/*Live Variable: $r0*/
+
+        $r2 = new java.lang.StringBuilder;
+/*Live Variable: $r3*/
+/*Live Variable: $r0*/
+/*Live Variable: $r2*/
+
+        specialinvoke $r2.<java.lang.StringBuilder: void <init>()>();
+/*Live Variable: $r3*/
+/*Live Variable: $r0*/
+/*Live Variable: $r2*/
+
+        $i0 = $r0.<tc3$Node: int val>;
+/*Live Variable: $r3*/
+/*Live Variable: $r0*/
+/*Live Variable: $i0*/
+/*Live Variable: $r2*/
+
+        $r4 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i0);
+/*Live Variable: $r3*/
+/*Live Variable: $r0*/
+/*Live Variable: $r4*/
+
+        $r5 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("->");
+/*Live Variable: $r3*/
+/*Live Variable: $r5*/
+/*Live Variable: $r0*/
+
+        $r6 = $r0.<tc3$Node: tc3$Node next>;
+/*Live Variable: $r3*/
+/*Live Variable: $r5*/
+/*Live Variable: $r6*/
+
+        $i1 = $r6.<tc3$Node: int val>;
+/*Live Variable: $r3*/
+/*Live Variable: $i1*/
+/*Live Variable: $r5*/
+
+        $r7 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i1);
+/*Live Variable: $r3*/
+/*Live Variable: $r7*/
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.String toString()>();
+/*Live Variable: $r8*/
+/*Live Variable: $r3*/
+
+        virtualinvoke $r3.<java.io.PrintStream: void println(java.lang.String)>($r8);
+
+        return;
+    }
+}

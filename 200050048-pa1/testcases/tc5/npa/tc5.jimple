@@ -1,0 +1,89 @@
+public class tc5 extends java.lang.Object
+{
+/*tc5.java*/
+/*soot.tagkit.KeyTag@4e1ed57e*/
+/*soot.tagkit.KeyTag@9d5e3de*/
+/*soot.tagkit.KeyTag@422d3885*/
+
+    public void <init>()
+    {
+        tc5 r0;
+
+        r0 := @this: tc5;
+/*@this: tc5: NonNull*/
+/*r0: NonNull*/
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+/*r0: NonNull*/
+
+        return;
+    }
+
+    public static int recurse(int)
+    {
+        int i0, $i1, $i2, $i3;
+
+        i0 := @parameter0: int;
+
+        if i0 >= 0 goto label1;
+
+        return 42;
+
+     label1:
+        $i1 = i0 - 1;
+
+        $i2 = staticinvoke <tc5: int recurse(int)>($i1);
+
+        $i3 = i0 + $i2;
+
+        return $i3;
+    }
+
+    public static void main()
+    {
+        int i0, i1;
+        java.lang.StringBuilder $r0, $r2, $r3;
+        java.io.PrintStream $r1;
+        java.lang.String $r4;
+
+        i1 = staticinvoke <tc5: int recurse(int)>(10);
+
+        i0 = staticinvoke <tc5: int recurse(int)>(11);
+
+        $r1 = <java.lang.System: java.io.PrintStream out>;
+/*<java.lang.System: java.io.PrintStream out>: Nullness Unknown*/
+/*$r1: Nullness Unknown*/
+
+        $r0 = new java.lang.StringBuilder;
+/*new java.lang.StringBuilder: NonNull*/
+/*$r0: NonNull*/
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>()>();
+/*$r0: NonNull*/
+
+        $r2 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Only reading a: ");
+/*virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Only reading a: "): Nullness Unknown*/
+/*"Only reading a: ": NonNull*/
+/*$r0: NonNull*/
+/*$r2: Nullness Unknown*/
+
+        $r3 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(i1);
+/*virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(i1): Nullness Unknown*/
+/*$r2: Nullness Unknown*/
+/*$r3: Nullness Unknown*/
+
+        $r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.String toString()>();
+/*virtualinvoke $r3.<java.lang.StringBuilder: java.lang.String toString()>(): Nullness Unknown*/
+/*$r3: Nullness Unknown*/
+/*$r4: Nullness Unknown*/
+
+        virtualinvoke $r1.<java.io.PrintStream: void println(java.lang.String)>($r4);
+/*$r4: Nullness Unknown*/
+/*$r1: Nullness Unknown*/
+
+        if i0 >= 10 goto label1;
+
+     label1:
+        return;
+    }
+}

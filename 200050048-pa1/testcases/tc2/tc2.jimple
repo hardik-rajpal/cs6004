@@ -1,0 +1,73 @@
+public class tc2 extends java.lang.Object
+{
+/*tc2.java*/
+
+    public void <init>()
+    {
+        tc2 r0;
+
+        r0 := @this: tc2;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static void main()
+    {
+        int[] r0;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, $i8, $i9, i10, i11;
+        java.io.PrintStream $r1;
+
+        r0 = newarray (int)[10];
+
+        i10 = 1;
+
+        i11 = 0;
+
+     label1:
+        if i11 >= 10 goto label3;
+
+        $i6 = i11 * i11;
+
+        r0[i11] = $i6;
+
+        $i7 = r0[i11];
+
+        $i9 = i11 + $i7;
+
+        $i8 = 2 * i11;
+
+        if $i9 <= $i8 goto label2;
+
+        i10 = r0[i11];
+
+        goto label3;
+
+     label2:
+        i11 = i11 + 1;
+
+        goto label1;
+
+     label3:
+        r0[0] = i10;
+
+        $r1 = <java.lang.System: java.io.PrintStream out>;
+
+        $i0 = r0[0];
+
+        $i1 = $i0 + 44;
+
+        $i2 = $i1 + i10;
+
+        $i4 = $i2 + 44;
+
+        $i3 = r0[9];
+
+        $i5 = $i4 + $i3;
+
+        virtualinvoke $r1.<java.io.PrintStream: void println(int)>($i5);
+
+        return;
+    }
+}

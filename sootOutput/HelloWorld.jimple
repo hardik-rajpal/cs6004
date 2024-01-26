@@ -1,9 +1,9 @@
 class HelloWorld extends java.lang.Object
 {
 /*HelloWorld.java*/
-/*soot.tagkit.KeyTag@f4fd58c*/
-/*soot.tagkit.KeyTag@6ddcb56f*/
-/*soot.tagkit.KeyTag@4aaae2db*/
+/*soot.tagkit.KeyTag@6f29d1db*/
+/*soot.tagkit.KeyTag@12be26c7*/
+/*soot.tagkit.KeyTag@56f3ad41*/
 
     void <init>()
     {

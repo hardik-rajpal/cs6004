@@ -1,0 +1,112 @@
+public class tc1 extends java.lang.Object
+{
+/*tc1.java*/
+/*soot.tagkit.KeyTag@96baf62*/
+/*soot.tagkit.KeyTag@5724e42*/
+/*soot.tagkit.KeyTag@3b50a325*/
+
+    public void <init>()
+    {
+        tc1 r0;
+        java.io.PrintStream $r1;
+
+        r0 := @this: tc1;
+/*@this: tc1: NonNull*/
+/*r0: NonNull*/
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+/*r0: NonNull*/
+
+        $r1 = <java.lang.System: java.io.PrintStream out>;
+/*<java.lang.System: java.io.PrintStream out>: Nullness Unknown*/
+/*$r1: Nullness Unknown*/
+
+        virtualinvoke $r1.<java.io.PrintStream: void println(java.lang.String)>("Contructor");
+/*"Contructor": NonNull*/
+/*$r1: Nullness Unknown*/
+
+        return;
+    }
+
+    public static void main(java.lang.String[])
+    {
+        int i1, i2, i3;
+        java.lang.StringBuilder $r0, $r2, $r3, $r4, $r5, $r6, $r7;
+        java.io.PrintStream $r1;
+        java.lang.String $r8;
+        java.lang.String[] r9;
+
+        r9 := @parameter0: java.lang.String[];
+/*@parameter0: java.lang.String[]: Nullness Unknown*/
+/*r9: Nullness Unknown*/
+
+        i1 = 0 + 1;
+
+        i2 = i1 + 2;
+
+        if i1 >= 3 goto label1;
+
+        i3 = i2 + 1;
+
+        goto label2;
+
+     label1:
+        i3 = i1 + 0;
+
+     label2:
+        $r1 = <java.lang.System: java.io.PrintStream out>;
+/*<java.lang.System: java.io.PrintStream out>: Nullness Unknown*/
+/*$r1: Nullness Unknown*/
+
+        $r0 = new java.lang.StringBuilder;
+/*new java.lang.StringBuilder: NonNull*/
+/*$r0: NonNull*/
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>()>();
+/*$r0: NonNull*/
+
+        $r2 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("");
+/*virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(""): Nullness Unknown*/
+/*"": NonNull*/
+/*$r0: NonNull*/
+/*$r2: Nullness Unknown*/
+
+        $r3 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(i1);
+/*virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(i1): Nullness Unknown*/
+/*$r2: Nullness Unknown*/
+/*$r3: Nullness Unknown*/
+
+        $r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(",");
+/*virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(","): Nullness Unknown*/
+/*",": NonNull*/
+/*$r3: Nullness Unknown*/
+/*$r4: Nullness Unknown*/
+
+        $r5 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(0);
+/*virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(0): Nullness Unknown*/
+/*$r4: Nullness Unknown*/
+/*$r5: Nullness Unknown*/
+
+        $r6 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(",");
+/*virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(","): Nullness Unknown*/
+/*",": NonNull*/
+/*$r5: Nullness Unknown*/
+/*$r6: Nullness Unknown*/
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(i3);
+/*virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(i3): Nullness Unknown*/
+/*$r6: Nullness Unknown*/
+/*$r7: Nullness Unknown*/
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.String toString()>();
+/*virtualinvoke $r7.<java.lang.StringBuilder: java.lang.String toString()>(): Nullness Unknown*/
+/*$r7: Nullness Unknown*/
+/*$r8: Nullness Unknown*/
+
+        virtualinvoke $r1.<java.io.PrintStream: void println(java.lang.String)>($r8);
+/*$r8: Nullness Unknown*/
+/*$r1: Nullness Unknown*/
+
+        return;
+    }
+}

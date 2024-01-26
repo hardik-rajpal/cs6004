@@ -1,0 +1,113 @@
+public class tc1 extends java.lang.Object
+{
+/*tc1.java*/
+
+    public void <init>()
+    {
+        tc1 r0;
+        java.io.PrintStream $r1;
+
+        r0 := @this: tc1;
+/*Live Variable: r0*/
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = <java.lang.System: java.io.PrintStream out>;
+/*Live Variable: $r1*/
+
+        virtualinvoke $r1.<java.io.PrintStream: void println(java.lang.String)>("Contructor");
+
+        return;
+    }
+
+    public static void main(java.lang.String[])
+    {
+        int i1, i2, i3;
+        java.lang.StringBuilder $r0, $r2, $r3, $r4, $r5, $r6, $r7;
+        java.io.PrintStream $r1;
+        java.lang.String $r8;
+        java.lang.String[] r9;
+
+        r9 := @parameter0: java.lang.String[];
+
+        i1 = 0 + 1;
+/*Live Variable: i1*/
+
+        i2 = i1 + 2;
+/*Live Variable: i1*/
+/*Live Variable: i2*/
+
+        if i1 >= 3 goto label1;
+/*Live Variable: i1*/
+/*Live Variable: i2*/
+
+        i3 = i2 + 1;
+/*Live Variable: i1*/
+/*Live Variable: i3*/
+
+        goto label2;
+/*Live Variable: i1*/
+/*Live Variable: i3*/
+
+     label1:
+        i3 = i1 + 0;
+/*Live Variable: i1*/
+/*Live Variable: i3*/
+
+     label2:
+        $r1 = <java.lang.System: java.io.PrintStream out>;
+/*Live Variable: $r1*/
+/*Live Variable: i3*/
+/*Live Variable: i1*/
+
+        $r0 = new java.lang.StringBuilder;
+/*Live Variable: $r1*/
+/*Live Variable: i3*/
+/*Live Variable: i1*/
+/*Live Variable: $r0*/
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>()>();
+/*Live Variable: $r1*/
+/*Live Variable: i3*/
+/*Live Variable: i1*/
+/*Live Variable: $r0*/
+
+        $r2 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("");
+/*Live Variable: $r1*/
+/*Live Variable: i3*/
+/*Live Variable: i1*/
+/*Live Variable: $r2*/
+
+        $r3 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(i1);
+/*Live Variable: $r1*/
+/*Live Variable: i3*/
+/*Live Variable: $r3*/
+
+        $r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(",");
+/*Live Variable: $r1*/
+/*Live Variable: i3*/
+/*Live Variable: $r4*/
+
+        $r5 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(0);
+/*Live Variable: $r1*/
+/*Live Variable: i3*/
+/*Live Variable: $r5*/
+
+        $r6 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(",");
+/*Live Variable: $r1*/
+/*Live Variable: i3*/
+/*Live Variable: $r6*/
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(i3);
+/*Live Variable: $r1*/
+/*Live Variable: $r7*/
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.String toString()>();
+/*Live Variable: $r8*/
+/*Live Variable: $r1*/
+
+        virtualinvoke $r1.<java.io.PrintStream: void println(java.lang.String)>($r8);
+
+        return;
+    }
+}

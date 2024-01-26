@@ -1,0 +1,92 @@
+Testcases 1
+Jimple Observations:
+    1. There is a non-static <init> function explicated in the IR, which calls the constructor for java.lang.Object and executes the constructor code for the class. 
+    2. The variables are renamed to i1, i2, ...
+       Also, y is replaced by 0. (Constant propagation)
+       x is replaced by i1
+       z is replaced by i2 and i3 (probably because z=z+1 statment and the i2=i2+1 not being allowed?)
+       w is eliminated as it is dead.
+    3. The string concatenation is spelled out using the append function on temporary variables which takes the type of the argument passed.
+    4. if-else is replaced by if-goto and goto, inverting the condition, for simpler 3A code.
+    5. Temporaries are prefixed with $.
+LVA Observations:
+    1. The live variables are mentioned after each line of jimple code. Unmentioned variables are dead.
+NPA Observations:
+    1. Nullness of primitive types (int) is not mentioned.
+    2. Nullness of System.out and StringBuilder is unknown
+    3. Nullness of param to main is unknown.
+
+Testcases 2
+Jimple Observations
+    1. Variable renaming: a->r0 x->i10 i->i11
+    2. Statements are broken down into simpler ones:
+        a[i] = i*i;
+        ->
+        $i6 = i11*i11
+        r0[i11] = $i6
+    3. For loop and break statement are converted to goto and if-goto statements.
+    4. Because I've used chars instead of strings, ('' instead of "") in the println function, the jimple code performs arithmetic addition of chars and ints instead of concatenation, and invokes the (int) variant of the println function.
+LVA Observations
+    1. r0 (a) is live all the time until $i3 = r0[9] becauase it is repeatedy read throughout the program.
+    2. No variables are live after the print call.
+NPA Observations
+    1. Only nullness of r0 is discussed as other variables are primitive ints.
+    2. nullness of 'out' is unknown as before.
+    3. nullness of r0 is mentioned after every read from and write to r0[...]. This might not be necessary as these statements do not alter what r0 points to.
+
+
+Testcases 3
+Jimple Observations
+    1. The class Node declard inside tc3 is referenced as tc3$Node.
+    2. $r0 replaces start and r12 replaces head. The $ might be because the compiler replaces 'start' with the temporary variable created during the first new Node() call.
+    3. Temporary int variables are introduced to read start.next, start.next.val and i*i.
+LVA Observations
+    1. r12 is live at the end of the loop, which signifies the case where we go for another iteration, reading r12 again.
+    2. $r0 is live through the loop as we use it after the loop.
+    3. r12 is live throughout the loop as it is used to access the fields of its object.
+NPA Observations
+    1. The analysis fails to record data about nullness of r12.next. In lines 55-66, it sees a r12.next being set to a nonnull variable ($r11) but still says r12.next has nullness unknown at line 63.
+    2. Similar imprecision is observed in lines 75 to 90, where $r10 is given nullness unknown despite $r0.next having been assigned a nonnull variable $r9.
+
+Testcases 4
+Jimple Observations
+    1. Jimple allows for typecasting statements, though they are broken down into simpler statements and use temporary variables.
+    ((Dog)(pet)).tailLength = 100
+    becomes
+    $r2 = (tc4$Dog) $r0;
+    $r2.<tc4$Dog: int tailLength> = 100;
+
+    2. The Animal reference is replaced by Labrador $r0. It has a $ because it is a compiler-generated variable.
+    3. The program isn't clever enough to ignore unnecessary typecasting: Labrador to Labrador.
+    $r3 = (tc4$Labrador) $r0;
+    4. Jimple discards comments
+LVA Observations
+    1. The live variables are as expected.
+    2. The discussion of liveness is restricted to variables on the stack and not extended to fields of the objects pointed to by said variables.
+NPA Observations
+    1. Nullness of the typecast expressions is unknown, yet the variable to which they are assigned is marked as nonnull.
+    2. As mentioned in a previous testase, nullness of v.f is not recorded where v is a variable on the stack and f is a field.
+
+Testcases 5
+Jimple Observations:
+    1. Jimple code is as expected.
+    2. Since a (i1) is not live after line 56, a=b is not present in the jimple code. However, the if block is still translated.
+LVA Observations
+    1. The liveness values are as expected.
+NPA Observations
+    1. The null pointer values are as expected. (There are only primitives in this testcase, excluding out and StringBuilder).
+
+
+Notes about Jimple
+1. Each line of code performs one and only one "action":
+    one arithmetic operation
+    one function call; if the arguments are expressions, they are evaluated first and stored into temporaries.
+    store is separated from constructor; when a field is assigned a new object,
+    the object is contructed first and stored into a temporary variable, before being stored in the field.
+2. Control flow is limited to function calls, if-goto, and goto statements.
+3. function calls are of two types: specialinvoke and virtualinvoke.
+    specialinvoke: calls methods without regard for dynamic binding
+    virtualinvoke: calls methods based on the class of the object
+4. Class names are rather verbose: "java.lang.System: java.io.PrintStream" and "tc3$Node"
+References:
+1. https://stackoverflow.com/questions/13764238/why-invokespecial-is-needed-when-invokevirtual-exists

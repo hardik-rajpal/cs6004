@@ -1,3 +1,6 @@
+//case with array and break statement in a for loop.
+//liveness can only be determined with semantic deductions.
+//no nullref possible.
 public class tc2 {
     public static void main() {
         int a[] = new int[10];
@@ -10,6 +13,6 @@ public class tc2 {
             }
         }
         a[0] = x;
-        System.out.println(a[0] + ',' + x);
+        System.out.println(a[0] + ',' + x + ',' + a[9]);
     }
 }
