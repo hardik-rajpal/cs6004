@@ -7,6 +7,17 @@ public class PA1{
         soot.Main.main(args);
         soot.G.v().reset();
     }
+    public static void deleteClassFiles(String tcdir){
+        try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(Paths.get(tcdir))) {
+            for (Path path : directoryStream) {
+                if(path.toString().endsWith(".class")){
+                    Files.delete(path);
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("IOException while deleting class files");
+        }
+    }
     public static int runShellCommand(String cmd){
         ProcessBuilder processBuilder = new ProcessBuilder(cmd.split("\\s+"));
         try{
@@ -74,19 +85,21 @@ public class PA1{
         String parts[] = path.split("/");
         String tcdir = parts[0]+"/"+parts[1];
         String className = parts[2].split(".java")[0];
+        //compile:
         int retcode = runShellCommand("javac "+path);
-        System.out.println("Testcase "+i+" compilation returned: "+retcode);
         if(retcode!=0){
+            System.out.println("Testcase "+i+" compilation returned: "+retcode);
             return;
         }
-        
         createJimple(tcdir, className);
         runLVA(tcdir, className);
         runNPA(tcdir, className);
+        //remove class files:
+        deleteClassFiles(tcdir);
     }
     public static void main(String args[]){
-        System.out.println("Hello, world!");
         for(int i=1;i<=5;i++){
+            System.out.println("Processing testcase"+i+"...");
             processTestcase(i);
         }
     }

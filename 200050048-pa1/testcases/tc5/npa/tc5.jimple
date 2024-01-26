@@ -1,9 +1,9 @@
 public class tc5 extends java.lang.Object
 {
 /*tc5.java*/
-/*soot.tagkit.KeyTag@cf746a2*/
-/*soot.tagkit.KeyTag@230b94c*/
-/*soot.tagkit.KeyTag@60f2dd2*/
+/*soot.tagkit.KeyTag@5f88593c*/
+/*soot.tagkit.KeyTag@514fbcbd*/
+/*soot.tagkit.KeyTag@5570324c*/
 
     public void <init>()
     {

@@ -4,7 +4,7 @@ public class tc4 extends java.lang.Object
 /*[inner=tc4$Labrador, outer=tc4, name=Labrador,flags=9]*/
 /*[inner=tc4$Dog, outer=tc4, name=Dog,flags=9]*/
 /*[inner=tc4$Animal, outer=tc4, name=Animal,flags=9]*/
-/*soot.tagkit.InnerClassAttribute@2b7228cd*/
+/*soot.tagkit.InnerClassAttribute@724b4bbd*/
 
     public void <init>()
     {

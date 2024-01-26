@@ -2,10 +2,10 @@ public class tc3 extends java.lang.Object
 {
 /*tc3.java*/
 /*[inner=tc3$Node, outer=tc3, name=Node,flags=9]*/
-/*soot.tagkit.KeyTag@7a51ef55*/
-/*soot.tagkit.KeyTag@74960e6f*/
-/*soot.tagkit.KeyTag@70a98425*/
-/*soot.tagkit.InnerClassAttribute@35ab0454*/
+/*soot.tagkit.KeyTag@71e1da26*/
+/*soot.tagkit.KeyTag@7f263a6a*/
+/*soot.tagkit.KeyTag@7b19b156*/
+/*soot.tagkit.InnerClassAttribute@3e1b3051*/
 
     public void <init>()
     {
