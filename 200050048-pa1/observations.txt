@@ -1,4 +1,4 @@
-Testcases 1
+Testcase 1
 Jimple Observations:
     1. There is a non-static <init> function explicated in the IR, which calls the constructor for java.lang.Object and executes the constructor code for the class. 
     2. The variables are renamed to i1, i2, ...
@@ -16,7 +16,7 @@ NPA Observations:
     2. Nullness of System.out and StringBuilder is unknown
     3. Nullness of param to main is unknown.
 
-Testcases 2
+Testcase 2
 Jimple Observations
     1. Variable renaming: a->r0 x->i10 i->i11
     2. Statements are broken down into simpler ones:
@@ -35,7 +35,7 @@ NPA Observations
     3. nullness of r0 is mentioned after every read from and write to r0[...]. This might not be necessary as these statements do not alter what r0 points to.
 
 
-Testcases 3
+Testcase 3
 Jimple Observations
     1. The class Node declard inside tc3 is referenced as tc3$Node.
     2. $r0 replaces start and r12 replaces head. The $ might be because the compiler replaces 'start' with the temporary variable created during the first new Node() call.
@@ -48,7 +48,7 @@ NPA Observations
     1. The analysis fails to record data about nullness of r12.next. In lines 55-66, it sees a r12.next being set to a nonnull variable ($r11) but still says r12.next has nullness unknown at line 63.
     2. Similar imprecision is observed in lines 75 to 90, where $r10 is given nullness unknown despite $r0.next having been assigned a nonnull variable $r9.
 
-Testcases 4
+Testcase 4
 Jimple Observations
     1. Jimple allows for typecasting statements, though they are broken down into simpler statements and use temporary variables.
     ((Dog)(pet)).tailLength = 100
@@ -67,7 +67,7 @@ NPA Observations
     1. Nullness of the typecast expressions is unknown, yet the variable to which they are assigned is marked as nonnull.
     2. As mentioned in a previous testase, nullness of v.f is not recorded where v is a variable on the stack and f is a field.
 
-Testcases 5
+Testcase 5
 Jimple Observations:
     1. Jimple code is as expected.
     2. Since a (i1) is not live after line 56, a=b is not present in the jimple code. However, the if block is still translated.
