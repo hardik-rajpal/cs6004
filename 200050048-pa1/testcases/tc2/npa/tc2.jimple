@@ -1,9 +1,9 @@
 public class tc2 extends java.lang.Object
 {
 /*tc2.java*/
-/*soot.tagkit.KeyTag@50185a8c*/
-/*soot.tagkit.KeyTag@50fafc9b*/
-/*soot.tagkit.KeyTag@70e8dc01*/
+/*soot.tagkit.KeyTag@4c704a43*/
+/*soot.tagkit.KeyTag@42b7adbd*/
+/*soot.tagkit.KeyTag@46882133*/
 
     public void <init>()
     {
