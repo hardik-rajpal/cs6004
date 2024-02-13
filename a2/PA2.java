@@ -1,22 +1,21 @@
-import java.util.Iterator;
-import java.util.List;
+// import java.util.Iterator;
+// import java.util.List;
 
 import soot.*;
-import soot.Body;
-import soot.NormalUnitPrinter;
-import soot.Scene;
-import soot.SootClass;
-import soot.SootMethod;
-import soot.Unit;
-import soot.UnitPrinter;
-import soot.toolkits.graph.ExceptionalUnitGraph;
-import soot.toolkits.graph.UnitGraph;
-import soot.jimple.internal.*;
+// import soot.Body;
+// import soot.NormalUnitPrinter;
+// import soot.Scene;
+// import soot.SootClass;
+// import soot.SootMethod;
+// import soot.Unit;
+// import soot.UnitPrinter;
+// import soot.toolkits.graph.ExceptionalUnitGraph;
+// import soot.toolkits.graph.UnitGraph;
+// import soot.jimple.internal.*;
 
 public class PA2 {
     public static void main(String[] args) {
-        String classPath = "."; 	// change to appropriate path to the test class
-
+        String classPath = ".; C:/CODE/atgit/cs6004/soot.jar"; 	// change to appropriate path to the test class
         //Set up arguments for Soot
         String[] sootArgs = {
             "-cp", classPath, "-pp", // sets the class path for Soot
