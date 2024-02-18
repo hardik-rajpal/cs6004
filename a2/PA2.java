@@ -15,7 +15,7 @@ import soot.*;
 
 public class PA2 {
     public static void main(String[] args) {
-        String classPath = ".; C:/CODE/atgit/cs6004/soot.jar"; 	// change to appropriate path to the test class
+        String classPath = "."; 	// change to appropriate path to the test class
         //Set up arguments for Soot
         String[] sootArgs = {
             "-cp", classPath, "-pp", // sets the class path for Soot
