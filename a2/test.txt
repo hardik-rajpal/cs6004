@@ -1,0 +1,175 @@
+Soot started on Tue Feb 27 18:10:14 IST 2024
+current unit: r0 := @this: Node
+Preds{
+current unit: r0 := @this: Test
+Preds{
+	specialinvoke r0.<java.lang.Object: void <init>()>()
+}End Preds
+	specialinvoke r0.<java.lang.Object: void <init>()>()
+}End Preds
+current unit: specialinvoke r0.<java.lang.Object: void <init>()>()
+Preds{
+	return
+}End Preds
+current unit: return
+Preds{
+}End Preds
+current unit: specialinvoke r0.<java.lang.Object: void <init>()>()
+Preds{
+	return
+}End Preds
+current unit: return
+Preds{
+}End Preds
+current unit: r1 := @parameter0: java.lang.String[]
+Preds{
+	staticinvoke <Test: Node foo()>()
+}End Preds
+current unit: staticinvoke <Test: Node foo()>()
+Preds{
+	return
+}End Preds
+current unit: return
+Preds{
+}End Preds
+current unit: $r0 = new Node
+Preds{
+	specialinvoke $r0.<Node: void <init>()>()
+}End Preds
+current unit: specialinvoke $r0.<Node: void <init>()>()
+Preds{
+	$r2 = new Node
+}End Preds
+current unit: $r2 = new Node
+Preds{
+	specialinvoke $r2.<Node: void <init>()>()
+}End Preds
+current unit: specialinvoke $r2.<Node: void <init>()>()
+Preds{
+	$r0.<Node: Node f> = $r2
+}End Preds
+current unit: $r0.<Node: Node f> = $r2
+Preds{
+	$r4 = $r0.<Node: Node f>
+}End Preds
+current unit: $r4 = $r0.<Node: Node f>
+Preds{
+	$r3 = new Node
+}End Preds
+current unit: $r3 = new Node
+Preds{
+	specialinvoke $r3.<Node: void <init>()>()
+}End Preds
+current unit: specialinvoke $r3.<Node: void <init>()>()
+Preds{
+	$r4.<Node: Node g> = $r3
+}End Preds
+current unit: $r4.<Node: Node g> = $r3
+Preds{
+	$r5 = new Node
+}End Preds
+current unit: $r5 = new Node
+Preds{
+	specialinvoke $r5.<Node: void <init>()>()
+}End Preds
+current unit: specialinvoke $r5.<Node: void <init>()>()
+Preds{
+	$r7 = new Node
+}End Preds
+current unit: $r7 = new Node
+Preds{
+	specialinvoke $r7.<Node: void <init>()>()
+}End Preds
+current unit: specialinvoke $r7.<Node: void <init>()>()
+Preds{
+	$r5.<Node: Node f> = $r7
+}End Preds
+current unit: $r5.<Node: Node f> = $r7
+Preds{
+	$r9 = $r0.<Node: Node f>
+}End Preds
+current unit: $r9 = $r0.<Node: Node f>
+Preds{
+	staticinvoke <Test: void bar(Node,Node)>($r9, $r5)
+}End Preds
+current unit: staticinvoke <Test: void bar(Node,Node)>($r9, $r5)
+Preds{
+	$r10 = $r5.<Node: Node f>
+}End Preds
+current unit: $r10 = $r5.<Node: Node f>
+Preds{
+	if $r10 != $r7 goto $r11 = $r5.<Node: Node f>
+}End Preds
+current unit: if $r10 != $r7 goto $r11 = $r5.<Node: Node f>
+Preds{
+	$r12 = <java.lang.System: java.io.PrintStream out>
+	$r11 = $r5.<Node: Node f>
+}End Preds
+current unit: $r12 = <java.lang.System: java.io.PrintStream out>
+Preds{
+	virtualinvoke $r12.<java.io.PrintStream: void println(java.lang.String)>("b1")
+}End Preds
+current unit: virtualinvoke $r12.<java.io.PrintStream: void println(java.lang.String)>("b1")
+Preds{
+	$r13 = $r0.<Node: Node f>
+}End Preds
+current unit: $r13 = $r0.<Node: Node f>
+Preds{
+	$r5.<Node: Node f> = $r13
+}End Preds
+current unit: $r5.<Node: Node f> = $r13
+Preds{
+	goto [?= $r10 = $r5.<Node: Node f>]
+}End Preds
+current unit: goto [?= $r10 = $r5.<Node: Node f>]
+Preds{
+	$r10 = $r5.<Node: Node f>
+}End Preds
+current unit: $r11 = $r5.<Node: Node f>
+Preds{
+	return $r11
+}End Preds
+current unit: return $r11
+Preds{
+}End Preds
+current unit: r5 := @parameter0: Node
+Preds{
+	r3 := @parameter1: Node
+}End Preds
+current unit: r3 := @parameter1: Node
+Preds{
+	$r0 = new Node
+}End Preds
+current unit: $r0 = new Node
+Preds{
+	specialinvoke $r0.<Node: void <init>()>()
+}End Preds
+current unit: specialinvoke $r0.<Node: void <init>()>()
+Preds{
+	$r2 = new Node
+}End Preds
+current unit: $r2 = new Node
+Preds{
+	specialinvoke $r2.<Node: void <init>()>()
+}End Preds
+current unit: specialinvoke $r2.<Node: void <init>()>()
+Preds{
+	$r0.<Node: Node f> = $r2
+}End Preds
+current unit: $r0.<Node: Node f> = $r2
+Preds{
+	$r4 = $r0.<Node: Node f>
+}End Preds
+current unit: $r4 = $r0.<Node: Node f>
+Preds{
+	r3.<Node: Node f> = $r4
+}End Preds
+current unit: r3.<Node: Node f> = $r4
+Preds{
+	return
+}End Preds
+current unit: return
+Preds{
+}End Preds
+Soot finished on Tue Feb 27 18:10:14 IST 2024
+Soot has run for 0 min. 0 sec.

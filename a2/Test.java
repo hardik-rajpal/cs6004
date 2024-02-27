@@ -16,11 +16,9 @@ public class Test {
 		Node z = new Node();
 		y.f = z;
 		bar(x.f, y);
-		if(y.f==z){
+		while(y.f==z){
 			System.out.println("b1");
-		}
-		else{
-			System.out.println("b2");
+			y.f = x.f;
 		}
 		return y.f;
 	}
