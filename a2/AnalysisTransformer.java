@@ -3,6 +3,7 @@ import soot.*;
 // import soot.jimple.AnyNewExpr;
 import soot.jimple.internal.JAssignStmt;
 import soot.jimple.internal.JNewExpr;
+import soot.toolkits.graph.ExceptionalUnitGraph;
 // import soot.toolkits.graph.*;
 // import soot.toolkits.scalar.BackwardFlowAnalysis;
 // import soot.toolkits.scalar.FlowSet;
@@ -44,6 +45,7 @@ public class AnalysisTransformer extends BodyTransformer {
     protected void internalTransform(Body body, String phaseName, Map<String, String> options) {
         // Construct CFG for the current method's body
         PatchingChain<Unit> units = body.getUnits();
+        ExceptionalUnitGraph graph = new ExceptionalUnitGraph(body);
         // String methodName = body.getMethod().getName();
         // Iterate over each unit of CFG.
         // Shown how to get the line numbers if the unit is a "new" Statement.
@@ -59,45 +61,52 @@ public class AnalysisTransformer extends BodyTransformer {
             ptd.in = new PointsToGraph();
             ptd.out = new PointsToGraph();
             pointsToInfo.put(u, ptd);
+            System.out.println("current unit: "+u.toString());
+            List<Unit> preds = graph.getSuccsOf(u);
+            System.out.println("Preds{");
+            for(Unit b:preds){
+                System.out.println("\t"+b.toString());
+            }
+            System.out.println("}End Preds");
         }
         workList.add(units.getFirst());
-        while (workList.size()>0) {
-            Unit u = workList.get(0);
-            workList.remove(0);
-            PointsToGraph newIn = new PointsToGraph();
-            PointsToGraph newOut = new PointsToGraph();
+        // while (workList.size()>0) {
+        //     Unit u = workList.get(0);
+        //     workList.remove(0);
+        //     PointsToGraph newIn = new PointsToGraph();
+        //     PointsToGraph newOut = new PointsToGraph();
 
-            //process u:
-            newIn = mergePredecessorData(u.getBoxesPointingToThis());
-            newOut = flow(newIn,u);
+        //     //process u:
+        //     newIn = mergePredecessorData(u.getBoxesPointingToThis());
+        //     newOut = flow(newIn,u);
 
-            if(pointsToInfo.containsKey(u)){
-                pointsToInfo.get(u).in = newIn;
-                NodePointsToData nodeData = pointsToInfo.get(u);
-                if(nodeData.out.hashCode()!=newOut.hashCode()){
-                    nodeData.out = newOut;
-                    //TODO: add successors:
+        //     if(pointsToInfo.containsKey(u)){
+        //         pointsToInfo.get(u).in = newIn;
+        //         NodePointsToData nodeData = pointsToInfo.get(u);
+        //         if(nodeData.out.hashCode()!=newOut.hashCode()){
+        //             nodeData.out = newOut;
+        //             //TODO: add successors:
 
-                }
-            }
-            else{
-                NodePointsToData ptd = new NodePointsToData();
-                ptd.in = newIn;
-                ptd.out = newOut;
-                pointsToInfo.put(u, ptd);
-            }
-            // if (u instanceof JAssignStmt) {
-            //     JAssignStmt stmt = (JAssignStmt) u;
-            //     Value rhs = stmt.getRightOp();
-            //     if (rhs instanceof JNewExpr) {
-            //         try {
-            //             System.out.println("Unit is " + u + " and the line number is : " + u.getJavaSourceStartLineNumber());
-            //         } catch (Exception e) {
-            //             System.out.println("Unit is " + u + " and the line number is : " + -1);
-            //         }
-            //     }
-            // }
-        }
+        //         }
+        //     }
+        //     else{
+        //         NodePointsToData ptd = new NodePointsToData();
+        //         ptd.in = newIn;
+        //         ptd.out = newOut;
+        //         pointsToInfo.put(u, ptd);
+        //     }
+        //     // if (u instanceof JAssignStmt) {
+        //     //     JAssignStmt stmt = (JAssignStmt) u;
+        //     //     Value rhs = stmt.getRightOp();
+        //     //     if (rhs instanceof JNewExpr) {
+        //     //         try {
+        //     //             System.out.println("Unit is " + u + " and the line number is : " + u.getJavaSourceStartLineNumber());
+        //     //         } catch (Exception e) {
+        //     //             System.out.println("Unit is " + u + " and the line number is : " + -1);
+        //     //         }
+        //     //     }
+        //     // }
+        // }
 
 
     }

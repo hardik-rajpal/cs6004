@@ -16,6 +16,12 @@ public class Test {
 		Node z = new Node();
 		y.f = z;
 		bar(x.f, y);
+		if(y.f==z){
+			System.out.println("b1");
+		}
+		else{
+			System.out.println("b2");
+		}
 		return y.f;
 	}
 	public static void bar(Node p1, Node p2){
