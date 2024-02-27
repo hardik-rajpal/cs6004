@@ -26,20 +26,36 @@ public class Test extends java.lang.Object
 
     public static Node foo()
     {
-        Node $r0, $r2, $r3, $r4, $r5, $r7, $r9, $r10, $r11, $r13;
-        java.io.PrintStream $r12;
+        java.io.InputStream $r0;
+        Node $r1, $r2, $r3, $r4, $r5, $r7, $r9, $r10;
+        int i0, $i1, i2;
+        java.io.IOException $r11;
 
-        $r0 = new Node;
+        i2 = 0;
 
-        specialinvoke $r0.<Node: void <init>()>();
+     label1:
+        $r0 = <java.lang.System: java.io.InputStream in>;
+
+        i2 = virtualinvoke $r0.<java.io.InputStream: int read()>();
+
+     label2:
+        goto label4;
+
+     label3:
+        $r11 := @caughtexception;
+
+     label4:
+        $r1 = new Node;
+
+        specialinvoke $r1.<Node: void <init>()>();
 
         $r2 = new Node;
 
         specialinvoke $r2.<Node: void <init>()>();
 
-        $r0.<Node: Node f> = $r2;
+        $r1.<Node: Node f> = $r2;
 
-        $r4 = $r0.<Node: Node f>;
+        $r4 = $r1.<Node: Node f>;
 
         $r3 = new Node;
 
@@ -57,29 +73,22 @@ public class Test extends java.lang.Object
 
         $r5.<Node: Node f> = $r7;
 
-        $r9 = $r0.<Node: Node f>;
+        i0 = i2 + 2;
 
-        staticinvoke <Test: void bar(Node,Node)>($r9, $r5);
+        $i1 = i0 * i0;
 
-     label1:
-        $r10 = $r5.<Node: Node f>;
+        if i2 != $i1 goto label5;
 
-        if $r10 != $r7 goto label2;
+        $r10 = $r1.<Node: Node f>;
 
-        $r12 = <java.lang.System: java.io.PrintStream out>;
+        staticinvoke <Test: void bar(Node,Node)>($r10, $r5);
 
-        virtualinvoke $r12.<java.io.PrintStream: void println(java.lang.String)>("b1");
+     label5:
+        $r9 = $r5.<Node: Node f>;
 
-        $r13 = $r0.<Node: Node f>;
+        return $r9;
 
-        $r5.<Node: Node f> = $r13;
-
-        goto label1;
-
-     label2:
-        $r11 = $r5.<Node: Node f>;
-
-        return $r11;
+        catch java.io.IOException from label1 to label2 with label3;
     }
 
     public static void bar(Node, Node)

@@ -1,3 +1,5 @@
+import java.io.IOException;
+
 class Node {
 	Node f;
 	Node g;
@@ -9,16 +11,22 @@ public class Test {
 		foo();
 	}
 	public static Node foo(){
+		Integer a= new Integer(0);
+		try{
+		a	= System.in.read();
+		}
+		catch(IOException e){
+
+		} 
 		Node x = new Node();
 		x.f = new Node();
 		x.f.g = new Node(); 
 		Node y = new Node(); 
 		Node z = new Node();
 		y.f = z;
-		bar(x.f, y);
-		while(y.f==z){
-			System.out.println("b1");
-			y.f = x.f;
+		Integer b = a;
+		if(a==b*b){
+			bar(x.f, y);
 		}
 		return y.f;
 	}
