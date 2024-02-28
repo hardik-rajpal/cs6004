@@ -1,16 +1,1393 @@
-Soot started on Tue Feb 27 20:22:03 IST 2024
-Non-field access: $r0
-Non-field access: <java.lang.System: java.io.InputStream in>
-Non-field access: virtualinvoke $r1.<java.io.InputStream: int read()>()
-Non-field access: staticinvoke <java.lang.Integer: java.lang.Integer valueOf(int)>($i0)
-Non-field access: $r3
-Non-field access: $r4
-Non-field access: $r8
-Non-field access: virtualinvoke r14.<java.lang.Integer: int intValue()>()
-Non-field access: virtualinvoke r14.<java.lang.Integer: int intValue()>()
-Non-field access: virtualinvoke r14.<java.lang.Integer: int intValue()>()
-Non-field access: $i2 * $i3
-Non-field access: $r2
-Non-field access: $r4
-Soot finished on Tue Feb 27 20:22:04 IST 2024
+Soot started on Wed Feb 28 10:57:35 IST 2024
+Unit: "r0 := @this: Test"{
+	In: 
+	{
+		stack{
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+Unit: "r0 := @this: Node"{
+	In: 
+	{
+		stack{
+		}
+		heap{
+		}
+	}
+		stack{
+		}
+		heap{
+}
+		}
+	}
+	Out: 
+	{
+		stack{
+		}
+		heap{
+		}
+	}
+Unit: "specialinvoke r0.<java.lang.Object: void <init>()>()"{
+	In: 
+	{
+		stack{
+		}
+		heap{
+		}
+	}
+}
+	Out: 
+	{
+		stack{
+		}
+		heap{
+		}
+	}
+Unit: "specialinvoke r0.<java.lang.Object: void <init>()>()"{
+	In: 
+	{
+}
+Unit: "return"{
+	In: 
+	{
+		stack{
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+		}
+		heap{
+		}
+	}
+}
+		stack{
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+		}
+		heap{
+		}
+	}
+}
+Unit: "return"{
+	In: 
+	{
+		stack{
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+		}
+		heap{
+		}
+	}
+}
+Unit: "r1 := @parameter0: java.lang.String[]"{
+	In: 
+	{
+		stack{
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+		}
+		heap{
+		}
+	}
+}
+Unit: "staticinvoke <Test: Node foo()>()"{
+	In: 
+	{
+		stack{
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+		}
+		heap{
+		}
+	}
+}
+Unit: "return"{
+	In: 
+	{
+		stack{
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+		}
+		heap{
+		}
+	}
+}
+Unit: "$r0 = new java.lang.Integer"{
+	In: 
+	{
+		stack{
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "specialinvoke $r0.<java.lang.Integer: void <init>(int)>(0)"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "r14 = $r0"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+			r14->[ Obj_14, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "$r1 = <java.lang.System: java.io.InputStream in>"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+			r14->[ Obj_14, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+			$r1->[ ]
+			r14->[ Obj_14, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "$i0 = virtualinvoke $r1.<java.io.InputStream: int read()>()"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+			$r1->[ ]
+			r14->[ Obj_14, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+			$r1->[ ]
+			r14->[ Obj_14, ]
+			$i0->[ ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "r14 = staticinvoke <java.lang.Integer: java.lang.Integer valueOf(int)>($i0)"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+			$r1->[ ]
+			r14->[ Obj_14, ]
+			$i0->[ ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+			$r1->[ ]
+			r14->[ ]
+			$i0->[ ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "goto [?= $r2 = new Node]"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+			$r1->[ ]
+			r14->[ ]
+			$i0->[ ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+			$r1->[ ]
+			r14->[ Obj_14, ]
+			$i0->[ ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "$r13 := @caughtexception"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+			$r1->[ ]
+			r14->[ Obj_14, ]
+			$i0->[ ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+			$r1->[ ]
+			r14->[ Obj_14, ]
+			$i0->[ ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "$r2 = new Node"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+			$r1->[ ]
+			r14->[ Obj_14, ]
+			$i0->[ ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+			$r1->[ ]
+			r14->[ Obj_14, ]
+			$r2->[ Obj_21, ]
+			$i0->[ ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "specialinvoke $r2.<Node: void <init>()>()"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+			$r1->[ ]
+			r14->[ Obj_14, ]
+			$r2->[ Obj_21, ]
+			$i0->[ ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+			$r1->[ ]
+			r14->[ Obj_14, ]
+			$r2->[ Obj_21, ]
+			$i0->[ ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "$r3 = new Node"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+			$r1->[ ]
+			r14->[ Obj_14, ]
+			$r2->[ Obj_21, ]
+			$i0->[ ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+			$r1->[ ]
+			r14->[ Obj_14, ]
+			$r2->[ Obj_21, ]
+			$r3->[ Obj_22, ]
+			$i0->[ ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "specialinvoke $r3.<Node: void <init>()>()"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+			$r1->[ ]
+			r14->[ Obj_14, ]
+			$r2->[ Obj_21, ]
+			$r3->[ Obj_22, ]
+			$i0->[ ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+			$r1->[ ]
+			r14->[ Obj_14, ]
+			$r2->[ Obj_21, ]
+			$r3->[ Obj_22, ]
+			$i0->[ ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "$r2.<Node: Node f> = $r3"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+			$r1->[ ]
+			r14->[ Obj_14, ]
+			$r2->[ Obj_21, ]
+			$r3->[ Obj_22, ]
+			$i0->[ ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+			$r1->[ ]
+			r14->[ Obj_14, ]
+			$r2->[ Obj_21, ]
+			$r3->[ Obj_22, ]
+			$i0->[ ]
+		}
+		heap{
+			Obj_21.f->[ Obj_22, ]
+		}
+	}
+}
+Unit: "$r5 = $r2.<Node: Node f>"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+			$r1->[ ]
+			r14->[ Obj_14, ]
+			$r2->[ Obj_21, ]
+			$r3->[ Obj_22, ]
+			$i0->[ ]
+		}
+		heap{
+			Obj_21.f->[ Obj_22, ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+			$r1->[ ]
+			r14->[ Obj_14, ]
+			$r2->[ Obj_21, ]
+			$r3->[ Obj_22, ]
+			$r5->[ ]
+			$i0->[ ]
+		}
+		heap{
+			Obj_21.f->[ Obj_22, ]
+		}
+	}
+}
+Unit: "$r4 = new Node"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+			$r1->[ ]
+			r14->[ Obj_14, ]
+			$r2->[ Obj_21, ]
+			$r3->[ Obj_22, ]
+			$r5->[ ]
+			$i0->[ ]
+		}
+		heap{
+			Obj_21.f->[ Obj_22, ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+			$r1->[ ]
+			r14->[ Obj_14, ]
+			$r2->[ Obj_21, ]
+			$r3->[ Obj_22, ]
+			$r4->[ Obj_23, ]
+			$r5->[ ]
+			$i0->[ ]
+		}
+		heap{
+			Obj_21.f->[ Obj_22, ]
+		}
+	}
+}
+Unit: "specialinvoke $r4.<Node: void <init>()>()"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+			$r1->[ ]
+			r14->[ Obj_14, ]
+			$r2->[ Obj_21, ]
+			$r3->[ Obj_22, ]
+			$r4->[ Obj_23, ]
+			$r5->[ ]
+			$i0->[ ]
+		}
+		heap{
+			Obj_21.f->[ Obj_22, ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+			$r1->[ ]
+			r14->[ Obj_14, ]
+			$r2->[ Obj_21, ]
+			$r3->[ Obj_22, ]
+			$r4->[ Obj_23, ]
+			$r5->[ ]
+			$i0->[ ]
+		}
+		heap{
+			Obj_21.f->[ Obj_22, ]
+		}
+	}
+}
+Unit: "$r5.<Node: Node g> = $r4"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+			$r1->[ ]
+			r14->[ Obj_14, ]
+			$r2->[ Obj_21, ]
+			$r3->[ Obj_22, ]
+			$r4->[ Obj_23, ]
+			$r5->[ ]
+			$i0->[ ]
+		}
+		heap{
+			Obj_21.f->[ Obj_22, ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+			$r1->[ ]
+			r14->[ Obj_14, ]
+			$r2->[ Obj_21, ]
+			$r3->[ Obj_22, ]
+			$r4->[ Obj_23, ]
+			$r5->[ ]
+			$i0->[ ]
+		}
+		heap{
+			Obj_21.f->[ Obj_22, ]
+		}
+	}
+}
+Unit: "$r6 = new Node"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+			$r1->[ ]
+			r14->[ Obj_14, ]
+			$r2->[ Obj_21, ]
+			$r3->[ Obj_22, ]
+			$r4->[ Obj_23, ]
+			$r5->[ ]
+			$i0->[ ]
+		}
+		heap{
+			Obj_21.f->[ Obj_22, ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+			$r1->[ ]
+			r14->[ Obj_14, ]
+			$r2->[ Obj_21, ]
+			$r3->[ Obj_22, ]
+			$r4->[ Obj_23, ]
+			$r5->[ ]
+			$r6->[ Obj_24, ]
+			$i0->[ ]
+		}
+		heap{
+			Obj_21.f->[ Obj_22, ]
+		}
+	}
+}
+Unit: "specialinvoke $r6.<Node: void <init>()>()"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+			$r1->[ ]
+			r14->[ Obj_14, ]
+			$r2->[ Obj_21, ]
+			$r3->[ Obj_22, ]
+			$r4->[ Obj_23, ]
+			$r5->[ ]
+			$r6->[ Obj_24, ]
+			$i0->[ ]
+		}
+		heap{
+			Obj_21.f->[ Obj_22, ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+			$r1->[ ]
+			r14->[ Obj_14, ]
+			$r2->[ Obj_21, ]
+			$r3->[ Obj_22, ]
+			$r4->[ Obj_23, ]
+			$r5->[ ]
+			$r6->[ Obj_24, ]
+			$i0->[ ]
+		}
+		heap{
+			Obj_21.f->[ Obj_22, ]
+		}
+	}
+}
+Unit: "$r8 = new Node"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+			$r1->[ ]
+			r14->[ Obj_14, ]
+			$r2->[ Obj_21, ]
+			$r3->[ Obj_22, ]
+			$r4->[ Obj_23, ]
+			$r5->[ ]
+			$r6->[ Obj_24, ]
+			$i0->[ ]
+		}
+		heap{
+			Obj_21.f->[ Obj_22, ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+			$r1->[ ]
+			r14->[ Obj_14, ]
+			$r2->[ Obj_21, ]
+			$r3->[ Obj_22, ]
+			$r4->[ Obj_23, ]
+			$r5->[ ]
+			$r6->[ Obj_24, ]
+			$r8->[ Obj_25, ]
+			$i0->[ ]
+		}
+		heap{
+			Obj_21.f->[ Obj_22, ]
+		}
+	}
+}
+Unit: "specialinvoke $r8.<Node: void <init>()>()"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+			$r1->[ ]
+			r14->[ Obj_14, ]
+			$r2->[ Obj_21, ]
+			$r3->[ Obj_22, ]
+			$r4->[ Obj_23, ]
+			$r5->[ ]
+			$r6->[ Obj_24, ]
+			$r8->[ Obj_25, ]
+			$i0->[ ]
+		}
+		heap{
+			Obj_21.f->[ Obj_22, ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+			$r1->[ ]
+			r14->[ Obj_14, ]
+			$r2->[ Obj_21, ]
+			$r3->[ Obj_22, ]
+			$r4->[ Obj_23, ]
+			$r5->[ ]
+			$r6->[ Obj_24, ]
+			$r8->[ Obj_25, ]
+			$i0->[ ]
+		}
+		heap{
+			Obj_21.f->[ Obj_22, ]
+		}
+	}
+}
+Unit: "$r6.<Node: Node f> = $r8"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+			$r1->[ ]
+			r14->[ Obj_14, ]
+			$r2->[ Obj_21, ]
+			$r3->[ Obj_22, ]
+			$r4->[ Obj_23, ]
+			$r5->[ ]
+			$r6->[ Obj_24, ]
+			$r8->[ Obj_25, ]
+			$i0->[ ]
+		}
+		heap{
+			Obj_21.f->[ Obj_22, ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+			$r1->[ ]
+			r14->[ Obj_14, ]
+			$r2->[ Obj_21, ]
+			$r3->[ Obj_22, ]
+			$r4->[ Obj_23, ]
+			$r5->[ ]
+			$r6->[ Obj_24, ]
+			$r8->[ Obj_25, ]
+			$i0->[ ]
+		}
+		heap{
+			Obj_21.f->[ Obj_22, ]
+			Obj_24.f->[ Obj_25, ]
+		}
+	}
+}
+Unit: "$i1 = virtualinvoke r14.<java.lang.Integer: int intValue()>()"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+			$r1->[ ]
+			r14->[ Obj_14, ]
+			$r2->[ Obj_21, ]
+			$r3->[ Obj_22, ]
+			$r4->[ Obj_23, ]
+			$r5->[ ]
+			$r6->[ Obj_24, ]
+			$r8->[ Obj_25, ]
+			$i0->[ ]
+		}
+		heap{
+			Obj_21.f->[ Obj_22, ]
+			Obj_24.f->[ Obj_25, ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+			$r1->[ ]
+			r14->[ Obj_14, ]
+			$r2->[ Obj_21, ]
+			$r3->[ Obj_22, ]
+			$r4->[ Obj_23, ]
+			$r5->[ ]
+			$r6->[ Obj_24, ]
+			$r8->[ Obj_25, ]
+			$i0->[ ]
+			$i1->[ ]
+		}
+		heap{
+			Obj_21.f->[ Obj_22, ]
+			Obj_24.f->[ Obj_25, ]
+		}
+	}
+}
+Unit: "$i2 = virtualinvoke r14.<java.lang.Integer: int intValue()>()"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+			$r1->[ ]
+			r14->[ Obj_14, ]
+			$r2->[ Obj_21, ]
+			$r3->[ Obj_22, ]
+			$r4->[ Obj_23, ]
+			$r5->[ ]
+			$r6->[ Obj_24, ]
+			$r8->[ Obj_25, ]
+			$i0->[ ]
+			$i1->[ ]
+		}
+		heap{
+			Obj_21.f->[ Obj_22, ]
+			Obj_24.f->[ Obj_25, ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+			$r1->[ ]
+			r14->[ Obj_14, ]
+			$r2->[ Obj_21, ]
+			$r3->[ Obj_22, ]
+			$r4->[ Obj_23, ]
+			$r5->[ ]
+			$r6->[ Obj_24, ]
+			$r8->[ Obj_25, ]
+			$i0->[ ]
+			$i1->[ ]
+			$i2->[ ]
+		}
+		heap{
+			Obj_21.f->[ Obj_22, ]
+			Obj_24.f->[ Obj_25, ]
+		}
+	}
+}
+Unit: "$i3 = virtualinvoke r14.<java.lang.Integer: int intValue()>()"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+			$r1->[ ]
+			r14->[ Obj_14, ]
+			$r2->[ Obj_21, ]
+			$r3->[ Obj_22, ]
+			$r4->[ Obj_23, ]
+			$r5->[ ]
+			$r6->[ Obj_24, ]
+			$r8->[ Obj_25, ]
+			$i0->[ ]
+			$i1->[ ]
+			$i2->[ ]
+		}
+		heap{
+			Obj_21.f->[ Obj_22, ]
+			Obj_24.f->[ Obj_25, ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+			$r1->[ ]
+			$r2->[ Obj_21, ]
+			$r3->[ Obj_22, ]
+			$r4->[ Obj_23, ]
+			$r5->[ ]
+			$r6->[ Obj_24, ]
+			$r8->[ Obj_25, ]
+			$i0->[ ]
+			$i1->[ ]
+			$i2->[ ]
+			$i3->[ ]
+			r14->[ Obj_14, ]
+		}
+		heap{
+			Obj_21.f->[ Obj_22, ]
+			Obj_24.f->[ Obj_25, ]
+		}
+	}
+}
+Unit: "$i4 = $i2 * $i3"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+			$r1->[ ]
+			$r2->[ Obj_21, ]
+			$r3->[ Obj_22, ]
+			$r4->[ Obj_23, ]
+			$r5->[ ]
+			$r6->[ Obj_24, ]
+			$r8->[ Obj_25, ]
+			$i0->[ ]
+			$i1->[ ]
+			$i2->[ ]
+			$i3->[ ]
+			r14->[ Obj_14, ]
+		}
+		heap{
+			Obj_21.f->[ Obj_22, ]
+			Obj_24.f->[ Obj_25, ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+			$r1->[ ]
+			$r2->[ Obj_21, ]
+			$r3->[ Obj_22, ]
+			$r4->[ Obj_23, ]
+			$r5->[ ]
+			$r6->[ Obj_24, ]
+			$r8->[ Obj_25, ]
+			$i0->[ ]
+			$i1->[ ]
+			$i2->[ ]
+			$i3->[ ]
+			$i4->[ ]
+			r14->[ Obj_14, ]
+		}
+		heap{
+			Obj_21.f->[ Obj_22, ]
+			Obj_24.f->[ Obj_25, ]
+		}
+	}
+}
+Unit: "if $i1 != $i4 goto $r11 = $r6.<Node: Node f>"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+			$r1->[ ]
+			$r2->[ Obj_21, ]
+			$r3->[ Obj_22, ]
+			$r4->[ Obj_23, ]
+			$r5->[ ]
+			$r6->[ Obj_24, ]
+			$r8->[ Obj_25, ]
+			$i0->[ ]
+			$i1->[ ]
+			$i2->[ ]
+			$i3->[ ]
+			$i4->[ ]
+			r14->[ Obj_14, ]
+		}
+		heap{
+			Obj_21.f->[ Obj_22, ]
+			Obj_24.f->[ Obj_25, ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+			$r1->[ ]
+			$r2->[ Obj_21, ]
+			$r3->[ Obj_22, ]
+			$r4->[ Obj_23, ]
+			$r5->[ ]
+			$r6->[ Obj_24, ]
+			$r8->[ Obj_25, ]
+			$i0->[ ]
+			$i1->[ ]
+			$i2->[ ]
+			$i3->[ ]
+			$i4->[ ]
+			r14->[ Obj_14, ]
+		}
+		heap{
+			Obj_21.f->[ Obj_22, ]
+			Obj_24.f->[ Obj_25, ]
+		}
+	}
+}
+Unit: "$r12 = $r2.<Node: Node f>"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+			$r1->[ ]
+			$r2->[ Obj_21, ]
+			$r3->[ Obj_22, ]
+			$r4->[ Obj_23, ]
+			$r5->[ ]
+			$r6->[ Obj_24, ]
+			$r8->[ Obj_25, ]
+			$i0->[ ]
+			$i1->[ ]
+			$i2->[ ]
+			$i3->[ ]
+			$i4->[ ]
+			r14->[ Obj_14, ]
+		}
+		heap{
+			Obj_21.f->[ Obj_22, ]
+			Obj_24.f->[ Obj_25, ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+			$r1->[ ]
+			$r2->[ Obj_21, ]
+			$r3->[ Obj_22, ]
+			$r4->[ Obj_23, ]
+			$r5->[ ]
+			$r6->[ Obj_24, ]
+			$r8->[ Obj_25, ]
+			$i0->[ ]
+			$i1->[ ]
+			$i2->[ ]
+			$i3->[ ]
+			$i4->[ ]
+			r14->[ Obj_14, ]
+			$r12->[ ]
+		}
+		heap{
+			Obj_21.f->[ Obj_22, ]
+			Obj_24.f->[ Obj_25, ]
+		}
+	}
+}
+Unit: "staticinvoke <Test: void bar(Node,Node)>($r12, $r6)"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+			$r1->[ ]
+			$r2->[ Obj_21, ]
+			$r3->[ Obj_22, ]
+			$r4->[ Obj_23, ]
+			$r5->[ ]
+			$r6->[ Obj_24, ]
+			$r8->[ Obj_25, ]
+			$i0->[ ]
+			$i1->[ ]
+			$i2->[ ]
+			$i3->[ ]
+			$i4->[ ]
+			r14->[ Obj_14, ]
+			$r12->[ ]
+		}
+		heap{
+			Obj_21.f->[ Obj_22, ]
+			Obj_24.f->[ Obj_25, ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+			$r1->[ ]
+			$r2->[ Obj_21, ]
+			$r3->[ Obj_22, ]
+			$r4->[ Obj_23, ]
+			$r5->[ ]
+			$r6->[ Obj_24, ]
+			$r8->[ Obj_25, ]
+			$i0->[ ]
+			$i1->[ ]
+			$i2->[ ]
+			$i3->[ ]
+			$i4->[ ]
+			r14->[ Obj_14, ]
+			$r12->[ ]
+		}
+		heap{
+			Obj_21.f->[ Obj_22, ]
+			Obj_24.f->[ Obj_25, ]
+		}
+	}
+}
+Unit: "$r11 = $r6.<Node: Node f>"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+			$r1->[ ]
+			$r2->[ Obj_21, ]
+			$r3->[ Obj_22, ]
+			$r4->[ Obj_23, ]
+			$r5->[ ]
+			$r6->[ Obj_24, ]
+			$r8->[ Obj_25, ]
+			$i0->[ ]
+			$i1->[ ]
+			$i2->[ ]
+			$i3->[ ]
+			$i4->[ ]
+			r14->[ Obj_14, ]
+			$r12->[ ]
+		}
+		heap{
+			Obj_21.f->[ Obj_22, ]
+			Obj_24.f->[ Obj_25, ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+			$r1->[ ]
+			$r2->[ Obj_21, ]
+			$r3->[ Obj_22, ]
+			$r4->[ Obj_23, ]
+			$r5->[ ]
+			$r6->[ Obj_24, ]
+			$r8->[ Obj_25, ]
+			$i0->[ ]
+			$i1->[ ]
+			$i2->[ ]
+			$i3->[ ]
+			$i4->[ ]
+			r14->[ Obj_14, ]
+			$r11->[ ]
+			$r12->[ ]
+		}
+		heap{
+			Obj_21.f->[ Obj_22, ]
+			Obj_24.f->[ Obj_25, ]
+		}
+	}
+}
+Unit: "return $r11"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+			$r1->[ ]
+			$r2->[ Obj_21, ]
+			$r3->[ Obj_22, ]
+			$r4->[ Obj_23, ]
+			$r5->[ ]
+			$r6->[ Obj_24, ]
+			$r8->[ Obj_25, ]
+			$i0->[ ]
+			$i1->[ ]
+			$i2->[ ]
+			$i3->[ ]
+			$i4->[ ]
+			r14->[ Obj_14, ]
+			$r11->[ ]
+			$r12->[ ]
+		}
+		heap{
+			Obj_21.f->[ Obj_22, ]
+			Obj_24.f->[ Obj_25, ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_14, ]
+			$r1->[ ]
+			$r2->[ Obj_21, ]
+			$r3->[ Obj_22, ]
+			$r4->[ Obj_23, ]
+			$r5->[ ]
+			$r6->[ Obj_24, ]
+			$r8->[ Obj_25, ]
+			$i0->[ ]
+			$i1->[ ]
+			$i2->[ ]
+			$i3->[ ]
+			$i4->[ ]
+			r14->[ Obj_14, ]
+			$r11->[ ]
+			$r12->[ ]
+		}
+		heap{
+			Obj_21.f->[ Obj_22, ]
+			Obj_24.f->[ Obj_25, ]
+		}
+	}
+}
+Unit: "r5 := @parameter0: Node"{
+	In: 
+	{
+		stack{
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+		}
+		heap{
+		}
+	}
+}
+Unit: "r3 := @parameter1: Node"{
+	In: 
+	{
+		stack{
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+		}
+		heap{
+		}
+	}
+}
+Unit: "$r0 = new Node"{
+	In: 
+	{
+		stack{
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_34, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "specialinvoke $r0.<Node: void <init>()>()"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_34, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_34, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "$r2 = new Node"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_34, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_34, ]
+			$r2->[ Obj_35, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "specialinvoke $r2.<Node: void <init>()>()"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_34, ]
+			$r2->[ Obj_35, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_34, ]
+			$r2->[ Obj_35, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "$r0.<Node: Node f> = $r2"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_34, ]
+			$r2->[ Obj_35, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_34, ]
+			$r2->[ Obj_35, ]
+		}
+		heap{
+			Obj_34.f->[ Obj_35, ]
+		}
+	}
+}
+Unit: "$r4 = $r0.<Node: Node f>"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_34, ]
+			$r2->[ Obj_35, ]
+		}
+		heap{
+			Obj_34.f->[ Obj_35, ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_34, ]
+			$r2->[ Obj_35, ]
+			$r4->[ ]
+		}
+		heap{
+			Obj_34.f->[ Obj_35, ]
+		}
+	}
+}
+Unit: "r3.<Node: Node f> = $r4"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_34, ]
+			$r2->[ Obj_35, ]
+			$r4->[ ]
+		}
+		heap{
+			Obj_34.f->[ Obj_35, ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_34, ]
+			$r2->[ Obj_35, ]
+			$r4->[ ]
+		}
+		heap{
+			Obj_34.f->[ Obj_35, ]
+		}
+	}
+}
+Unit: "return"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_34, ]
+			$r2->[ Obj_35, ]
+			$r4->[ ]
+		}
+		heap{
+			Obj_34.f->[ Obj_35, ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_34, ]
+			$r2->[ Obj_35, ]
+			$r4->[ ]
+		}
+		heap{
+			Obj_34.f->[ Obj_35, ]
+		}
+	}
+}
+Soot finished on Wed Feb 28 10:57:35 IST 2024
 Soot has run for 0 min. 0 sec.
