@@ -42,14 +42,37 @@ public class AnalysisTransformer extends BodyTransformer {
     }
 
     class PointsToGraph {
-        HashMap<String, Set<String>> stackMap;
-        HashMap<HeapReference, Set<String>> heapMap;
+        TreeMap<String, TreeSet<String>> stackMap;
+        TreeMap<HeapReference, TreeSet<String>> heapMap;
 
         PointsToGraph() {
-            stackMap = new HashMap<String, Set<String>>();
-            heapMap = new HashMap<HeapReference, Set<String>>();
+            stackMap = new TreeMap<String, TreeSet<String>>();
+            heapMap = new TreeMap<HeapReference, TreeSet<String>>(hrcomp);
         }
-
+        @Override
+        public int hashCode() {
+            int code = 0;
+            String stackString = "";
+            for(String stackVar:stackMap.keySet()){
+                stackString+=stackVar;
+                stackString+="{";
+                for(String pointee:stackMap.get(stackVar)){
+                    stackString+=pointee+",";
+                }
+                stackString+="}";
+            }
+            String heapString = "";
+            for(HeapReference heapVar:heapMap.keySet()){
+                heapString+=heapVar.object+"."+heapVar.field;
+                heapString+="{";
+                for(String pointee:heapMap.get(heapVar)){
+                    heapString+=pointee+",";
+                }
+                heapString+="}";
+            }
+            code = stackString.hashCode()|(heapString.hashCode()<<1);
+            return code;
+        }
         void print(String s) {
             System.out.print(s);
         }
@@ -87,8 +110,8 @@ public class AnalysisTransformer extends BodyTransformer {
     }
 
     class KillGenSets {
-        Set<String> killStack;
-        Set<HeapReference> killHeap;
+        TreeSet<String> killStack;
+        TreeSet<HeapReference> killHeap;
         PointsToGraph gen;
     }
 
@@ -110,6 +133,17 @@ public class AnalysisTransformer extends BodyTransformer {
         }
     }
 
+    class HeapReferenceComparator implements Comparator<HeapReference> {
+
+        @Override
+        public int compare(HeapReference e1, HeapReference e2) {
+            String s1,s2;
+            s1 = e1.object+"."+e1.field;
+            s2 = e2.object+"."+e2.field;
+            return s1.compareTo(s2);
+        }
+    }
+
     PointsToGraph mergePredecessorData(List<Unit> units, HashMap<Unit, NodePointsToData> pointsToInfo) {
         PointsToGraph merged = new PointsToGraph();
         for (Unit unit : units) {
@@ -126,7 +160,7 @@ public class AnalysisTransformer extends BodyTransformer {
             if (merged.stackMap.containsKey(stackVarName)) {
                 merged.stackMap.get(stackVarName).addAll(pOut.stackMap.get(stackVarName));
             } else {
-                HashSet<String> pointees = new HashSet<>();
+                TreeSet<String> pointees = new TreeSet<>();
                 pointees.addAll(pOut.stackMap.get(stackVarName));
                 merged.stackMap.put(stackVarName, pointees);
             }
@@ -136,7 +170,7 @@ public class AnalysisTransformer extends BodyTransformer {
             if (merged.heapMap.containsKey(heapRef)) {
                 merged.heapMap.get(heapRef).addAll(pOut.heapMap.get(heapRef));
             } else {
-                HashSet<String> pointees = new HashSet<>();
+                TreeSet<String> pointees = new TreeSet<>();
                 pointees.addAll(pOut.heapMap.get(heapRef));
                 merged.heapMap.put(heapRef, pointees);
             }
@@ -146,26 +180,26 @@ public class AnalysisTransformer extends BodyTransformer {
     KillGenSets getKillGenSets(PointsToGraph in, Unit u) {
         KillGenSets kgset = new KillGenSets();
         kgset.gen = new PointsToGraph();
-        kgset.killHeap = new HashSet<HeapReference>();
-        kgset.killStack = new HashSet<String>();
+        kgset.killHeap = new TreeSet<HeapReference>(hrcomp);
+        kgset.killStack = new TreeSet<String>();
         if (u instanceof JAssignStmt) {
             JAssignStmt stmt = (JAssignStmt) u;
             Value rhs = stmt.getRightOp();
             Value lhs = stmt.getLeftOp();
-            HashSet<String> newPointees = getNewPointees(in, u, rhs);
+            TreeSet<String> newPointees = getNewPointees(in, u, rhs);
             fillKillGenSet(in, kgset, lhs, newPointees);
         }
         return kgset;
     }
 
-    private void fillKillGenSet(PointsToGraph in, KillGenSets kgset, Value lhs, HashSet<String> newPointees) {
+    private void fillKillGenSet(PointsToGraph in, KillGenSets kgset, Value lhs, TreeSet<String> newPointees) {
         if (lhs instanceof JInstanceFieldRef) {
             // field access=> update the heap, boy.
             JInstanceFieldRef fieldRef = (JInstanceFieldRef) (lhs);
             String field = fieldRef.getField().getName();
             String base = fieldRef.getBase().toString();
             if (in.stackMap.containsKey(base)) {
-                Set<String> heapObjs = in.stackMap.get(base);
+                TreeSet<String> heapObjs = in.stackMap.get(base);
                 if (heapObjs.size() == 1) {
                     // strong update
                     for (String s : heapObjs) {
@@ -207,8 +241,8 @@ public class AnalysisTransformer extends BodyTransformer {
                 || expression instanceof JSpecialInvokeExpr;
     }
 
-    private HashSet<String> getNewPointees(PointsToGraph in, Unit u, Value rhs) {
-        HashSet<String> newPointees = new HashSet<>();
+    private TreeSet<String> getNewPointees(PointsToGraph in, Unit u, Value rhs) {
+        TreeSet<String> newPointees = new TreeSet<>();
         if (rhs instanceof JNewExpr) {
             // allocation site abstraction:
             String objectName = "Obj_" + Integer.toString(u.getJavaSourceStartLineNumber());
@@ -221,7 +255,7 @@ public class AnalysisTransformer extends BodyTransformer {
                 String field = fieldRef.getField().getName();
                 String base = fieldRef.getBase().toString();
                 if (in.stackMap.containsKey(base)) {
-                    Set<String> baseObjects = in.stackMap.get(base);
+                    TreeSet<String> baseObjects = in.stackMap.get(base);
                     for (String baseObject : baseObjects) {
                         HeapReference hr = new HeapReference();
                         hr.field = field;
@@ -260,12 +294,12 @@ public class AnalysisTransformer extends BodyTransformer {
         // remove killed points-to info
         for (String stackVarName : in.stackMap.keySet()) {
             if (!kgsets.killStack.contains(stackVarName)) {
-                ans.stackMap.put(stackVarName, new HashSet<String>(in.stackMap.get(stackVarName)));
+                ans.stackMap.put(stackVarName, new TreeSet<String>(in.stackMap.get(stackVarName)));
             }
         }
         for (HeapReference heapRef : in.heapMap.keySet()) {
             if (!kgsets.killHeap.contains(heapRef)) {
-                ans.heapMap.put(heapRef, new HashSet<String>(in.heapMap.get(heapRef)));
+                ans.heapMap.put(heapRef, new TreeSet<String>(in.heapMap.get(heapRef)));
             }
         }
         // add gen points-to info
@@ -278,7 +312,7 @@ public class AnalysisTransformer extends BodyTransformer {
         for(int i=0;i<method.getParameterCount();i++){
             String stackParamName = "@parameter"+Integer.toString(i);
             String dummyObjName = "param_"+Integer.toString(i);
-            HashSet<String> pointees = new HashSet<>();
+            TreeSet<String> pointees = new TreeSet<>();
             pointees.add(dummyObjName);
             g.stackMap.put(stackParamName, pointees);
         }
@@ -288,7 +322,8 @@ public class AnalysisTransformer extends BodyTransformer {
     void print(String s) {
         System.out.println(s);
     }
-
+    static UnitComparator unitcomparator;
+    static HeapReferenceComparator hrcomp;
     @Override
     protected void internalTransform(Body body, String phaseName, Map<String, String> options) {
         // Construct CFG for the current method's body
@@ -313,9 +348,12 @@ public class AnalysisTransformer extends BodyTransformer {
             unitIndices.put(u, new Integer(index));
             index++;
         }
-        UnitComparator comparator = new UnitComparator(unitIndices);
-        SortedSet<Unit> workList = new TreeSet<Unit>(comparator);
+        unitcomparator = new UnitComparator(unitIndices);
+        hrcomp = new HeapReferenceComparator();
+
+        SortedSet<Unit> workList = new TreeSet<Unit>(unitcomparator);
         workList.add(units.getFirst());
+        System.exit(0);
         while (workList.size() > 0) {
             Unit u = workList.first();
             workList.remove(u);
