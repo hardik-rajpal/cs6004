@@ -26,93 +26,28 @@ public class Test extends java.lang.Object
 
     public static Node foo()
     {
-        java.io.InputStream $r0;
-        Node $r1, $r2, $r3, $r4, $r5, $r7, $r9, $r10;
-        int i0, $i1, i2;
-        java.io.IOException $r11;
-
-        i2 = 0;
-
-     label1:
-        $r0 = <java.lang.System: java.io.InputStream in>;
-
-        i2 = virtualinvoke $r0.<java.io.InputStream: int read()>();
-
-     label2:
-        goto label4;
-
-     label3:
-        $r11 := @caughtexception;
-
-     label4:
-        $r1 = new Node;
-
-        specialinvoke $r1.<Node: void <init>()>();
-
-        $r2 = new Node;
-
-        specialinvoke $r2.<Node: void <init>()>();
-
-        $r1.<Node: Node f> = $r2;
-
-        $r4 = $r1.<Node: Node f>;
-
-        $r3 = new Node;
-
-        specialinvoke $r3.<Node: void <init>()>();
-
-        $r4.<Node: Node g> = $r3;
-
-        $r5 = new Node;
-
-        specialinvoke $r5.<Node: void <init>()>();
-
-        $r7 = new Node;
-
-        specialinvoke $r7.<Node: void <init>()>();
-
-        $r5.<Node: Node f> = $r7;
-
-        i0 = i2 + 2;
-
-        $i1 = i0 * i0;
-
-        if i2 != $i1 goto label5;
-
-        $r10 = $r1.<Node: Node f>;
-
-        staticinvoke <Test: void bar(Node,Node)>($r10, $r5);
-
-     label5:
-        $r9 = $r5.<Node: Node f>;
-
-        return $r9;
-
-        catch java.io.IOException from label1 to label2 with label3;
-    }
-
-    public static void bar(Node, Node)
-    {
-        Node $r0, $r2, r3, $r4, r5;
-
-        r5 := @parameter0: Node;
-
-        r3 := @parameter1: Node;
+        Node $r0, $r1, $r3, r4;
 
         $r0 = new Node;
 
         specialinvoke $r0.<Node: void <init>()>();
 
-        $r2 = new Node;
+        r4 = $r0;
 
-        specialinvoke $r2.<Node: void <init>()>();
+        $r1 = new Node;
 
-        $r0.<Node: Node f> = $r2;
+        specialinvoke $r1.<Node: void <init>()>();
 
-        $r4 = $r0.<Node: Node f>;
+     label1:
+        if $r1 != r4 goto label2;
 
-        r3.<Node: Node f> = $r4;
+        r4 = r4.<Node: Node f>;
 
-        return;
+        goto label1;
+
+     label2:
+        $r3 = $r1.<Node: Node f>;
+
+        return $r3;
     }
 }

@@ -19,19 +19,25 @@ public class AnalysisTransformer extends BodyTransformer {
     class HeapReference {
         String object;
         String field;
-
+        boolean isDummy = false;
         HeapReference() {
             object = "";
             field = "";
         }
-
         @Override
         public boolean equals(Object o) {
             if (!(o instanceof HeapReference)) {
-                throw new RuntimeException("Bro why you comparing random objects?");
+                throw new RuntimeException("Bro why are you comparing random objects?");
             }
             HeapReference hr = (HeapReference) (o);
             return hr.field.equals(this.field) && (hr.object.equals(this.object));
+        }
+        @Override
+        public int hashCode() {
+            int s1,s2;
+            s1 = field.hashCode();
+            s2 = object.hashCode();
+            return s1|(s2<<1);
         }
     }
 
@@ -120,16 +126,19 @@ public class AnalysisTransformer extends BodyTransformer {
             if (merged.stackMap.containsKey(stackVarName)) {
                 merged.stackMap.get(stackVarName).addAll(pOut.stackMap.get(stackVarName));
             } else {
-                merged.stackMap.put(stackVarName, pOut.stackMap.get(stackVarName));
+                HashSet<String> pointees = new HashSet<>();
+                pointees.addAll(pOut.stackMap.get(stackVarName));
+                merged.stackMap.put(stackVarName, pointees);
             }
         }
         // combine all heapMap entries
         for (HeapReference heapRef : pOut.heapMap.keySet()) {
             if (merged.heapMap.containsKey(heapRef)) {
-                // TODO: check this.
                 merged.heapMap.get(heapRef).addAll(pOut.heapMap.get(heapRef));
             } else {
-                merged.heapMap.put(heapRef, pOut.heapMap.get(heapRef));
+                HashSet<String> pointees = new HashSet<>();
+                pointees.addAll(pOut.heapMap.get(heapRef));
+                merged.heapMap.put(heapRef, pointees);
             }
         }
     }
@@ -164,7 +173,9 @@ public class AnalysisTransformer extends BodyTransformer {
                         hr.field = field;
                         hr.object = s;
                         kgset.killHeap.add(hr);
-                        kgset.gen.heapMap.put(hr, newPointees);
+                        if(newPointees.size()>0){
+                            kgset.gen.heapMap.put(hr, newPointees);
+                        }
                     }
                 } else {
                     // weak update, always done.
@@ -172,7 +183,9 @@ public class AnalysisTransformer extends BodyTransformer {
                         HeapReference hr = new HeapReference();
                         hr.field = field;
                         hr.object = s;
-                        kgset.gen.heapMap.put(hr, newPointees);
+                        if(newPointees.size()>0){
+                            kgset.gen.heapMap.put(hr, newPointees);
+                        }
                     }
                 }
             } else {
@@ -182,7 +195,9 @@ public class AnalysisTransformer extends BodyTransformer {
             String stackVarName = lhs.toString();
             // unconditional kill:
             kgset.killStack.add(stackVarName);
-            kgset.gen.stackMap.put(stackVarName, newPointees);
+            if(newPointees.size()>0){
+                kgset.gen.stackMap.put(stackVarName, newPointees);
+            }
         }
     }
 
@@ -214,9 +229,12 @@ public class AnalysisTransformer extends BodyTransformer {
                         if (in.heapMap.containsKey(hr)) {
                             newPointees.addAll(in.heapMap.get(hr));
                         } else {
-                            // TODO: What
                             // may happen because dummy objects.
-                            // or, uninitialized objects.
+                            //assume null check analysis has been done.
+                            //=>no null objects are used.
+                            //=>must be dummy object (params)
+                            //regardless, gen is phi.
+                            // newpointees.add(phi).
                         }
                     }
                 } else {
@@ -229,7 +247,7 @@ public class AnalysisTransformer extends BodyTransformer {
                         newPointees.addAll(in.stackMap.get(varName));
                     }
                 } else {
-                    // TODO: What to do for calls?
+                    // ignoring calls
                 }
             }
         }
@@ -257,7 +275,13 @@ public class AnalysisTransformer extends BodyTransformer {
 
     PointsToGraph getDummyPointsToGraph(SootMethod method) {
         PointsToGraph g = new PointsToGraph();
-        // TODO: implement
+        for(int i=0;i<method.getParameterCount();i++){
+            String stackParamName = "@parameter"+Integer.toString(i);
+            String dummyObjName = "param_"+Integer.toString(i);
+            HashSet<String> pointees = new HashSet<>();
+            pointees.add(dummyObjName);
+            g.stackMap.put(stackParamName, pointees);
+        }
         return g;
     }
 
