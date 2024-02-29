@@ -1,1 +1,357 @@
-Soot started on Wed Feb 28 20:06:49 IST 2024
+Soot started on Thu Feb 29 11:12:42 IST 2024
+Unit: "r0 := @this: Test"{
+	In: 
+	{
+		stack{
+Unit: "r0 := @this: Node"{
+		}
+		heap{
+		}
+	}
+	Out: 
+	In: 
+	{
+		stack{
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+		}
+		heap{
+		}
+	}
+	{
+		stack{
+		}
+		heap{
+		}
+	}
+}
+}
+Unit: "specialinvoke r0.<java.lang.Object: void <init>()>()"{
+	In: 
+	{
+		stack{
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+		}
+		heap{
+		}
+	}
+}
+Unit: "return"{
+	In: 
+	{
+		stack{
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+		}
+		heap{
+		}
+	}
+}
+Unit: "specialinvoke r0.<java.lang.Object: void <init>()>()"{
+	In: 
+	{
+		stack{
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+		}
+		heap{
+		}
+	}
+}
+Unit: "return"{
+	In: 
+	{
+		stack{
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+		}
+		heap{
+		}
+	}
+}
+Unit: "r1 := @parameter0: java.lang.String[]"{
+	In: 
+	{
+		stack{
+			@parameter0->[ param_0, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			@parameter0->[ param_0, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "staticinvoke <Test: Node foo()>()"{
+	In: 
+	{
+		stack{
+			@parameter0->[ param_0, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			@parameter0->[ param_0, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "return"{
+	In: 
+	{
+		stack{
+			@parameter0->[ param_0, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			@parameter0->[ param_0, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "$r0 = new Node"{
+	In: 
+	{
+		stack{
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_15, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "specialinvoke $r0.<Node: void <init>()>()"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_15, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_15, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "r4 = $r0"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_15, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_15, ]
+			r4->[ Obj_15, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "$r1 = new Node"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_15, ]
+			r4->[ Obj_15, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_15, ]
+			$r1->[ Obj_16, ]
+			r4->[ Obj_15, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "specialinvoke $r1.<Node: void <init>()>()"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_15, ]
+			$r1->[ Obj_16, ]
+			r4->[ Obj_15, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_15, ]
+			$r1->[ Obj_16, ]
+			r4->[ Obj_15, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "if $r1 != r4 goto $r3 = $r1.<Node: Node f>"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_15, ]
+			$r1->[ Obj_16, ]
+			r4->[ Obj_15, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_15, ]
+			$r1->[ Obj_16, ]
+			r4->[ Obj_15, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "r4 = r4.<Node: Node f>"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_15, ]
+			$r1->[ Obj_16, ]
+			r4->[ Obj_15, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_15, ]
+			$r1->[ Obj_16, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "goto [?= (branch)]"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_15, ]
+			$r1->[ Obj_16, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_15, ]
+			$r1->[ Obj_16, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "$r3 = $r1.<Node: Node f>"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_15, ]
+			$r1->[ Obj_16, ]
+			r4->[ Obj_15, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_15, ]
+			$r1->[ Obj_16, ]
+			r4->[ Obj_15, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "return $r3"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_15, ]
+			$r1->[ Obj_16, ]
+			r4->[ Obj_15, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_15, ]
+			$r1->[ Obj_16, ]
+			r4->[ Obj_15, ]
+		}
+		heap{
+		}
+	}
+}
+Soot finished on Thu Feb 29 11:12:43 IST 2024
+Soot has run for 0 min. 0 sec.

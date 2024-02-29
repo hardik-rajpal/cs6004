@@ -44,10 +44,10 @@ public class AnalysisTransformer extends BodyTransformer {
     class PointsToGraph {
         TreeMap<String, TreeSet<String>> stackMap;
         TreeMap<HeapReference, TreeSet<String>> heapMap;
-
         PointsToGraph() {
+            // hrcomp 
             stackMap = new TreeMap<String, TreeSet<String>>();
-            heapMap = new TreeMap<HeapReference, TreeSet<String>>(hrcomp);
+            heapMap = new TreeMap<HeapReference, TreeSet<String>>(new HeapReferenceComparator());
         }
         @Override
         public int hashCode() {
@@ -124,12 +124,10 @@ public class AnalysisTransformer extends BodyTransformer {
 
         @Override
         public int compare(Unit e1, Unit e2) {
-            if (this.units.get(e1) < (this.units.get(e2))) {
-                return -1;
-            } else if (this.units.get(e1) > (this.units.get(e2))) {
-                return 1;
-            }
-            return 0;
+            Integer i1,i2;
+            i1 = this.units.get(e1);
+            i2 = this.units.get(e2);
+            return i1.compareTo(i2);
         }
     }
 
@@ -180,7 +178,7 @@ public class AnalysisTransformer extends BodyTransformer {
     KillGenSets getKillGenSets(PointsToGraph in, Unit u) {
         KillGenSets kgset = new KillGenSets();
         kgset.gen = new PointsToGraph();
-        kgset.killHeap = new TreeSet<HeapReference>(hrcomp);
+        kgset.killHeap = new TreeSet<HeapReference>(new HeapReferenceComparator());
         kgset.killStack = new TreeSet<String>();
         if (u instanceof JAssignStmt) {
             JAssignStmt stmt = (JAssignStmt) u;
@@ -322,14 +320,12 @@ public class AnalysisTransformer extends BodyTransformer {
     void print(String s) {
         System.out.println(s);
     }
-    static UnitComparator unitcomparator;
-    static HeapReferenceComparator hrcomp;
     @Override
     protected void internalTransform(Body body, String phaseName, Map<String, String> options) {
         // Construct CFG for the current method's body
         PatchingChain<Unit> units = body.getUnits();
         ExceptionalUnitGraph graph = new ExceptionalUnitGraph(body);
-
+        
         // String methodName = body.getMethod().getName();
         // Iterate over each unit of CFG.
         // Shown how to get the line numbers if the unit is a "new" Statement.
@@ -339,6 +335,7 @@ public class AnalysisTransformer extends BodyTransformer {
          */
         HashMap<Unit, NodePointsToData> pointsToInfo = new HashMap<Unit, NodePointsToData>();
         HashMap<Unit, Integer> unitIndices = new HashMap<Unit, Integer>();
+        //within a method, assume a unit is uniquely identified by its string.
         int index = 0;
         for (Unit u : units) {
             NodePointsToData ptd = new NodePointsToData();
@@ -348,19 +345,19 @@ public class AnalysisTransformer extends BodyTransformer {
             unitIndices.put(u, new Integer(index));
             index++;
         }
+        UnitComparator unitcomparator;
         unitcomparator = new UnitComparator(unitIndices);
-        hrcomp = new HeapReferenceComparator();
-
+        
         SortedSet<Unit> workList = new TreeSet<Unit>(unitcomparator);
-        workList.add(units.getFirst());
-        System.exit(0);
+        Unit first = units.getFirst();
+        workList.add(first);
         while (workList.size() > 0) {
             Unit u = workList.first();
             workList.remove(u);
             PointsToGraph newIn = new PointsToGraph();
             PointsToGraph newOut = new PointsToGraph();
             // process u:
-            if (u == units.getFirst()) {
+            if (u == first) {
                 newIn = getDummyPointsToGraph(body.getMethod());
             } else {
                 newIn = mergePredecessorData(graph.getPredsOf(u), pointsToInfo);
