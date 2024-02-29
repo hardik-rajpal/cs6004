@@ -1,8 +1,19 @@
-Soot started on Thu Feb 29 11:40:48 IST 2024
+Soot started on Thu Feb 29 12:02:20 IST 2024
+Unit: "r0 := @this: Node"{
+	In: 
 Unit: "r0 := @this: Test"{
 	In: 
 	{
 		stack{
+	{
+		stack{
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
 		}
 		heap{
 		}
@@ -16,15 +27,29 @@ Unit: "r0 := @this: Test"{
 		}
 	}
 }
-Unit: "r0 := @this: Node"{
+			r0->[ ]
+Unit: "specialinvoke r0.<java.lang.Object: void <init>()>()"{
+		}
+		heap{
+		}
+	}
+}
 	In: 
-	{
-		stack{
 Unit: "specialinvoke r0.<java.lang.Object: void <init>()>()"{
 	In: 
 	{
 		stack{
-			r0->[ ]
+	{
+		stack{
+			r0->[ 			r0->[ ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+]
 		}
 		heap{
 		}
@@ -33,6 +58,16 @@ Unit: "specialinvoke r0.<java.lang.Object: void <init>()>()"{
 	{
 		stack{
 			r0->[ ]
+			r0->[ ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "return"{
+	In: 
+	{
+		stack{
 		}
 		heap{
 		}
@@ -52,46 +87,11 @@ Unit: "return"{
 		stack{
 			r0->[ ]
 		}
-		heap{
+			r0->[ 		heap{
 		}
 	}
 }
-		}
-		heap{
-		}
-	}
-	Out: 
-	{
-		stack{
-			r0->[ ]
-		}
-		heap{
-		}
-	}
-}
-Unit: "specialinvoke r0.<java.lang.Object: void <init>()>()"{
-	In: 
-	{
-		stack{
-			r0->[ ]
-		}
-		heap{
-		}
-	}
-	Out: 
-	{
-		stack{
-			r0->[ ]
-		}
-		heap{
-		}
-	}
-}
-Unit: "return"{
-	In: 
-	{
-		stack{
-			r0->[ ]
+]
 		}
 		heap{
 		}
@@ -767,5 +767,5 @@ Unit: "return $r6"{
 		}
 	}
 }
-Soot finished on Thu Feb 29 11:40:51 IST 2024
-Soot has run for 0 min. 2 sec.
+Soot finished on Thu Feb 29 12:02:20 IST 2024
+Soot has run for 0 min. 0 sec.
