@@ -1,28 +1,15 @@
-Soot started on Thu Feb 29 11:12:42 IST 2024
+Soot started on Thu Feb 29 11:34:32 IST 2024
+Unit: "r0 := @this: Node"{
+	In: 
 Unit: "r0 := @this: Test"{
 	In: 
 	{
 		stack{
-Unit: "r0 := @this: Node"{
 		}
 		heap{
 		}
 	}
 	Out: 
-	In: 
-	{
-		stack{
-		}
-		heap{
-		}
-	}
-	Out: 
-	{
-		stack{
-		}
-		heap{
-		}
-	}
 	{
 		stack{
 		}
@@ -30,6 +17,51 @@ Unit: "r0 := @this: Node"{
 		}
 	}
 }
+	{
+		stack{
+Unit: "specialinvoke r0.<java.lang.Object: void <init>()>()"{
+	In: 
+	{
+		stack{
+		}
+		}
+		heap{
+		}
+	}
+	Out: 
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+		}
+		heap{
+		}
+	}
+}
+Unit: "return"{
+	In: 
+	{
+		stack{
+		}
+	{
+		stack{
+		}
+		heap{
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+		}
+		heap{
+		}
+	}
+}
+		}
+	}
 }
 Unit: "specialinvoke r0.<java.lang.Object: void <init>()>()"{
 	In: 
@@ -63,39 +95,9 @@ Unit: "return"{
 		}
 	}
 }
-Unit: "specialinvoke r0.<java.lang.Object: void <init>()>()"{
-	In: 
-	{
-		stack{
-		}
-		heap{
-		}
-	}
-	Out: 
-	{
-		stack{
-		}
-		heap{
-		}
-	}
-}
-Unit: "return"{
-	In: 
-	{
-		stack{
-		}
-		heap{
-		}
-	}
-	Out: 
-	{
-		stack{
-		}
-		heap{
-		}
-	}
-}
-Unit: "r1 := @parameter0: java.lang.String[]"{
+r3 := @parameter0: java.lang.String[]
+class soot.jimple.internal.JIdentityStmt
+Unit: "r3 := @parameter0: java.lang.String[]"{
 	In: 
 	{
 		stack{
@@ -108,42 +110,7 @@ Unit: "r1 := @parameter0: java.lang.String[]"{
 	{
 		stack{
 			@parameter0->[ param_0, ]
-		}
-		heap{
-		}
-	}
-}
-Unit: "staticinvoke <Test: Node foo()>()"{
-	In: 
-	{
-		stack{
-			@parameter0->[ param_0, ]
-		}
-		heap{
-		}
-	}
-	Out: 
-	{
-		stack{
-			@parameter0->[ param_0, ]
-		}
-		heap{
-		}
-	}
-}
-Unit: "return"{
-	In: 
-	{
-		stack{
-			@parameter0->[ param_0, ]
-		}
-		heap{
-		}
-	}
-	Out: 
-	{
-		stack{
-			@parameter0->[ param_0, ]
+			r3->[ param_0, ]
 		}
 		heap{
 		}
@@ -153,6 +120,196 @@ Unit: "$r0 = new Node"{
 	In: 
 	{
 		stack{
+			@parameter0->[ param_0, ]
+			r3->[ param_0, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_10, ]
+			@parameter0->[ param_0, ]
+			r3->[ param_0, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "specialinvoke $r0.<Node: void <init>()>()"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_10, ]
+			@parameter0->[ param_0, ]
+			r3->[ param_0, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_10, ]
+			@parameter0->[ param_0, ]
+			r3->[ param_0, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "$r1 = new Node"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_10, ]
+			@parameter0->[ param_0, ]
+			r3->[ param_0, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_10, ]
+			$r1->[ Obj_10, ]
+			@parameter0->[ param_0, ]
+			r3->[ param_0, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "specialinvoke $r1.<Node: void <init>()>()"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_10, ]
+			$r1->[ Obj_10, ]
+			@parameter0->[ param_0, ]
+			r3->[ param_0, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_10, ]
+			$r1->[ Obj_10, ]
+			@parameter0->[ param_0, ]
+			r3->[ param_0, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "staticinvoke <Test: Node foo(Node,Node)>($r0, $r1)"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_10, ]
+			$r1->[ Obj_10, ]
+			@parameter0->[ param_0, ]
+			r3->[ param_0, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_10, ]
+			$r1->[ Obj_10, ]
+			@parameter0->[ param_0, ]
+			r3->[ param_0, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "return"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_10, ]
+			$r1->[ Obj_10, ]
+			@parameter0->[ param_0, ]
+			r3->[ param_0, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_10, ]
+			$r1->[ Obj_10, ]
+			@parameter0->[ param_0, ]
+			r3->[ param_0, ]
+		}
+		heap{
+		}
+	}
+}
+r3 := @parameter0: Node
+class soot.jimple.internal.JIdentityStmt
+r4 := @parameter1: Node
+class soot.jimple.internal.JIdentityStmt
+Unit: "r3 := @parameter0: Node"{
+	In: 
+	{
+		stack{
+			@parameter0->[ param_0, ]
+			@parameter1->[ param_1, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			@parameter0->[ param_0, ]
+			@parameter1->[ param_1, ]
+			r3->[ param_0, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "r4 := @parameter1: Node"{
+	In: 
+	{
+		stack{
+			@parameter0->[ param_0, ]
+			@parameter1->[ param_1, ]
+			r3->[ param_0, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			@parameter0->[ param_0, ]
+			@parameter1->[ param_1, ]
+			r3->[ param_0, ]
+			r4->[ param_1, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "$r0 = new Node"{
+	In: 
+	{
+		stack{
+			@parameter0->[ param_0, ]
+			@parameter1->[ param_1, ]
+			r3->[ param_0, ]
+			r4->[ param_1, ]
 		}
 		heap{
 		}
@@ -161,6 +318,10 @@ Unit: "$r0 = new Node"{
 	{
 		stack{
 			$r0->[ Obj_15, ]
+			@parameter0->[ param_0, ]
+			@parameter1->[ param_1, ]
+			r3->[ param_0, ]
+			r4->[ param_1, ]
 		}
 		heap{
 		}
@@ -171,6 +332,10 @@ Unit: "specialinvoke $r0.<Node: void <init>()>()"{
 	{
 		stack{
 			$r0->[ Obj_15, ]
+			@parameter0->[ param_0, ]
+			@parameter1->[ param_1, ]
+			r3->[ param_0, ]
+			r4->[ param_1, ]
 		}
 		heap{
 		}
@@ -179,16 +344,24 @@ Unit: "specialinvoke $r0.<Node: void <init>()>()"{
 	{
 		stack{
 			$r0->[ Obj_15, ]
+			@parameter0->[ param_0, ]
+			@parameter1->[ param_1, ]
+			r3->[ param_0, ]
+			r4->[ param_1, ]
 		}
 		heap{
 		}
 	}
 }
-Unit: "r4 = $r0"{
+Unit: "r7 = $r0"{
 	In: 
 	{
 		stack{
 			$r0->[ Obj_15, ]
+			@parameter0->[ param_0, ]
+			@parameter1->[ param_1, ]
+			r3->[ param_0, ]
+			r4->[ param_1, ]
 		}
 		heap{
 		}
@@ -197,7 +370,11 @@ Unit: "r4 = $r0"{
 	{
 		stack{
 			$r0->[ Obj_15, ]
-			r4->[ Obj_15, ]
+			@parameter0->[ param_0, ]
+			@parameter1->[ param_1, ]
+			r3->[ param_0, ]
+			r4->[ param_1, ]
+			r7->[ Obj_15, ]
 		}
 		heap{
 		}
@@ -208,7 +385,11 @@ Unit: "$r1 = new Node"{
 	{
 		stack{
 			$r0->[ Obj_15, ]
-			r4->[ Obj_15, ]
+			@parameter0->[ param_0, ]
+			@parameter1->[ param_1, ]
+			r3->[ param_0, ]
+			r4->[ param_1, ]
+			r7->[ Obj_15, ]
 		}
 		heap{
 		}
@@ -218,7 +399,11 @@ Unit: "$r1 = new Node"{
 		stack{
 			$r0->[ Obj_15, ]
 			$r1->[ Obj_16, ]
-			r4->[ Obj_15, ]
+			@parameter0->[ param_0, ]
+			@parameter1->[ param_1, ]
+			r3->[ param_0, ]
+			r4->[ param_1, ]
+			r7->[ Obj_15, ]
 		}
 		heap{
 		}
@@ -230,7 +415,11 @@ Unit: "specialinvoke $r1.<Node: void <init>()>()"{
 		stack{
 			$r0->[ Obj_15, ]
 			$r1->[ Obj_16, ]
-			r4->[ Obj_15, ]
+			@parameter0->[ param_0, ]
+			@parameter1->[ param_1, ]
+			r3->[ param_0, ]
+			r4->[ param_1, ]
+			r7->[ Obj_15, ]
 		}
 		heap{
 		}
@@ -240,19 +429,27 @@ Unit: "specialinvoke $r1.<Node: void <init>()>()"{
 		stack{
 			$r0->[ Obj_15, ]
 			$r1->[ Obj_16, ]
-			r4->[ Obj_15, ]
+			@parameter0->[ param_0, ]
+			@parameter1->[ param_1, ]
+			r3->[ param_0, ]
+			r4->[ param_1, ]
+			r7->[ Obj_15, ]
 		}
 		heap{
 		}
 	}
 }
-Unit: "if $r1 != r4 goto $r3 = $r1.<Node: Node f>"{
+Unit: "$r0.<Node: Node f> = $r1"{
 	In: 
 	{
 		stack{
 			$r0->[ Obj_15, ]
 			$r1->[ Obj_16, ]
-			r4->[ Obj_15, ]
+			@parameter0->[ param_0, ]
+			@parameter1->[ param_1, ]
+			r3->[ param_0, ]
+			r4->[ param_1, ]
+			r7->[ Obj_15, ]
 		}
 		heap{
 		}
@@ -262,21 +459,31 @@ Unit: "if $r1 != r4 goto $r3 = $r1.<Node: Node f>"{
 		stack{
 			$r0->[ Obj_15, ]
 			$r1->[ Obj_16, ]
-			r4->[ Obj_15, ]
+			@parameter0->[ param_0, ]
+			@parameter1->[ param_1, ]
+			r3->[ param_0, ]
+			r4->[ param_1, ]
+			r7->[ Obj_15, ]
 		}
 		heap{
+			Obj_15.f->[ Obj_16, ]
 		}
 	}
 }
-Unit: "r4 = r4.<Node: Node f>"{
+Unit: "$r1.<Node: Node f> = r3"{
 	In: 
 	{
 		stack{
 			$r0->[ Obj_15, ]
 			$r1->[ Obj_16, ]
-			r4->[ Obj_15, ]
+			@parameter0->[ param_0, ]
+			@parameter1->[ param_1, ]
+			r3->[ param_0, ]
+			r4->[ param_1, ]
+			r7->[ Obj_15, ]
 		}
 		heap{
+			Obj_15.f->[ Obj_16, ]
 		}
 	}
 	Out: 
@@ -284,8 +491,145 @@ Unit: "r4 = r4.<Node: Node f>"{
 		stack{
 			$r0->[ Obj_15, ]
 			$r1->[ Obj_16, ]
+			@parameter0->[ param_0, ]
+			@parameter1->[ param_1, ]
+			r3->[ param_0, ]
+			r4->[ param_1, ]
+			r7->[ Obj_15, ]
 		}
 		heap{
+			Obj_15.f->[ Obj_16, ]
+			Obj_16.f->[ param_0, ]
+		}
+	}
+}
+Unit: "$r5 = r4.<Node: Node f>"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_15, ]
+			$r1->[ Obj_16, ]
+			@parameter0->[ param_0, ]
+			@parameter1->[ param_1, ]
+			r3->[ param_0, ]
+			r4->[ param_1, ]
+			r7->[ Obj_15, ]
+		}
+		heap{
+			Obj_15.f->[ Obj_16, ]
+			Obj_16.f->[ param_0, ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_15, ]
+			$r1->[ Obj_16, ]
+			@parameter0->[ param_0, ]
+			@parameter1->[ param_1, ]
+			r3->[ param_0, ]
+			r4->[ param_1, ]
+			r7->[ Obj_15, ]
+		}
+		heap{
+			Obj_15.f->[ Obj_16, ]
+			Obj_16.f->[ param_0, ]
+		}
+	}
+}
+Unit: "$r0.<Node: Node f> = $r5"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_15, ]
+			$r1->[ Obj_16, ]
+			@parameter0->[ param_0, ]
+			@parameter1->[ param_1, ]
+			r3->[ param_0, ]
+			r4->[ param_1, ]
+			r7->[ Obj_15, ]
+		}
+		heap{
+			Obj_15.f->[ Obj_16, ]
+			Obj_16.f->[ param_0, ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_15, ]
+			$r1->[ Obj_16, ]
+			@parameter0->[ param_0, ]
+			@parameter1->[ param_1, ]
+			r3->[ param_0, ]
+			r4->[ param_1, ]
+			r7->[ Obj_15, ]
+		}
+		heap{
+			Obj_16.f->[ param_0, ]
+		}
+	}
+}
+Unit: "if $r1 != r7 goto $r6 = $r1.<Node: Node f>"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_15, ]
+			$r1->[ Obj_16, ]
+			@parameter0->[ param_0, ]
+			@parameter1->[ param_1, ]
+			r3->[ param_0, ]
+			r4->[ param_1, ]
+			r7->[ Obj_15, ]
+		}
+		heap{
+			Obj_16.f->[ param_0, ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_15, ]
+			$r1->[ Obj_16, ]
+			@parameter0->[ param_0, ]
+			@parameter1->[ param_1, ]
+			r3->[ param_0, ]
+			r4->[ param_1, ]
+			r7->[ Obj_15, ]
+		}
+		heap{
+			Obj_16.f->[ param_0, ]
+		}
+	}
+}
+Unit: "r7 = r7.<Node: Node f>"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_15, ]
+			$r1->[ Obj_16, ]
+			@parameter0->[ param_0, ]
+			@parameter1->[ param_1, ]
+			r3->[ param_0, ]
+			r4->[ param_1, ]
+			r7->[ Obj_15, ]
+		}
+		heap{
+			Obj_16.f->[ param_0, ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_15, ]
+			$r1->[ Obj_16, ]
+			@parameter0->[ param_0, ]
+			@parameter1->[ param_1, ]
+			r3->[ param_0, ]
+			r4->[ param_1, ]
+		}
+		heap{
+			Obj_16.f->[ param_0, ]
 		}
 	}
 }
@@ -295,8 +639,13 @@ Unit: "goto [?= (branch)]"{
 		stack{
 			$r0->[ Obj_15, ]
 			$r1->[ Obj_16, ]
+			@parameter0->[ param_0, ]
+			@parameter1->[ param_1, ]
+			r3->[ param_0, ]
+			r4->[ param_1, ]
 		}
 		heap{
+			Obj_16.f->[ param_0, ]
 		}
 	}
 	Out: 
@@ -304,20 +653,30 @@ Unit: "goto [?= (branch)]"{
 		stack{
 			$r0->[ Obj_15, ]
 			$r1->[ Obj_16, ]
+			@parameter0->[ param_0, ]
+			@parameter1->[ param_1, ]
+			r3->[ param_0, ]
+			r4->[ param_1, ]
 		}
 		heap{
+			Obj_16.f->[ param_0, ]
 		}
 	}
 }
-Unit: "$r3 = $r1.<Node: Node f>"{
+Unit: "$r6 = $r1.<Node: Node f>"{
 	In: 
 	{
 		stack{
 			$r0->[ Obj_15, ]
 			$r1->[ Obj_16, ]
-			r4->[ Obj_15, ]
+			@parameter0->[ param_0, ]
+			@parameter1->[ param_1, ]
+			r3->[ param_0, ]
+			r4->[ param_1, ]
+			r7->[ Obj_15, ]
 		}
 		heap{
+			Obj_16.f->[ param_0, ]
 		}
 	}
 	Out: 
@@ -325,21 +684,33 @@ Unit: "$r3 = $r1.<Node: Node f>"{
 		stack{
 			$r0->[ Obj_15, ]
 			$r1->[ Obj_16, ]
-			r4->[ Obj_15, ]
+			$r6->[ param_0, ]
+			@parameter0->[ param_0, ]
+			@parameter1->[ param_1, ]
+			r3->[ param_0, ]
+			r4->[ param_1, ]
+			r7->[ Obj_15, ]
 		}
 		heap{
+			Obj_16.f->[ param_0, ]
 		}
 	}
 }
-Unit: "return $r3"{
+Unit: "return $r6"{
 	In: 
 	{
 		stack{
 			$r0->[ Obj_15, ]
 			$r1->[ Obj_16, ]
-			r4->[ Obj_15, ]
+			$r6->[ param_0, ]
+			@parameter0->[ param_0, ]
+			@parameter1->[ param_1, ]
+			r3->[ param_0, ]
+			r4->[ param_1, ]
+			r7->[ Obj_15, ]
 		}
 		heap{
+			Obj_16.f->[ param_0, ]
 		}
 	}
 	Out: 
@@ -347,11 +718,17 @@ Unit: "return $r3"{
 		stack{
 			$r0->[ Obj_15, ]
 			$r1->[ Obj_16, ]
-			r4->[ Obj_15, ]
+			$r6->[ param_0, ]
+			@parameter0->[ param_0, ]
+			@parameter1->[ param_1, ]
+			r3->[ param_0, ]
+			r4->[ param_1, ]
+			r7->[ Obj_15, ]
 		}
 		heap{
+			Obj_16.f->[ param_0, ]
 		}
 	}
 }
-Soot finished on Thu Feb 29 11:12:43 IST 2024
-Soot has run for 0 min. 0 sec.
+Soot finished on Thu Feb 29 11:34:34 IST 2024
+Soot has run for 0 min. 2 sec.

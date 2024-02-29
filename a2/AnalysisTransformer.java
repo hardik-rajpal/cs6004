@@ -1,9 +1,11 @@
 import java.util.*;
 
 import soot.*;
+import soot.jimple.internal.AbstractDefinitionStmt;
 // import soot.jimple.AnyNewExpr;
 import soot.jimple.internal.JAssignStmt;
 import soot.jimple.internal.JDynamicInvokeExpr;
+import soot.jimple.internal.JIdentityStmt;
 import soot.jimple.internal.JInstanceFieldRef;
 import soot.jimple.internal.JInterfaceInvokeExpr;
 import soot.jimple.internal.JNewExpr;
@@ -180,8 +182,14 @@ public class AnalysisTransformer extends BodyTransformer {
         kgset.gen = new PointsToGraph();
         kgset.killHeap = new TreeSet<HeapReference>(new HeapReferenceComparator());
         kgset.killStack = new TreeSet<String>();
-        if (u instanceof JAssignStmt) {
-            JAssignStmt stmt = (JAssignStmt) u;
+        String unitstr  = u.toString();
+        if(unitstr.contains("parameter")){
+            System.out.println(unitstr);
+            System.out.println(u.getClass());
+        }
+        AbstractDefinitionStmt stmt;
+        if (u instanceof JAssignStmt || u instanceof JIdentityStmt) {
+            stmt = (AbstractDefinitionStmt) u;
             Value rhs = stmt.getRightOp();
             Value lhs = stmt.getLeftOp();
             TreeSet<String> newPointees = getNewPointees(in, u, rhs);
@@ -275,6 +283,9 @@ public class AnalysisTransformer extends BodyTransformer {
             } else {
                 if (!(isInvokeExpression(rhs))) {
                     String varName = rhs.toString();
+                    if(varName.contains(":") && varName.contains("parameter")){
+                        varName = varName.split(":")[0];
+                    }
                     if (in.stackMap.containsKey(varName)) {
                         newPointees.addAll(in.stackMap.get(varName));
                     }
