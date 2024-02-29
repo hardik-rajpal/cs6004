@@ -324,20 +324,14 @@ public class MyVeryOwnPointsToAnalysis {
     }
     public TreeMap<Unit, NodePointsToData> getPointsToInfo(Body body, String phaseName, Map<String, String> options){
         PatchingChain<Unit> units = body.getUnits();
+        // Construct CFG for the current method's body
+
         ExceptionalUnitGraph graph = new ExceptionalUnitGraph(body);
         
-        // String methodName = body.getMethod().getName();
-        // Iterate over each unit of CFG.
-        // Shown how to get the line numbers if the unit is a "new" Statement.
-        /*
-         * Steps: 1. PTG for stack,heap. 2. Escape analysis using PTG 3. Print escaping
-         * objects.
-         */
         HashMap<Unit, Integer> unitIndices = new HashMap<Unit, Integer>();
         UnitComparator unitcomparator;
         unitcomparator = new UnitComparator(unitIndices);
         TreeMap<Unit, NodePointsToData> pointsToInfo = new TreeMap<Unit, NodePointsToData>(unitcomparator);
-        //within a method, assume a unit is uniquely identified by its string.
         int index = 0;
         for (Unit u : units) {
             unitIndices.put(u, new Integer(index));
@@ -347,7 +341,6 @@ public class MyVeryOwnPointsToAnalysis {
             pointsToInfo.put(u, ptd);
             index++;
         }
-        
         SortedSet<Unit> workList = new TreeSet<Unit>(unitcomparator);
         Unit first = units.getFirst();
         workList.add(first);
