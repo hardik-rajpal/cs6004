@@ -213,9 +213,7 @@ public class AnalysisTransformer extends BodyTransformer {
                         hr.field = field;
                         hr.object = s;
                         kgset.killHeap.add(hr);
-                        if(newPointees.size()>0){
-                            kgset.gen.heapMap.put(hr, newPointees);
-                        }
+                        kgset.gen.heapMap.put(hr, newPointees);
                     }
                 } else {
                     // weak update, always done.
@@ -223,21 +221,17 @@ public class AnalysisTransformer extends BodyTransformer {
                         HeapReference hr = new HeapReference();
                         hr.field = field;
                         hr.object = s;
-                        if(newPointees.size()>0){
-                            kgset.gen.heapMap.put(hr, newPointees);
-                        }
+                        kgset.gen.heapMap.put(hr, newPointees);
                     }
                 }
             } else {
-                // TODO: throw
+                
             }
         } else {
             String stackVarName = lhs.toString();
             // unconditional kill:
             kgset.killStack.add(stackVarName);
-            if(newPointees.size()>0){
-                kgset.gen.stackMap.put(stackVarName, newPointees);
-            }
+            kgset.gen.stackMap.put(stackVarName, newPointees);
         }
     }
 

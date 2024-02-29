@@ -1,6 +1,4 @@
-Soot started on Thu Feb 29 11:34:32 IST 2024
-Unit: "r0 := @this: Node"{
-	In: 
+Soot started on Thu Feb 29 11:40:48 IST 2024
 Unit: "r0 := @this: Test"{
 	In: 
 	{
@@ -12,29 +10,29 @@ Unit: "r0 := @this: Test"{
 	Out: 
 	{
 		stack{
+			r0->[ ]
 		}
 		heap{
 		}
 	}
 }
+Unit: "r0 := @this: Node"{
+	In: 
 	{
 		stack{
 Unit: "specialinvoke r0.<java.lang.Object: void <init>()>()"{
 	In: 
 	{
 		stack{
+			r0->[ ]
 		}
-		}
-		heap{
-		}
-	}
-	Out: 
 		heap{
 		}
 	}
 	Out: 
 	{
 		stack{
+			r0->[ ]
 		}
 		heap{
 		}
@@ -44,22 +42,30 @@ Unit: "return"{
 	In: 
 	{
 		stack{
+			r0->[ ]
 		}
-	{
-		stack{
-		}
-		heap{
 		heap{
 		}
 	}
 	Out: 
 	{
 		stack{
+			r0->[ ]
 		}
 		heap{
 		}
 	}
 }
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			r0->[ ]
+		}
+		heap{
 		}
 	}
 }
@@ -67,6 +73,7 @@ Unit: "specialinvoke r0.<java.lang.Object: void <init>()>()"{
 	In: 
 	{
 		stack{
+			r0->[ ]
 		}
 		heap{
 		}
@@ -74,6 +81,7 @@ Unit: "specialinvoke r0.<java.lang.Object: void <init>()>()"{
 	Out: 
 	{
 		stack{
+			r0->[ ]
 		}
 		heap{
 		}
@@ -83,6 +91,7 @@ Unit: "return"{
 	In: 
 	{
 		stack{
+			r0->[ ]
 		}
 		heap{
 		}
@@ -90,6 +99,7 @@ Unit: "return"{
 	Out: 
 	{
 		stack{
+			r0->[ ]
 		}
 		heap{
 		}
@@ -525,6 +535,7 @@ Unit: "$r5 = r4.<Node: Node f>"{
 		stack{
 			$r0->[ Obj_15, ]
 			$r1->[ Obj_16, ]
+			$r5->[ ]
 			@parameter0->[ param_0, ]
 			@parameter1->[ param_1, ]
 			r3->[ param_0, ]
@@ -543,6 +554,7 @@ Unit: "$r0.<Node: Node f> = $r5"{
 		stack{
 			$r0->[ Obj_15, ]
 			$r1->[ Obj_16, ]
+			$r5->[ ]
 			@parameter0->[ param_0, ]
 			@parameter1->[ param_1, ]
 			r3->[ param_0, ]
@@ -559,6 +571,7 @@ Unit: "$r0.<Node: Node f> = $r5"{
 		stack{
 			$r0->[ Obj_15, ]
 			$r1->[ Obj_16, ]
+			$r5->[ ]
 			@parameter0->[ param_0, ]
 			@parameter1->[ param_1, ]
 			r3->[ param_0, ]
@@ -566,6 +579,7 @@ Unit: "$r0.<Node: Node f> = $r5"{
 			r7->[ Obj_15, ]
 		}
 		heap{
+			Obj_15.f->[ ]
 			Obj_16.f->[ param_0, ]
 		}
 	}
@@ -576,6 +590,7 @@ Unit: "if $r1 != r7 goto $r6 = $r1.<Node: Node f>"{
 		stack{
 			$r0->[ Obj_15, ]
 			$r1->[ Obj_16, ]
+			$r5->[ ]
 			@parameter0->[ param_0, ]
 			@parameter1->[ param_1, ]
 			r3->[ param_0, ]
@@ -583,6 +598,7 @@ Unit: "if $r1 != r7 goto $r6 = $r1.<Node: Node f>"{
 			r7->[ Obj_15, ]
 		}
 		heap{
+			Obj_15.f->[ ]
 			Obj_16.f->[ param_0, ]
 		}
 	}
@@ -591,6 +607,7 @@ Unit: "if $r1 != r7 goto $r6 = $r1.<Node: Node f>"{
 		stack{
 			$r0->[ Obj_15, ]
 			$r1->[ Obj_16, ]
+			$r5->[ ]
 			@parameter0->[ param_0, ]
 			@parameter1->[ param_1, ]
 			r3->[ param_0, ]
@@ -598,6 +615,7 @@ Unit: "if $r1 != r7 goto $r6 = $r1.<Node: Node f>"{
 			r7->[ Obj_15, ]
 		}
 		heap{
+			Obj_15.f->[ ]
 			Obj_16.f->[ param_0, ]
 		}
 	}
@@ -608,6 +626,7 @@ Unit: "r7 = r7.<Node: Node f>"{
 		stack{
 			$r0->[ Obj_15, ]
 			$r1->[ Obj_16, ]
+			$r5->[ ]
 			@parameter0->[ param_0, ]
 			@parameter1->[ param_1, ]
 			r3->[ param_0, ]
@@ -615,6 +634,7 @@ Unit: "r7 = r7.<Node: Node f>"{
 			r7->[ Obj_15, ]
 		}
 		heap{
+			Obj_15.f->[ ]
 			Obj_16.f->[ param_0, ]
 		}
 	}
@@ -623,12 +643,15 @@ Unit: "r7 = r7.<Node: Node f>"{
 		stack{
 			$r0->[ Obj_15, ]
 			$r1->[ Obj_16, ]
+			$r5->[ ]
 			@parameter0->[ param_0, ]
 			@parameter1->[ param_1, ]
 			r3->[ param_0, ]
 			r4->[ param_1, ]
+			r7->[ ]
 		}
 		heap{
+			Obj_15.f->[ ]
 			Obj_16.f->[ param_0, ]
 		}
 	}
@@ -639,12 +662,15 @@ Unit: "goto [?= (branch)]"{
 		stack{
 			$r0->[ Obj_15, ]
 			$r1->[ Obj_16, ]
+			$r5->[ ]
 			@parameter0->[ param_0, ]
 			@parameter1->[ param_1, ]
 			r3->[ param_0, ]
 			r4->[ param_1, ]
+			r7->[ ]
 		}
 		heap{
+			Obj_15.f->[ ]
 			Obj_16.f->[ param_0, ]
 		}
 	}
@@ -653,12 +679,15 @@ Unit: "goto [?= (branch)]"{
 		stack{
 			$r0->[ Obj_15, ]
 			$r1->[ Obj_16, ]
+			$r5->[ ]
 			@parameter0->[ param_0, ]
 			@parameter1->[ param_1, ]
 			r3->[ param_0, ]
 			r4->[ param_1, ]
+			r7->[ ]
 		}
 		heap{
+			Obj_15.f->[ ]
 			Obj_16.f->[ param_0, ]
 		}
 	}
@@ -669,6 +698,7 @@ Unit: "$r6 = $r1.<Node: Node f>"{
 		stack{
 			$r0->[ Obj_15, ]
 			$r1->[ Obj_16, ]
+			$r5->[ ]
 			@parameter0->[ param_0, ]
 			@parameter1->[ param_1, ]
 			r3->[ param_0, ]
@@ -676,6 +706,7 @@ Unit: "$r6 = $r1.<Node: Node f>"{
 			r7->[ Obj_15, ]
 		}
 		heap{
+			Obj_15.f->[ ]
 			Obj_16.f->[ param_0, ]
 		}
 	}
@@ -684,6 +715,7 @@ Unit: "$r6 = $r1.<Node: Node f>"{
 		stack{
 			$r0->[ Obj_15, ]
 			$r1->[ Obj_16, ]
+			$r5->[ ]
 			$r6->[ param_0, ]
 			@parameter0->[ param_0, ]
 			@parameter1->[ param_1, ]
@@ -692,6 +724,7 @@ Unit: "$r6 = $r1.<Node: Node f>"{
 			r7->[ Obj_15, ]
 		}
 		heap{
+			Obj_15.f->[ ]
 			Obj_16.f->[ param_0, ]
 		}
 	}
@@ -702,6 +735,7 @@ Unit: "return $r6"{
 		stack{
 			$r0->[ Obj_15, ]
 			$r1->[ Obj_16, ]
+			$r5->[ ]
 			$r6->[ param_0, ]
 			@parameter0->[ param_0, ]
 			@parameter1->[ param_1, ]
@@ -710,6 +744,7 @@ Unit: "return $r6"{
 			r7->[ Obj_15, ]
 		}
 		heap{
+			Obj_15.f->[ ]
 			Obj_16.f->[ param_0, ]
 		}
 	}
@@ -718,6 +753,7 @@ Unit: "return $r6"{
 		stack{
 			$r0->[ Obj_15, ]
 			$r1->[ Obj_16, ]
+			$r5->[ ]
 			$r6->[ param_0, ]
 			@parameter0->[ param_0, ]
 			@parameter1->[ param_1, ]
@@ -726,9 +762,10 @@ Unit: "return $r6"{
 			r7->[ Obj_15, ]
 		}
 		heap{
+			Obj_15.f->[ ]
 			Obj_16.f->[ param_0, ]
 		}
 	}
 }
-Soot finished on Thu Feb 29 11:34:34 IST 2024
+Soot finished on Thu Feb 29 11:40:51 IST 2024
 Soot has run for 0 min. 2 sec.
