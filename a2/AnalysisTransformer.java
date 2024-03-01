@@ -9,6 +9,7 @@ public class AnalysisTransformer extends BodyTransformer {
     protected void internalTransform(Body body, String phaseName, Map<String, String> options) {
         PTA pta = new PTA();
         //TODO: modify object naming to match assignment specs
+        //TODO: account for static field refs in PTA and EA properly.
         MyVeryOwnEscapeAnalysis ea = new MyVeryOwnEscapeAnalysis();
         TreeMap<Unit, PTA.NodePointsToData> pointsToInfo;
         //Step 1: ptg for stack and heap.
