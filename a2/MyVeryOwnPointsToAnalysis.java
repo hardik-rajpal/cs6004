@@ -1,14 +1,19 @@
 import java.util.*;
 
 import soot.*;
+import soot.jimple.ParameterRef;
+import soot.jimple.ThisRef;
 import soot.jimple.internal.AbstractDefinitionStmt;
+import soot.jimple.internal.JArrayRef;
 // import soot.jimple.AnyNewExpr;
 import soot.jimple.internal.JAssignStmt;
 import soot.jimple.internal.JDynamicInvokeExpr;
 import soot.jimple.internal.JIdentityStmt;
 import soot.jimple.internal.JInstanceFieldRef;
 import soot.jimple.internal.JInterfaceInvokeExpr;
+import soot.jimple.internal.JNewArrayExpr;
 import soot.jimple.internal.JNewExpr;
+import soot.jimple.internal.JNewMultiArrayExpr;
 import soot.jimple.internal.JSpecialInvokeExpr;
 import soot.jimple.internal.JStaticInvokeExpr;
 import soot.jimple.internal.JVirtualInvokeExpr;
@@ -205,13 +210,13 @@ public class MyVeryOwnPointsToAnalysis {
                 TreeSet<String> heapObjs = in.stackMap.get(base);
                 if (heapObjs.size() == 1) {
                     // strong update
-                    for (String s : heapObjs) {
-                        HeapReference hr = new HeapReference();
-                        hr.field = field;
-                        hr.object = s;
-                        kgset.killHeap.add(hr);
-                        kgset.gen.heapMap.put(hr, newPointees);
-                    }
+                    String s = heapObjs.first();
+                    HeapReference hr = new HeapReference();
+                    hr.field = field;
+                    hr.object = s;
+                    //strong update's kill.
+                    kgset.killHeap.add(hr);
+                    kgset.gen.heapMap.put(hr, newPointees);
                 } else {
                     // weak update, always done.
                     for (String s : heapObjs) {
@@ -224,7 +229,26 @@ public class MyVeryOwnPointsToAnalysis {
             } else {
                 
             }
-        } else {
+        }
+        else if(lhs instanceof JArrayRef){
+            JArrayRef arrayRef = (JArrayRef)(lhs);
+            String field = "[]";
+            String base = arrayRef.getBase().toString();
+            if(in.stackMap.containsKey(base)){
+                //only weak updates allowed on arrays.
+                TreeSet<String> heapObjs = in.stackMap.get(base);
+                for(String s:heapObjs){
+                    HeapReference hr = new HeapReference();
+                    hr.field = field;
+                    hr.object = s;
+                    kgset.gen.heapMap.put(hr, newPointees);
+                }
+            }
+            else{
+
+            }
+        } 
+        else {
             String stackVarName = lhs.toString();
             // unconditional kill:
             kgset.killStack.add(stackVarName);
@@ -244,45 +268,81 @@ public class MyVeryOwnPointsToAnalysis {
             // allocation site abstraction:
             String objectName = "Obj_" + Integer.toString(u.getJavaSourceStartLineNumber());
             newPointees.add(objectName);
-        } else {
-            // rhs.getType() instanceof soot.RefType
-            if (rhs instanceof JInstanceFieldRef) {
-                // new pointees only if reftype
-                JInstanceFieldRef fieldRef = (JInstanceFieldRef) (rhs);
-                String field = fieldRef.getField().getName();
-                String base = fieldRef.getBase().toString();
-                if (in.stackMap.containsKey(base)) {
-                    TreeSet<String> baseObjects = in.stackMap.get(base);
-                    for (String baseObject : baseObjects) {
-                        HeapReference hr = new HeapReference();
-                        hr.field = field;
-                        hr.object = baseObject;
-                        if (in.heapMap.containsKey(hr)) {
-                            newPointees.addAll(in.heapMap.get(hr));
-                        } else {
-                            // may happen because dummy objects.
-                            //assume null check analysis has been done.
-                            //=>no null objects are used.
-                            //=>must be dummy object (params)
-                            //regardless, gen is phi.
-                            // newpointees.add(phi).
-                        }
+        }else if(rhs instanceof JNewArrayExpr){
+            String objectName = "Arr_"+Integer.toString(u.getJavaSourceStartLineNumber());
+            newPointees.add(objectName);
+        }else if(rhs instanceof JNewMultiArrayExpr){
+            String objectName = "Arr_"+Integer.toString(u.getJavaSourceStartLineNumber());
+            newPointees.add(objectName);
+        } 
+        else if (rhs instanceof JInstanceFieldRef) {
+            // new pointees only if reftype
+            JInstanceFieldRef fieldRef = (JInstanceFieldRef) (rhs);
+            String field = fieldRef.getField().getName();
+            String base = fieldRef.getBase().toString();
+            if (in.stackMap.containsKey(base)) {
+                TreeSet<String> baseObjects = in.stackMap.get(base);
+                for (String baseObject : baseObjects) {
+                    HeapReference hr = new HeapReference();
+                    hr.field = field;
+                    hr.object = baseObject;
+                    if (in.heapMap.containsKey(hr)) {
+                        newPointees.addAll(in.heapMap.get(hr));
+                    } else {
+                        // may happen because dummy objects.
+                        //assume null check analysis has been done.
+                        //=>no null objects are used.
+                        //=>must be dummy object (params)
+                        //regardless, gen is phi.
+                        // newpointees.add(phi).
                     }
-                } else {
-                    // throw new RuntimeException(base+" not contained in in.stackMap!");
                 }
             } else {
-                if (!(isInvokeExpression(rhs))) {
-                    String varName = rhs.toString();
-                    if(varName.contains(":") && varName.contains("parameter")){
-                        varName = varName.split(":")[0];
+                // throw new RuntimeException(base+" not contained in in.stackMap!");
+            }
+        }else if(rhs instanceof JArrayRef){
+            JArrayRef arrayRef = (JArrayRef)(rhs);
+            String field = "[]";
+            String base = arrayRef.getBase().toString();
+            if (in.stackMap.containsKey(base)) {
+                TreeSet<String> baseObjects = in.stackMap.get(base);
+                for (String baseObject : baseObjects) {
+                    HeapReference hr = new HeapReference();
+                    hr.field = field;
+                    hr.object = baseObject;
+                    if (in.heapMap.containsKey(hr)) {
+                        newPointees.addAll(in.heapMap.get(hr));
+                    } else {
+                        // may happen because dummy objects.
+                        //assume null check analysis has been done.
+                        //=>no null objects are used.
+                        //=>must be dummy object (params)
+                        //regardless, gen is phi.
+                        // newpointees.add(phi).
                     }
-                    if (in.stackMap.containsKey(varName)) {
-                        newPointees.addAll(in.stackMap.get(varName));
-                    }
-                } else {
-                    // ignoring calls
                 }
+            } else {
+                // throw new RuntimeException(base+" not contained in in.stackMap!");
+            }
+        } 
+        else {
+            if (rhs instanceof Local) {
+                Local variable = (Local)(rhs);
+                String varName = variable.getName();
+                if (in.stackMap.containsKey(varName)) {
+                    newPointees.addAll(in.stackMap.get(varName));
+                }
+            } else if(rhs instanceof ParameterRef){
+                ParameterRef param = (ParameterRef)(rhs);
+                String varName = "@parameter"+Integer.toString(param.getIndex());
+                if (in.stackMap.containsKey(varName)) {
+                    newPointees.addAll(in.stackMap.get(varName));
+                }
+            } else if(rhs instanceof ThisRef){
+                //what?
+            }
+            else{
+                //function calls; ignored.
             }
         }
         return newPointees;

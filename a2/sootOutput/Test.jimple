@@ -15,60 +15,38 @@ public class Test extends java.lang.Object
 
     public static void main(java.lang.String[])
     {
-        Node $r0, $r1;
-        java.lang.String[] r3;
+        Node $r0;
+        java.lang.String[] r2;
 
-        r3 := @parameter0: java.lang.String[];
+        r2 := @parameter0: java.lang.String[];
 
         $r0 = new Node;
 
         specialinvoke $r0.<Node: void <init>()>();
 
-        $r1 = new Node;
-
-        specialinvoke $r1.<Node: void <init>()>();
-
-        staticinvoke <Test: Node foo(Node,Node)>($r0, $r1);
+        staticinvoke <Test: Node foo(Node)>($r0);
 
         return;
     }
 
-    public static Node foo(Node, Node)
+    public static Node foo(Node)
     {
-        Node $r0, $r1, r3, r4, $r5, $r6, r7;
+        Node $r0, $r2, r4;
 
-        r3 := @parameter0: Node;
-
-        r4 := @parameter1: Node;
+        r4 := @parameter0: Node;
 
         $r0 = new Node;
 
         specialinvoke $r0.<Node: void <init>()>();
 
-        r7 = $r0;
+        $r2 = new Node;
 
-        $r1 = new Node;
+        specialinvoke $r2.<Node: void <init>()>();
 
-        specialinvoke $r1.<Node: void <init>()>();
+        $r2.<Node: Node f> = $r0;
 
-        $r0.<Node: Node f> = $r1;
+        $r0.<Node: Node f> = $r0;
 
-        $r1.<Node: Node f> = r3;
-
-        $r5 = r4.<Node: Node f>;
-
-        $r0.<Node: Node f> = $r5;
-
-     label1:
-        if $r1 != r7 goto label2;
-
-        r7 = r7.<Node: Node f>;
-
-        goto label1;
-
-     label2:
-        $r6 = $r1.<Node: Node f>;
-
-        return $r6;
+        return $r0;
     }
 }

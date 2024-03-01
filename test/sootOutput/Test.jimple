@@ -1,0 +1,40 @@
+public class Test extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        Test r0;
+
+        r0 := @this: Test;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static void main(java.lang.String[])
+    {
+        Test$Derived $r0, $r2;
+        java.lang.String[] r4;
+
+        r4 := @parameter0: java.lang.String[];
+
+        $r0 = new Test$Derived;
+
+        specialinvoke $r0.<Test$Derived: void <init>()>();
+
+        $r2 = new Test$Derived;
+
+        specialinvoke $r2.<Test$Derived: void <init>()>();
+
+        virtualinvoke $r0.<Test$Base: void overridden()>();
+
+        virtualinvoke $r2.<Test$Derived: void overridden()>();
+
+        staticinvoke <Test$Base: void overshadowed()>();
+
+        staticinvoke <Test$Derived: void overshadowed()>();
+
+        return;
+    }
+}
