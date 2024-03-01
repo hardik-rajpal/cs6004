@@ -29,11 +29,24 @@ public class Test extends java.lang.Object
         return;
     }
 
+    public static void bar(Node)
+    {
+        Node $r0, r1, r2;
+
+        r1 := @parameter0: Node;
+
+        $r0 = <Test: Node global>;
+
+        r2 = $r0.<Node: Node f>;
+
+        return;
+    }
+
     public static Node foo(Node)
     {
-        Node $r0, $r2, r4;
+        Node $r0, $r2, $r3, $r4, $r5, $r6, $r8, r9;
 
-        r4 := @parameter0: Node;
+        r9 := @parameter0: Node;
 
         $r0 = new Node;
 
@@ -43,10 +56,30 @@ public class Test extends java.lang.Object
 
         specialinvoke $r2.<Node: void <init>()>();
 
-        $r2.<Node: Node f> = $r0;
+        $r0.<Node: Node f> = $r2;
 
-        $r0.<Node: Node f> = $r0;
+        $r3 = new Node;
 
-        return $r0;
+        specialinvoke $r3.<Node: void <init>()>();
+
+        <Test: Node global> = $r3;
+
+        $r5 = <Test: Node global>;
+
+        $r4 = new Node;
+
+        specialinvoke $r4.<Node: void <init>()>();
+
+        $r5.<Node: Node f> = $r4;
+
+        $r6 = new Node;
+
+        specialinvoke $r6.<Node: void <init>()>();
+
+        staticinvoke <Test: void bar(Node)>($r6);
+
+        $r8 = $r0.<Node: Node f>;
+
+        return $r8;
     }
 }

@@ -1,8 +1,13 @@
 // import java.util.*;
 
 import soot.*;
+import soot.jimple.InvokeExpr;
+import soot.jimple.ParameterRef;
+import soot.jimple.StaticFieldRef;
+import soot.jimple.internal.JArrayRef;
 import soot.jimple.internal.JAssignStmt;
 import soot.jimple.internal.JDynamicInvokeExpr;
+import soot.jimple.internal.JInstanceFieldRef;
 import soot.jimple.internal.JInterfaceInvokeExpr;
 import soot.jimple.internal.JInvokeStmt;
 import soot.jimple.internal.JReturnStmt;
@@ -27,49 +32,163 @@ import java.util.*;
 
 
 public class MyVeryOwnEscapeAnalysis {
-    public void doEscapeAnalysis(Body body,TreeMap<Unit, MyVeryOwnPointsToAnalysis.NodePointsToData> pointsToInfo,MyVeryOwnPointsToAnalysis pta) {
+    PTA pta;
+    public TreeSet<String> doEscapeAnalysis(Body body, TreeMap<Unit, PTA.NodePointsToData> pointsToInfo, PTA _pta) {
+        pta = _pta;
         ExceptionalUnitGraph graph = new ExceptionalUnitGraph(body);
-        TreeMap<Unit,TreeSet<String>> escapingVariables = new TreeMap<>();
-        Unit[] units = (Unit[])pointsToInfo.keySet().toArray();
-        for(Unit u:units){
-            MyVeryOwnPointsToAnalysis.PointsToGraph goingIn = pointsToInfo.get(u).in;
-            escapingVariables.put(u, getEscapingVariables(u,pointsToInfo));
-            MyVeryOwnPointsToAnalysis.PointsToGraph allSuccPTGs = mergeAllSuccPTGs(u,pointsToInfo,graph);
+        // escaping variables per unit.
+        TreeSet<String> escapingVariables = new TreeSet<>();
+
+        for (Unit u : pointsToInfo.keySet()) {
+            TreeSet<String> escapingVars = processUnit(pointsToInfo, graph, u);
+            escapingVariables.addAll(escapingVars);
         }
+        return escapingVariables;
     }
 
-    private MyVeryOwnPointsToAnalysis.PointsToGraph mergeAllSuccPTGs(Unit u,
-            TreeMap<Unit, MyVeryOwnPointsToAnalysis.NodePointsToData> pointsToInfo, ExceptionalUnitGraph graph) {
-                MyVeryOwnPointsToAnalysis.PointsToGraph ans = new MyVeryOwnPointsToAnalysis.PointsToGraph();
-                int oldHashcode;
-                do{
-                    oldHashcode = ans.hashCode();
-                    //TODO:
-                }
-                while(oldHashcode!=ans.hashCode());
-                return ans;
-                
+    private TreeSet<String> processUnit(TreeMap<Unit, PTA.NodePointsToData> pointsToInfo, ExceptionalUnitGraph graph,
+            Unit u) {
+        TreeSet<String> escapingVariables = new TreeSet<>();
+        PTA.PointsToGraph goingIn = pointsToInfo.get(u).in;
+        // should be objects only.
+        // use the heapmap only to perform reachability checks.
+        TreeSet<String> baseEscapingObjects = getEscapingVariables(u, goingIn);
+        ArrayList<Unit> descendants = getDescendants(u, graph);
+        descendants.add(u);
+        PTA.PointsToGraph ptgAfter = PTA.mergeOutsOf(descendants, pointsToInfo);
+        TreeSet<String> reachableVars = new TreeSet<>();
+        // reachable right before escaping node.
+        reachableVars.addAll(getReachableVars(goingIn.heapMap,baseEscapingObjects));
+        // reachable any point after escaping node.
+        reachableVars.addAll(getReachableVars(ptgAfter.heapMap,baseEscapingObjects));
+
+        escapingVariables.addAll(reachableVars);
+        return escapingVariables;
     }
+    private void dfs2(String rv,TreeSet<String> reachableVars,TreeMap<PTA.HeapReference, TreeSet<String>> heapMap){
+        for(PTA.HeapReference hr:heapMap.keySet()){
+            if(hr.object.equals(rv)){
+                TreeSet<String> newRV = heapMap.get(hr);
+                for(String newrv:newRV){
+                    if(!reachableVars.contains(newrv)){
+                        reachableVars.add(newrv);
+                        dfs2(newrv, reachableVars, heapMap);
+                    }
+                }
+            }
+        }
+    }
+    private TreeSet<String> getReachableVars(TreeMap<PTA.HeapReference, TreeSet<String>> heapMap, TreeSet<String> baseEscapingObjects) {
+        //expects baseEscapingVariables to be on the heap.
+        TreeSet<String> reachableVars = new TreeSet<>(baseEscapingObjects);
+        for(String rv:reachableVars){
+            dfs2(rv,reachableVars,heapMap);
+        }
+        return reachableVars;
+    }
+
+    void dfs(Unit u, ExceptionalUnitGraph graph, TreeSet<Unit> descendants){
+        for(Unit desc:graph.getSuccsOf(u)){
+            if(!descendants.contains(desc)){
+                descendants.add(desc);
+                dfs(desc,graph,descendants);
+            }
+        }
+    }
+    private ArrayList<Unit> getDescendants(Unit u, ExceptionalUnitGraph graph) {
+        TreeSet<Unit> descendants = new TreeSet<>((Comparator<Unit>)(pta.unitcomparator));
+        dfs(u,graph,descendants);
+        return new ArrayList<Unit>(descendants);
+    }
+
     boolean isInvokeExpression(Value expression) {
         return expression instanceof JInterfaceInvokeExpr || expression instanceof JVirtualInvokeExpr
                 || expression instanceof JStaticInvokeExpr || expression instanceof JDynamicInvokeExpr
                 || expression instanceof JSpecialInvokeExpr;
     }
 
-    private TreeSet<String> getEscapingVariables(Unit u,
-            TreeMap<Unit, MyVeryOwnPointsToAnalysis.NodePointsToData> pointsToInfo) {
+    private TreeSet<String> getEscapingVariables(Unit u, PTA.PointsToGraph goingIn) {
         TreeSet<String> escapingVars = new TreeSet<>();
-        if(u instanceof JInvokeStmt){
-            //any object passed as a parameter to a function call.
-        }
-        else if(u instanceof JAssignStmt){
-            //assignment to parameter's fields. 
-            //assignment to global vars.
-        }
-        else if(u instanceof JReturnStmt){
-            //returning any local objects.
+        if (u instanceof JInvokeStmt) {
+            JInvokeStmt stmt = (JInvokeStmt)(u);
+            InvokeExpr expr = stmt.getInvokeExpr();
+            for(int i=0;i<expr.getArgCount();i++){
+                Local arg = (Local)expr.getArg(i);
+                //args are always locals.
+                addLocalToEscapingVars(goingIn, escapingVars, arg);
+            }
+            // any object passed as a parameter to a function call.
+        } else if (u instanceof JAssignStmt) {
+            // assignment to parameter's fields.
+            // assignment to global vars.
+            JAssignStmt stmt = ((JAssignStmt)u);
+            Value rhs,lhs;
+            lhs = stmt.getLeftOp();
+            rhs = stmt.getRightOp();
+            if(lhs instanceof StaticFieldRef){
+                //assignment to global vars
+                fillEscapingVarsFromExpression(goingIn, escapingVars, rhs, u);
+            }
+            else if(lhs instanceof JInstanceFieldRef){
+                //assignment to fields of globals or fields of params.
+                JInstanceFieldRef fref = (JInstanceFieldRef)(lhs);
+                Value base = fref.getBase();
+                if(base instanceof ParameterRef){
+                    fillEscapingVarsFromExpression(goingIn, escapingVars, rhs, u);
+                }
+            }
+            
+        } else if (u instanceof JReturnStmt) {
+            // returning any local objects.
+            JReturnStmt ret = (JReturnStmt)(u);
+            Local rhs = (Local)ret.getOp();
+            addLocalToEscapingVars(goingIn, escapingVars, rhs);
         }
         return escapingVars;
     }
-    
+
+    private void fillEscapingVarsFromExpression(PTA.PointsToGraph goingIn, TreeSet<String> escapingVars, Value expr, Unit u) {
+        if(expr instanceof Local){
+            addLocalToEscapingVars(goingIn, escapingVars, (Local)expr);
+        }
+        else if(expr instanceof JInstanceFieldRef){
+            JInstanceFieldRef fref = (JInstanceFieldRef)(expr);
+            String field = fref.getField().getName();
+            String varName = fref.getBase().toString();
+            if(goingIn.stackMap.containsKey(varName)){
+                TreeSet<String> pointees = goingIn.stackMap.get(varName);
+                for(String pointee:pointees){
+                    PTA.HeapReference hr = new PTA.HeapReference();
+                    hr.field = field;
+                    hr.object = pointee;
+                    if(goingIn.heapMap.containsKey(hr)){
+                        escapingVars.addAll(goingIn.heapMap.get(hr));
+                    }
+                }
+            }
+        }
+        else if(expr instanceof JArrayRef){
+            JArrayRef aref = (JArrayRef)(expr);
+            String field = "[]";
+            String varName = aref.getBase().toString();
+            if(goingIn.stackMap.containsKey(varName)){
+                TreeSet<String> pointees = goingIn.stackMap.get(varName);
+                for(String pointee:pointees){
+                    PTA.HeapReference hr = new PTA.HeapReference();
+                    hr.field = field;
+                    hr.object = pointee;
+                    if(goingIn.heapMap.containsKey(hr)){
+                        escapingVars.addAll(goingIn.heapMap.get(hr));
+                    }
+                }
+            }
+        }
+    }
+
+    private void addLocalToEscapingVars(PTA.PointsToGraph goingIn, TreeSet<String> escapingVars, Local expr) {
+        if(goingIn.stackMap.containsKey(expr.getName())){
+            escapingVars.addAll(goingIn.stackMap.get(expr.getName()));
+        }
+    }
+
 }

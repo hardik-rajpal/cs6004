@@ -7,15 +7,23 @@ public class AnalysisTransformer extends BodyTransformer {
     }
     @Override
     protected void internalTransform(Body body, String phaseName, Map<String, String> options) {
-        //TODO: handle arrays in PTA
-        MyVeryOwnPointsToAnalysis pta = new MyVeryOwnPointsToAnalysis();
+        PTA pta = new PTA();
+        //TODO: modify object naming to match assignment specs
         MyVeryOwnEscapeAnalysis ea = new MyVeryOwnEscapeAnalysis();
-        TreeMap<Unit, MyVeryOwnPointsToAnalysis.NodePointsToData> pointsToInfo;
+        TreeMap<Unit, PTA.NodePointsToData> pointsToInfo;
         //Step 1: ptg for stack and heap.
         pointsToInfo = pta.getPointsToInfo(body, phaseName, options);
         pta.printPointsToInfo(pointsToInfo);
         //Step 2: escape analysis using said ptg
-        ea.doEscapeAnalysis(body, pointsToInfo,pta);
+        TreeSet<String> fugitives = ea.doEscapeAnalysis(body, pointsToInfo,pta);
+        String methodName = body.getMethod().getName();
+        String enclosingClass = body.getMethod().getDeclaringClass().getName();
+        System.out.println("Escaping Info");
+        System.out.print(enclosingClass+":"+methodName+" ");
+        for(String fugitive:fugitives){
+            System.out.print(fugitive+" ");
+        }
+        System.out.print("\n");
         
     }
 }

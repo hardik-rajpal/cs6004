@@ -2,6 +2,7 @@ import java.util.*;
 
 import soot.*;
 import soot.jimple.ParameterRef;
+import soot.jimple.StaticFieldRef;
 import soot.jimple.ThisRef;
 import soot.jimple.internal.AbstractDefinitionStmt;
 import soot.jimple.internal.JArrayRef;
@@ -19,7 +20,7 @@ import soot.jimple.internal.JStaticInvokeExpr;
 import soot.jimple.internal.JVirtualInvokeExpr;
 import soot.toolkits.graph.ExceptionalUnitGraph;
 
-public class MyVeryOwnPointsToAnalysis {
+public class PTA {
     public  static class HeapReference {
         String object;
         String field;
@@ -146,7 +147,7 @@ public class MyVeryOwnPointsToAnalysis {
         }
     }
 
-    PointsToGraph mergePredecessorData(List<Unit> units, TreeMap<Unit, NodePointsToData> pointsToInfo) {
+    public static PointsToGraph mergeOutsOf(List<Unit> units, TreeMap<Unit, NodePointsToData> pointsToInfo) {
         PointsToGraph merged = new PointsToGraph();
         for (Unit unit : units) {
             // predecessor out
@@ -157,7 +158,7 @@ public class MyVeryOwnPointsToAnalysis {
         return merged;
     }
 
-    private void mergePointsToGraphs(PointsToGraph merged, PointsToGraph pOut) {
+    private static void mergePointsToGraphs(PointsToGraph merged, PointsToGraph pOut) {
         for (String stackVarName : pOut.stackMap.keySet()) {
             if (merged.stackMap.containsKey(stackVarName)) {
                 merged.stackMap.get(stackVarName).addAll(pOut.stackMap.get(stackVarName));
@@ -338,6 +339,13 @@ public class MyVeryOwnPointsToAnalysis {
                 if (in.stackMap.containsKey(varName)) {
                     newPointees.addAll(in.stackMap.get(varName));
                 }
+            } else if(rhs instanceof StaticFieldRef){
+                //TODO: store info about obj being global
+                // StaticFieldRef sfref = (StaticFieldRef)(rhs);
+                String varName = rhs.toString();
+                if(in.stackMap.containsKey(varName)){
+                    newPointees.addAll(in.stackMap.get(varName));
+                }
             } else if(rhs instanceof ThisRef){
                 //what?
             }
@@ -382,6 +390,7 @@ public class MyVeryOwnPointsToAnalysis {
     void print(String s) {
         System.out.println(s);
     }
+    UnitComparator unitcomparator;
     public TreeMap<Unit, NodePointsToData> getPointsToInfo(Body body, String phaseName, Map<String, String> options){
         PatchingChain<Unit> units = body.getUnits();
         // Construct CFG for the current method's body
@@ -389,7 +398,6 @@ public class MyVeryOwnPointsToAnalysis {
         ExceptionalUnitGraph graph = new ExceptionalUnitGraph(body);
         
         HashMap<Unit, Integer> unitIndices = new HashMap<Unit, Integer>();
-        UnitComparator unitcomparator;
         unitcomparator = new UnitComparator(unitIndices);
         TreeMap<Unit, NodePointsToData> pointsToInfo = new TreeMap<Unit, NodePointsToData>(unitcomparator);
         int index = 0;
@@ -411,9 +419,11 @@ public class MyVeryOwnPointsToAnalysis {
             PointsToGraph newOut = new PointsToGraph();
             // process u:
             if (u == first) {
+                //equality holds because no new unit objects are created.
+                //equality in value must imply equality in reference.
                 newIn = getDummyPointsToGraph(body.getMethod());
             } else {
-                newIn = mergePredecessorData(graph.getPredsOf(u), pointsToInfo);
+                newIn = mergeOutsOf(graph.getPredsOf(u), pointsToInfo);
             }
             newOut = flow(newIn, u);
             // assign new in.
