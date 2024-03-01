@@ -15,7 +15,7 @@ public class AnalysisTransformer extends BodyTransformer {
         pointsToInfo = pta.getPointsToInfo(body, phaseName, options);
         pta.printPointsToInfo(pointsToInfo);
         //Step 2: escape analysis using said ptg
-        // ea.doEscapeAnalysis(body, pointsToInfo);
+        ea.doEscapeAnalysis(body, pointsToInfo,pta);
         
     }
 }

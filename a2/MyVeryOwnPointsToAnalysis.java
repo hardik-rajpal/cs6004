@@ -20,7 +20,7 @@ import soot.jimple.internal.JVirtualInvokeExpr;
 import soot.toolkits.graph.ExceptionalUnitGraph;
 
 public class MyVeryOwnPointsToAnalysis {
-    class HeapReference {
+    public  static class HeapReference {
         String object;
         String field;
         boolean isDummy = false;
@@ -45,7 +45,7 @@ public class MyVeryOwnPointsToAnalysis {
         }
     }
 
-    class PointsToGraph {
+    public static class PointsToGraph {
         TreeMap<String, TreeSet<String>> stackMap;
         TreeMap<HeapReference, TreeSet<String>> heapMap;
         PointsToGraph() {
@@ -135,7 +135,7 @@ public class MyVeryOwnPointsToAnalysis {
         }
     }
 
-    class HeapReferenceComparator implements Comparator<HeapReference> {
+    public static class HeapReferenceComparator implements Comparator<HeapReference> {
 
         @Override
         public int compare(HeapReference e1, HeapReference e2) {
