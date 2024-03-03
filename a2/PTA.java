@@ -19,6 +19,7 @@ import soot.jimple.internal.JSpecialInvokeExpr;
 import soot.jimple.internal.JStaticInvokeExpr;
 import soot.jimple.internal.JVirtualInvokeExpr;
 import soot.toolkits.graph.ExceptionalUnitGraph;
+import soot.util.Chain;
 
 public class PTA {
     public  static class HeapReference {
@@ -250,6 +251,7 @@ public class PTA {
             }
         } 
         else {
+            //scalar? TODO: globals here what to do
             String stackVarName = lhs.toString();
             // unconditional kill:
             kgset.killStack.add(stackVarName);
@@ -375,14 +377,22 @@ public class PTA {
         return ans;
     }
 
-    PointsToGraph getDummyPointsToGraph(SootMethod method) {
+    PointsToGraph getDummyPointsToGraph(Body body) {
         PointsToGraph g = new PointsToGraph();
+        SootMethod method = body.getMethod();
+        //TODO: dummy objects for fields and params 
+        // heap objects should be identifiable
+        List<Local> locals = body.getParameterLocals();
         for(int i=0;i<method.getParameterCount();i++){
             String stackParamName = "@parameter"+Integer.toString(i);
             String dummyObjName = "param_"+Integer.toString(i);
             TreeSet<String> pointees = new TreeSet<>();
             pointees.add(dummyObjName);
             g.stackMap.put(stackParamName, pointees);
+        }
+        Chain<SootField> fields = method.getDeclaringClass().getFields();
+        for(SootField field:fields){
+            print(field.toString());
         }
         return g;
     }
@@ -421,7 +431,7 @@ public class PTA {
             if (u == first) {
                 //equality holds because no new unit objects are created.
                 //equality in value must imply equality in reference.
-                newIn = getDummyPointsToGraph(body.getMethod());
+                newIn = getDummyPointsToGraph(body);
             } else {
                 newIn = mergeOutsOf(graph.getPredsOf(u), pointsToInfo);
             }

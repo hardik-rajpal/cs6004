@@ -6,6 +6,7 @@ class Node {
 
 public class Test {
 	public static Node global;
+	public int x;
 	public static void main(String[] args) {
 		foo(new Node());
 	}
