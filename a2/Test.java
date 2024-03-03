@@ -6,7 +6,7 @@ class Node {
 
 public class Test {
 	public static Node global;
-	public int x;
+	public Node x;
 	public static void main(String[] args) {
 		foo(new Node());
 	}
@@ -14,12 +14,10 @@ public class Test {
 		y = global.f;
 	}
 	public static Node foo(Node p){
-		Node x = new Node();
-		x.f = new Node();
-		global = new Node();
-		global.f = new Node();
-		Node y = new Node();
-		bar(y);
-		return x.f;
+		Node x = new Node();//escapes
+		global.f = new Node();//escapes.
+		global = new Node();//escapes
+		global.f = new Node();//escapes.
+		return x;
 	}
 }

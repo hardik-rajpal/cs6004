@@ -53,6 +53,9 @@ public class MyVeryOwnEscapeAnalysis {
         // should be objects only.
         // use the heapmap only to perform reachability checks.
         TreeSet<String> baseEscapingObjects = getEscapingVariables(u, goingIn);
+        //all parameter dummies and globals escape.
+        baseEscapingObjects.addAll(pta.getDummyHeapObjects(goingIn));
+
         ArrayList<Unit> descendants = getDescendants(u, graph);
         descendants.add(u);
         PTA.PointsToGraph ptgAfter = PTA.mergeOutsOf(descendants, pointsToInfo);
@@ -63,6 +66,9 @@ public class MyVeryOwnEscapeAnalysis {
         reachableVars.addAll(getReachableVars(ptgAfter.heapMap,baseEscapingObjects));
 
         escapingVariables.addAll(reachableVars);
+
+        //remove all dummy objects:
+        escapingVariables.removeIf(s->{return s.contains("@");});
         return escapingVariables;
     }
     private void dfs2(String rv,TreeSet<String> reachableVars,TreeMap<PTA.HeapReference, TreeSet<String>> heapMap){
@@ -81,7 +87,8 @@ public class MyVeryOwnEscapeAnalysis {
     private TreeSet<String> getReachableVars(TreeMap<PTA.HeapReference, TreeSet<String>> heapMap, TreeSet<String> baseEscapingObjects) {
         //expects baseEscapingVariables to be on the heap.
         TreeSet<String> reachableVars = new TreeSet<>(baseEscapingObjects);
-        for(String rv:reachableVars){
+        
+        for(String rv:baseEscapingObjects){
             dfs2(rv,reachableVars,heapMap);
         }
         return reachableVars;

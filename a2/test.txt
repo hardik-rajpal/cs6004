@@ -1,5 +1,814 @@
-Soot started on Sun Mar 03 12:18:16 IST 2024
-<Test: Node global>
-<Test: int x>
-<Node: Node f>
-<Node: Node g>
+Soot started on Sun Mar 03 14:18:58 IST 2024
+Params for <init>:
+0
+Params for <init>:
+0
+Unit: "r0 := @this: Test"{
+	In: 
+Unit: "r0 := @this: Node"{
+	In: 
+	{
+		stack{
+	{
+		stack{
+			global->[ 			f->[ @field_global, @field_f, ]
+			g->[ @field_g, ]
+]
+			x->[ @field_x, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			global->[ @field_global, ]
+			x->[ @field_x, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "specialinvoke r0.<java.lang.Object: void <init>()>()"{
+	In: 
+	{
+		stack{
+			global->[ @field_global, ]
+			x->[ 		}
+		heap{
+		}
+	}
+	Out: 
+@field_x, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			global->[ 	{
+		stack{
+			f->[ @field_f, ]
+			g->[ @field_g, ]
+		}
+@field_global, ]
+			x->[ 		heap{
+		}
+	}
+}
+@field_x, ]
+		}
+		heap{
+		}
+	}
+Unit: "specialinvoke r0.<java.lang.Object: void <init>()>()"{
+	In: 
+	{
+		stack{
+			f->[ @field_f, ]
+			g->[ @field_g, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			f->[ @field_f, ]
+			g->[ @field_g, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "return"{
+	In: 
+	{
+		stack{
+}
+Unit: "return"{
+	In: 
+	{
+		stack{
+			global->[ 			f->[ @field_f, ]
+			g->[ @field_g, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			f->[ @field_f, ]
+			g->[ @field_global, ]
+			x->[ @field_g, ]
+		}
+		heap{
+		}
+	}
+}
+@field_x, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			global->[ @field_global, ]
+			x->[ @field_x, ]
+		}
+		heap{
+		}
+	}
+}
+Escaping Info
+Test:<init> 
+Escaping Info
+Node:<init> 
+Params for main:
+1
+r2 := @parameter0: java.lang.String[]
+class soot.jimple.internal.JIdentityStmt
+Unit: "r2 := @parameter0: java.lang.String[]"{
+	In: 
+	{
+		stack{
+			global->[ @field_global, ]
+			r2->[ @param0, ]
+			x->[ @field_x, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			global->[ @field_global, ]
+			r2->[ @param0, ]
+			x->[ @field_x, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "$r0 = new Node"{
+	In: 
+	{
+		stack{
+			global->[ @field_global, ]
+			r2->[ @param0, ]
+			x->[ @field_x, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_11, ]
+			global->[ @field_global, ]
+			r2->[ @param0, ]
+			x->[ @field_x, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "specialinvoke $r0.<Node: void <init>()>()"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_11, ]
+			global->[ @field_global, ]
+			r2->[ @param0, ]
+			x->[ @field_x, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_11, ]
+			global->[ @field_global, ]
+			r2->[ @param0, ]
+			x->[ @field_x, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "staticinvoke <Test: Node foo(Node)>($r0)"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_11, ]
+			global->[ @field_global, ]
+			r2->[ @param0, ]
+			x->[ @field_x, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_11, ]
+			global->[ @field_global, ]
+			r2->[ @param0, ]
+			x->[ @field_x, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "return"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_11, ]
+			global->[ @field_global, ]
+			r2->[ @param0, ]
+			x->[ @field_x, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_11, ]
+			global->[ @field_global, ]
+			r2->[ @param0, ]
+			x->[ @field_x, ]
+		}
+		heap{
+		}
+	}
+}
+Escaping Info
+Test:main Obj_11 
+Params for bar:
+1
+r1 := @parameter0: Node
+class soot.jimple.internal.JIdentityStmt
+Unit: "r1 := @parameter0: Node"{
+	In: 
+	{
+		stack{
+			global->[ @field_global, ]
+			r1->[ @param0, ]
+			x->[ @field_x, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			global->[ @field_global, ]
+			r1->[ @param0, ]
+			x->[ @field_x, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "$r0 = <Test: Node global>"{
+	In: 
+	{
+		stack{
+			global->[ @field_global, ]
+			r1->[ @param0, ]
+			x->[ @field_x, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ @field_global, ]
+			global->[ @field_global, ]
+			r1->[ @param0, ]
+			x->[ @field_x, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "r2 = $r0.<Node: Node f>"{
+	In: 
+	{
+		stack{
+			$r0->[ @field_global, ]
+			global->[ @field_global, ]
+			r1->[ @param0, ]
+			x->[ @field_x, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ @field_global, ]
+			global->[ @field_global, ]
+			r1->[ @param0, ]
+			r2->[ ]
+			x->[ @field_x, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "return"{
+	In: 
+	{
+		stack{
+			$r0->[ @field_global, ]
+			global->[ @field_global, ]
+			r1->[ @param0, ]
+			r2->[ ]
+			x->[ @field_x, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ @field_global, ]
+			global->[ @field_global, ]
+			r1->[ @param0, ]
+			r2->[ ]
+			x->[ @field_x, ]
+		}
+		heap{
+		}
+	}
+}
+Escaping Info
+Test:bar 
+Params for foo:
+1
+r7 := @parameter0: Node
+class soot.jimple.internal.JIdentityStmt
+Unit: "r7 := @parameter0: Node"{
+	In: 
+	{
+		stack{
+			global->[ @field_global, ]
+			r7->[ @param0, ]
+			x->[ @field_x, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			global->[ @field_global, ]
+			r7->[ @param0, ]
+			x->[ @field_x, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "$r0 = new Node"{
+	In: 
+	{
+		stack{
+			global->[ @field_global, ]
+			r7->[ @param0, ]
+			x->[ @field_x, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_17, ]
+			global->[ @field_global, ]
+			r7->[ @param0, ]
+			x->[ @field_x, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "specialinvoke $r0.<Node: void <init>()>()"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_17, ]
+			global->[ @field_global, ]
+			r7->[ @param0, ]
+			x->[ @field_x, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_17, ]
+			global->[ @field_global, ]
+			r7->[ @param0, ]
+			x->[ @field_x, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "$r3 = <Test: Node global>"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_17, ]
+			global->[ @field_global, ]
+			r7->[ @param0, ]
+			x->[ @field_x, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_17, ]
+			$r3->[ @field_global, ]
+			global->[ @field_global, ]
+			r7->[ @param0, ]
+			x->[ @field_x, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "$r2 = new Node"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_17, ]
+			$r3->[ @field_global, ]
+			global->[ @field_global, ]
+			r7->[ @param0, ]
+			x->[ @field_x, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_17, ]
+			$r2->[ Obj_18, ]
+			$r3->[ @field_global, ]
+			global->[ @field_global, ]
+			r7->[ @param0, ]
+			x->[ @field_x, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "specialinvoke $r2.<Node: void <init>()>()"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_17, ]
+			$r2->[ Obj_18, ]
+			$r3->[ @field_global, ]
+			global->[ @field_global, ]
+			r7->[ @param0, ]
+			x->[ @field_x, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_17, ]
+			$r2->[ Obj_18, ]
+			$r3->[ @field_global, ]
+			global->[ @field_global, ]
+			r7->[ @param0, ]
+			x->[ @field_x, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "$r3.<Node: Node f> = $r2"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_17, ]
+			$r2->[ Obj_18, ]
+			$r3->[ @field_global, ]
+			global->[ @field_global, ]
+			r7->[ @param0, ]
+			x->[ @field_x, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_17, ]
+			$r2->[ Obj_18, ]
+			$r3->[ @field_global, ]
+			global->[ @field_global, ]
+			r7->[ @param0, ]
+			x->[ @field_x, ]
+		}
+		heap{
+			@field_global.f->[ Obj_18, ]
+		}
+	}
+}
+Unit: "$r4 = new Node"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_17, ]
+			$r2->[ Obj_18, ]
+			$r3->[ @field_global, ]
+			global->[ @field_global, ]
+			r7->[ @param0, ]
+			x->[ @field_x, ]
+		}
+		heap{
+			@field_global.f->[ Obj_18, ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_17, ]
+			$r2->[ Obj_18, ]
+			$r3->[ @field_global, ]
+			$r4->[ Obj_19, ]
+			global->[ @field_global, ]
+			r7->[ @param0, ]
+			x->[ @field_x, ]
+		}
+		heap{
+			@field_global.f->[ Obj_18, ]
+		}
+	}
+}
+Unit: "specialinvoke $r4.<Node: void <init>()>()"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_17, ]
+			$r2->[ Obj_18, ]
+			$r3->[ @field_global, ]
+			$r4->[ Obj_19, ]
+			global->[ @field_global, ]
+			r7->[ @param0, ]
+			x->[ @field_x, ]
+		}
+		heap{
+			@field_global.f->[ Obj_18, ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_17, ]
+			$r2->[ Obj_18, ]
+			$r3->[ @field_global, ]
+			$r4->[ Obj_19, ]
+			global->[ @field_global, ]
+			r7->[ @param0, ]
+			x->[ @field_x, ]
+		}
+		heap{
+			@field_global.f->[ Obj_18, ]
+		}
+	}
+}
+Unit: "<Test: Node global> = $r4"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_17, ]
+			$r2->[ Obj_18, ]
+			$r3->[ @field_global, ]
+			$r4->[ Obj_19, ]
+			global->[ @field_global, ]
+			r7->[ @param0, ]
+			x->[ @field_x, ]
+		}
+		heap{
+			@field_global.f->[ Obj_18, ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_17, ]
+			$r2->[ Obj_18, ]
+			$r3->[ @field_global, ]
+			$r4->[ Obj_19, ]
+			global->[ Obj_19, ]
+			r7->[ @param0, ]
+			x->[ @field_x, ]
+		}
+		heap{
+			@field_global.f->[ Obj_18, ]
+		}
+	}
+}
+Unit: "$r6 = <Test: Node global>"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_17, ]
+			$r2->[ Obj_18, ]
+			$r3->[ @field_global, ]
+			$r4->[ Obj_19, ]
+			global->[ Obj_19, ]
+			r7->[ @param0, ]
+			x->[ @field_x, ]
+		}
+		heap{
+			@field_global.f->[ Obj_18, ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_17, ]
+			$r2->[ Obj_18, ]
+			$r3->[ @field_global, ]
+			$r4->[ Obj_19, ]
+			$r6->[ Obj_19, ]
+			global->[ Obj_19, ]
+			r7->[ @param0, ]
+			x->[ @field_x, ]
+		}
+		heap{
+			@field_global.f->[ Obj_18, ]
+		}
+	}
+}
+Unit: "$r5 = new Node"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_17, ]
+			$r2->[ Obj_18, ]
+			$r3->[ @field_global, ]
+			$r4->[ Obj_19, ]
+			$r6->[ Obj_19, ]
+			global->[ Obj_19, ]
+			r7->[ @param0, ]
+			x->[ @field_x, ]
+		}
+		heap{
+			@field_global.f->[ Obj_18, ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_17, ]
+			$r2->[ Obj_18, ]
+			$r3->[ @field_global, ]
+			$r4->[ Obj_19, ]
+			$r5->[ Obj_20, ]
+			$r6->[ Obj_19, ]
+			global->[ Obj_19, ]
+			r7->[ @param0, ]
+			x->[ @field_x, ]
+		}
+		heap{
+			@field_global.f->[ Obj_18, ]
+		}
+	}
+}
+Unit: "specialinvoke $r5.<Node: void <init>()>()"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_17, ]
+			$r2->[ Obj_18, ]
+			$r3->[ @field_global, ]
+			$r4->[ Obj_19, ]
+			$r5->[ Obj_20, ]
+			$r6->[ Obj_19, ]
+			global->[ Obj_19, ]
+			r7->[ @param0, ]
+			x->[ @field_x, ]
+		}
+		heap{
+			@field_global.f->[ Obj_18, ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_17, ]
+			$r2->[ Obj_18, ]
+			$r3->[ @field_global, ]
+			$r4->[ Obj_19, ]
+			$r5->[ Obj_20, ]
+			$r6->[ Obj_19, ]
+			global->[ Obj_19, ]
+			r7->[ @param0, ]
+			x->[ @field_x, ]
+		}
+		heap{
+			@field_global.f->[ Obj_18, ]
+		}
+	}
+}
+Unit: "$r6.<Node: Node f> = $r5"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_17, ]
+			$r2->[ Obj_18, ]
+			$r3->[ @field_global, ]
+			$r4->[ Obj_19, ]
+			$r5->[ Obj_20, ]
+			$r6->[ Obj_19, ]
+			global->[ Obj_19, ]
+			r7->[ @param0, ]
+			x->[ @field_x, ]
+		}
+		heap{
+			@field_global.f->[ Obj_18, ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_17, ]
+			$r2->[ Obj_18, ]
+			$r3->[ @field_global, ]
+			$r4->[ Obj_19, ]
+			$r5->[ Obj_20, ]
+			$r6->[ Obj_19, ]
+			global->[ Obj_19, ]
+			r7->[ @param0, ]
+			x->[ @field_x, ]
+		}
+		heap{
+			@field_global.f->[ Obj_18, ]
+			Obj_19.f->[ Obj_20, ]
+		}
+	}
+}
+Unit: "return $r0"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_17, ]
+			$r2->[ Obj_18, ]
+			$r3->[ @field_global, ]
+			$r4->[ Obj_19, ]
+			$r5->[ Obj_20, ]
+			$r6->[ Obj_19, ]
+			global->[ Obj_19, ]
+			r7->[ @param0, ]
+			x->[ @field_x, ]
+		}
+		heap{
+			@field_global.f->[ Obj_18, ]
+			Obj_19.f->[ Obj_20, ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_17, ]
+			$r2->[ Obj_18, ]
+			$r3->[ @field_global, ]
+			$r4->[ Obj_19, ]
+			$r5->[ Obj_20, ]
+			$r6->[ Obj_19, ]
+			global->[ Obj_19, ]
+			r7->[ @param0, ]
+			x->[ @field_x, ]
+		}
+		heap{
+			@field_global.f->[ Obj_18, ]
+			Obj_19.f->[ Obj_20, ]
+		}
+	}
+}
+Escaping Info
+Test:foo Obj_17 Obj_18 Obj_19 Obj_20 
+Soot finished on Sun Mar 03 14:19:00 IST 2024
+Soot has run for 0 min. 1 sec.

@@ -1,6 +1,20 @@
-import java.util.*;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
-import soot.*;
+import soot.Body;
+import soot.Local;
+import soot.PatchingChain;
+import soot.SootField;
+import soot.SootMethod;
+import soot.Unit;
+import soot.Value;
 import soot.jimple.ParameterRef;
 import soot.jimple.StaticFieldRef;
 import soot.jimple.ThisRef;
@@ -9,7 +23,6 @@ import soot.jimple.internal.JArrayRef;
 // import soot.jimple.AnyNewExpr;
 import soot.jimple.internal.JAssignStmt;
 import soot.jimple.internal.JDynamicInvokeExpr;
-import soot.jimple.internal.JIdentityStmt;
 import soot.jimple.internal.JInstanceFieldRef;
 import soot.jimple.internal.JInterfaceInvokeExpr;
 import soot.jimple.internal.JNewArrayExpr;
@@ -22,14 +35,16 @@ import soot.toolkits.graph.ExceptionalUnitGraph;
 import soot.util.Chain;
 
 public class PTA {
-    public  static class HeapReference {
+    public static class HeapReference {
         String object;
         String field;
         boolean isDummy = false;
+
         HeapReference() {
             object = "";
             field = "";
         }
+
         @Override
         public boolean equals(Object o) {
             if (!(o instanceof HeapReference)) {
@@ -38,47 +53,51 @@ public class PTA {
             HeapReference hr = (HeapReference) (o);
             return hr.field.equals(this.field) && (hr.object.equals(this.object));
         }
+
         @Override
         public int hashCode() {
-            int s1,s2;
+            int s1, s2;
             s1 = field.hashCode();
             s2 = object.hashCode();
-            return s1|(s2<<1);
+            return s1 | (s2 << 1);
         }
     }
 
     public static class PointsToGraph {
         TreeMap<String, TreeSet<String>> stackMap;
         TreeMap<HeapReference, TreeSet<String>> heapMap;
+
         PointsToGraph() {
-            // hrcomp 
+            // hrcomp
             stackMap = new TreeMap<String, TreeSet<String>>();
             heapMap = new TreeMap<HeapReference, TreeSet<String>>(new HeapReferenceComparator());
         }
+
         @Override
         public int hashCode() {
             int code = 0;
             String stackString = "";
-            for(String stackVar:stackMap.keySet()){
-                stackString+=stackVar;
-                stackString+="{";
-                for(String pointee:stackMap.get(stackVar)){
-                    stackString+=pointee+",";
+            for (String stackVar : stackMap.keySet()) {
+                stackString += stackVar;
+                stackString += "{";
+                for (String pointee : stackMap.get(stackVar)) {
+                    stackString += pointee + ",";
                 }
-                stackString+="}";
+                stackString += "}";
             }
             String heapString = "";
-            for(HeapReference heapVar:heapMap.keySet()){
-                heapString+=heapVar.object+"."+heapVar.field;
-                heapString+="{";
-                for(String pointee:heapMap.get(heapVar)){
-                    heapString+=pointee+",";
+            for (HeapReference heapVar : heapMap.keySet()) {
+                heapString += heapVar.object + "." + heapVar.field;
+                heapString += "{";
+                for (String pointee : heapMap.get(heapVar)) {
+                    heapString += pointee + ",";
                 }
-                heapString+="}";
+                heapString += "}";
             }
-            code = stackString.hashCode()|(heapString.hashCode()<<1);
+            code = stackString.hashCode() | (heapString.hashCode() << 1);
             return code;
         }
+
         void print(String s) {
             System.out.print(s);
         }
@@ -130,7 +149,7 @@ public class PTA {
 
         @Override
         public int compare(Unit e1, Unit e2) {
-            Integer i1,i2;
+            Integer i1, i2;
             i1 = this.units.get(e1);
             i2 = this.units.get(e2);
             return i1.compareTo(i2);
@@ -141,9 +160,9 @@ public class PTA {
 
         @Override
         public int compare(HeapReference e1, HeapReference e2) {
-            String s1,s2;
-            s1 = e1.object+"."+e1.field;
-            s2 = e2.object+"."+e2.field;
+            String s1, s2;
+            s1 = e1.object + "." + e1.field;
+            s2 = e2.object + "." + e2.field;
             return s1.compareTo(s2);
         }
     }
@@ -186,13 +205,16 @@ public class PTA {
         kgset.gen = new PointsToGraph();
         kgset.killHeap = new TreeSet<HeapReference>(new HeapReferenceComparator());
         kgset.killStack = new TreeSet<String>();
-        String unitstr  = u.toString();
-        if(unitstr.contains("parameter")){
+        String unitstr = u.toString();
+        if (unitstr.contains("parameter")) {
             System.out.println(unitstr);
             System.out.println(u.getClass());
         }
         AbstractDefinitionStmt stmt;
-        if (u instanceof JAssignStmt || u instanceof JIdentityStmt) {
+        // not accounting for JIdentityStmt
+        // as that's only used for parameter aliasing.
+        // That's handled by getDummyPointsToGraph
+        if (u instanceof JAssignStmt) {
             stmt = (AbstractDefinitionStmt) u;
             Value rhs = stmt.getRightOp();
             Value lhs = stmt.getLeftOp();
@@ -216,7 +238,7 @@ public class PTA {
                     HeapReference hr = new HeapReference();
                     hr.field = field;
                     hr.object = s;
-                    //strong update's kill.
+                    // strong update's kill.
                     kgset.killHeap.add(hr);
                     kgset.gen.heapMap.put(hr, newPointees);
                 } else {
@@ -229,33 +251,38 @@ public class PTA {
                     }
                 }
             } else {
-                
+
             }
-        }
-        else if(lhs instanceof JArrayRef){
-            JArrayRef arrayRef = (JArrayRef)(lhs);
+        } else if (lhs instanceof JArrayRef) {
+            JArrayRef arrayRef = (JArrayRef) (lhs);
             String field = "[]";
             String base = arrayRef.getBase().toString();
-            if(in.stackMap.containsKey(base)){
-                //only weak updates allowed on arrays.
+            if (in.stackMap.containsKey(base)) {
+                // only weak updates allowed on arrays.
                 TreeSet<String> heapObjs = in.stackMap.get(base);
-                for(String s:heapObjs){
+                for (String s : heapObjs) {
                     HeapReference hr = new HeapReference();
                     hr.field = field;
                     hr.object = s;
                     kgset.gen.heapMap.put(hr, newPointees);
                 }
-            }
-            else{
+            } else {
 
             }
-        } 
-        else {
-            //scalar? TODO: globals here what to do
-            String stackVarName = lhs.toString();
-            // unconditional kill:
-            kgset.killStack.add(stackVarName);
-            kgset.gen.stackMap.put(stackVarName, newPointees);
+        } else {
+            if(lhs instanceof StaticFieldRef){
+                StaticFieldRef sfref = (StaticFieldRef)(lhs);
+                String stackVarName = sfref.getField().getName();
+                // unconditional kill:
+                kgset.killStack.add(stackVarName);
+                kgset.gen.stackMap.put(stackVarName, newPointees);
+            }
+            else{
+                String stackVarName = lhs.toString();
+                // unconditional kill:
+                kgset.killStack.add(stackVarName);
+                kgset.gen.stackMap.put(stackVarName, newPointees);
+            }
         }
     }
 
@@ -271,14 +298,13 @@ public class PTA {
             // allocation site abstraction:
             String objectName = "Obj_" + Integer.toString(u.getJavaSourceStartLineNumber());
             newPointees.add(objectName);
-        }else if(rhs instanceof JNewArrayExpr){
-            String objectName = "Arr_"+Integer.toString(u.getJavaSourceStartLineNumber());
+        } else if (rhs instanceof JNewArrayExpr) {
+            String objectName = "Arr_" + Integer.toString(u.getJavaSourceStartLineNumber());
             newPointees.add(objectName);
-        }else if(rhs instanceof JNewMultiArrayExpr){
-            String objectName = "Arr_"+Integer.toString(u.getJavaSourceStartLineNumber());
+        } else if (rhs instanceof JNewMultiArrayExpr) {
+            String objectName = "Arr_" + Integer.toString(u.getJavaSourceStartLineNumber());
             newPointees.add(objectName);
-        } 
-        else if (rhs instanceof JInstanceFieldRef) {
+        } else if (rhs instanceof JInstanceFieldRef) {
             // new pointees only if reftype
             JInstanceFieldRef fieldRef = (JInstanceFieldRef) (rhs);
             String field = fieldRef.getField().getName();
@@ -293,18 +319,18 @@ public class PTA {
                         newPointees.addAll(in.heapMap.get(hr));
                     } else {
                         // may happen because dummy objects.
-                        //assume null check analysis has been done.
-                        //=>no null objects are used.
-                        //=>must be dummy object (params)
-                        //regardless, gen is phi.
+                        // assume null check analysis has been done.
+                        // =>no null objects are used.
+                        // =>must be dummy object (params)
+                        // regardless, gen is phi.
                         // newpointees.add(phi).
                     }
                 }
             } else {
                 // throw new RuntimeException(base+" not contained in in.stackMap!");
             }
-        }else if(rhs instanceof JArrayRef){
-            JArrayRef arrayRef = (JArrayRef)(rhs);
+        } else if (rhs instanceof JArrayRef) {
+            JArrayRef arrayRef = (JArrayRef) (rhs);
             String field = "[]";
             String base = arrayRef.getBase().toString();
             if (in.stackMap.containsKey(base)) {
@@ -317,42 +343,37 @@ public class PTA {
                         newPointees.addAll(in.heapMap.get(hr));
                     } else {
                         // may happen because dummy objects.
-                        //assume null check analysis has been done.
-                        //=>no null objects are used.
-                        //=>must be dummy object (params)
-                        //regardless, gen is phi.
+                        // assume null check analysis has been done.
+                        // =>no null objects are used.
+                        // =>must be dummy object (params)
+                        // regardless, gen is phi.
                         // newpointees.add(phi).
                     }
                 }
             } else {
                 // throw new RuntimeException(base+" not contained in in.stackMap!");
             }
-        } 
-        else {
+        } else {
             if (rhs instanceof Local) {
-                Local variable = (Local)(rhs);
+                Local variable = (Local) (rhs);
                 String varName = variable.getName();
                 if (in.stackMap.containsKey(varName)) {
                     newPointees.addAll(in.stackMap.get(varName));
                 }
-            } else if(rhs instanceof ParameterRef){
-                ParameterRef param = (ParameterRef)(rhs);
-                String varName = "@parameter"+Integer.toString(param.getIndex());
+            } else if (rhs instanceof ParameterRef) {
+                // nop
+                // because getDummyGraphtakes takes care of this.
+            } else if (rhs instanceof StaticFieldRef) {
+                // TODO: store info about obj being global
+                StaticFieldRef sfref = (StaticFieldRef)(rhs);
+                String varName = sfref.getField().getName();
                 if (in.stackMap.containsKey(varName)) {
                     newPointees.addAll(in.stackMap.get(varName));
                 }
-            } else if(rhs instanceof StaticFieldRef){
-                //TODO: store info about obj being global
-                // StaticFieldRef sfref = (StaticFieldRef)(rhs);
-                String varName = rhs.toString();
-                if(in.stackMap.containsKey(varName)){
-                    newPointees.addAll(in.stackMap.get(varName));
-                }
-            } else if(rhs instanceof ThisRef){
-                //what?
-            }
-            else{
-                //function calls; ignored.
+            } else if (rhs instanceof ThisRef) {
+                // what?
+            } else {
+                // function calls; ignored.
             }
         }
         return newPointees;
@@ -380,19 +401,27 @@ public class PTA {
     PointsToGraph getDummyPointsToGraph(Body body) {
         PointsToGraph g = new PointsToGraph();
         SootMethod method = body.getMethod();
-        //TODO: dummy objects for fields and params 
+        // TODO: dummy objects for fields and params
         // heap objects should be identifiable
-        List<Local> locals = body.getParameterLocals();
-        for(int i=0;i<method.getParameterCount();i++){
-            String stackParamName = "@parameter"+Integer.toString(i);
-            String dummyObjName = "param_"+Integer.toString(i);
+        List<Local> params = body.getParameterLocals();
+        print("Params for " + method.getName() + ":");
+        print(Integer.toString(params.size()));
+        for (int i = 0; i < params.size(); i++) {
+            Local param = params.get(i);
+            String stackParamName = param.getName();
             TreeSet<String> pointees = new TreeSet<>();
+            String dummyObjName = "@param" + Integer.toString(i);
             pointees.add(dummyObjName);
             g.stackMap.put(stackParamName, pointees);
         }
         Chain<SootField> fields = method.getDeclaringClass().getFields();
-        for(SootField field:fields){
-            print(field.toString());
+        for (SootField field : fields) {
+            String stackParamName = field.getName();
+            TreeSet<String> pointees = new TreeSet<>();
+            String dummyObjName = "@field_" + stackParamName;
+            pointees.add(dummyObjName);
+            g.stackMap.put(stackParamName, pointees);
+
         }
         return g;
     }
@@ -400,13 +429,15 @@ public class PTA {
     void print(String s) {
         System.out.println(s);
     }
+
     UnitComparator unitcomparator;
-    public TreeMap<Unit, NodePointsToData> getPointsToInfo(Body body, String phaseName, Map<String, String> options){
+
+    public TreeMap<Unit, NodePointsToData> getPointsToInfo(Body body, String phaseName, Map<String, String> options) {
         PatchingChain<Unit> units = body.getUnits();
         // Construct CFG for the current method's body
 
         ExceptionalUnitGraph graph = new ExceptionalUnitGraph(body);
-        
+
         HashMap<Unit, Integer> unitIndices = new HashMap<Unit, Integer>();
         unitcomparator = new UnitComparator(unitIndices);
         TreeMap<Unit, NodePointsToData> pointsToInfo = new TreeMap<Unit, NodePointsToData>(unitcomparator);
@@ -429,8 +460,8 @@ public class PTA {
             PointsToGraph newOut = new PointsToGraph();
             // process u:
             if (u == first) {
-                //equality holds because no new unit objects are created.
-                //equality in value must imply equality in reference.
+                // equality holds because no new unit objects are created.
+                // equality in value must imply equality in reference.
                 newIn = getDummyPointsToGraph(body);
             } else {
                 newIn = mergeOutsOf(graph.getPredsOf(u), pointsToInfo);
@@ -439,7 +470,7 @@ public class PTA {
             // assign new in.
             NodePointsToData nodeData = pointsToInfo.get(u);
             nodeData.in = newIn;
-            // compare newOut with oldOut
+            // compare newOut with old Out
             if (nodeData.out.hashCode() != newOut.hashCode()) {
                 nodeData.out = newOut;
                 workList.addAll(graph.getSuccsOf(u));
@@ -447,8 +478,9 @@ public class PTA {
         }
         return pointsToInfo;
     }
-    void printPointsToInfo(TreeMap<Unit, NodePointsToData> pointsToInfo){
-        for(Unit u:pointsToInfo.keySet()){
+
+    void printPointsToInfo(TreeMap<Unit, NodePointsToData> pointsToInfo) {
+        for (Unit u : pointsToInfo.keySet()) {
             print("Unit: \"" + u.toString() + "\"{");
             print("\tIn: ");
             pointsToInfo.get(u).in.print();
@@ -456,5 +488,16 @@ public class PTA {
             pointsToInfo.get(u).out.print();
             print("}");
         }
+    }
+
+    public TreeSet<String> getDummyHeapObjects(PointsToGraph goingIn) {
+        TreeSet<String> dummies = new TreeSet<>();
+        Set<String> stackvars = goingIn.stackMap.keySet();
+        for(String svarname:stackvars){
+            dummies.addAll(goingIn.stackMap.get(svarname));
+        }
+        dummies.removeIf((s)->{return (!s.contains("@"));});
+        return dummies;
+        
     }
 }
