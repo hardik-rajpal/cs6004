@@ -14,10 +14,11 @@ public class Test {
 		y = global.f;
 	}
 	public static Node foo(Node p){
-		Node x = new Node();//escapes
-		global.f = new Node();//escapes.
-		global = new Node();//escapes
-		global.f = new Node();//escapes.
+		while(p.f==global){
+			global = global.f;
+		}
+		Node x = new Node();
+		global.f = new Node();
 		return x;
 	}
 }

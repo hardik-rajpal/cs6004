@@ -322,8 +322,15 @@ public class PTA {
                         // assume null check analysis has been done.
                         // =>no null objects are used.
                         // =>must be dummy object (params)
-                        // regardless, gen is phi.
-                        // newpointees.add(phi).
+                        if(baseObject.contains("@")){
+                           //dummy object
+                           String objectName = "@Obj_"+Integer.toString(u.getJavaSourceStartLineNumber());
+                           newPointees.add(objectName);
+                           //update to heapmap:
+                           TreeSet<String> dummyPointees = new TreeSet<>();
+                           dummyPointees.add(objectName);
+                           in.heapMap.put(hr, dummyPointees);
+                        }
                     }
                 }
             } else {
