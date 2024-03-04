@@ -14,8 +14,14 @@ public class Test {
 		x.f = new Node();
 		Node y = new Node();
 		y.f = new Node();
+		//comment out line 17 and check again.
+		y = new Node();
+		y.g = new Node();
+		y.f = new Node();
 		Node z = new Node();
 		Node w = bar(y,z);
+		//comment out line 23 and check again.
+		w = new Node();
 		w.f = new Node();
 		global.f.g.g.f.f = new Node();
 		global = new Node();
