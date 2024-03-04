@@ -1,3 +1,4 @@
+
 class Node {
 	Node f;
 	Node g;
@@ -35,5 +36,11 @@ public class Test {
 		w.f = new Node(); 
 		p2.f = w.f;	
 		return p1;	
+	}
+	public static Node[] arrtest(){
+		Node[] global = new Node[5];
+		global[1] = new Node();
+		global[1].f = new Node();
+		return global;
 	}
 }

@@ -293,10 +293,10 @@ public class PTA {
             String objectName = "Obj_" + Integer.toString(u.getJavaSourceStartLineNumber());
             newPointees.add(objectName);
         } else if (rhs instanceof JNewArrayExpr) {
-            String objectName = "Arr_" + Integer.toString(u.getJavaSourceStartLineNumber());
+            String objectName = "Obj_" + Integer.toString(u.getJavaSourceStartLineNumber());
             newPointees.add(objectName);
         } else if (rhs instanceof JNewMultiArrayExpr) {
-            String objectName = "Arr_" + Integer.toString(u.getJavaSourceStartLineNumber());
+            String objectName = "Obj_" + Integer.toString(u.getJavaSourceStartLineNumber());
             newPointees.add(objectName);
 
         } else if (rhs instanceof InvokeExpr) {
