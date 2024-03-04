@@ -45,38 +45,28 @@ public class Test extends java.lang.Object
 
     public static Node foo(Node)
     {
-        Node r0, $r1, $r2, $r3, $r5, $r6, $r7, $r8;
+        Node $r0, $r1, $r2, $r3, $r4, r6;
 
-        r0 := @parameter0: Node;
+        r6 := @parameter0: Node;
 
-     label1:
-        $r2 = r0.<Node: Node f>;
+        $r0 = <Test: Node global>;
 
-        $r1 = <Test: Node global>;
+        $r1 = $r0.<Node: Node f>;
 
-        if $r2 != $r1 goto label2;
+        <Test: Node global> = $r1;
 
-        $r7 = <Test: Node global>;
+        $r3 = <Test: Node global>;
 
-        $r8 = $r7.<Node: Node f>;
+        $r2 = new Node;
 
-        <Test: Node global> = $r8;
+        specialinvoke $r2.<Node: void <init>()>();
 
-        goto label1;
+        $r3.<Node: Node f> = $r2;
 
-     label2:
-        $r3 = new Node;
+        $r4 = new Node;
 
-        specialinvoke $r3.<Node: void <init>()>();
+        specialinvoke $r4.<Node: void <init>()>();
 
-        $r6 = <Test: Node global>;
-
-        $r5 = new Node;
-
-        specialinvoke $r5.<Node: void <init>()>();
-
-        $r6.<Node: Node f> = $r5;
-
-        return $r3;
+        return $r4;
     }
 }

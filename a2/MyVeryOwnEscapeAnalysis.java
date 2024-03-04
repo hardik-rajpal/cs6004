@@ -1,9 +1,9 @@
 // import java.util.*;
 
 import soot.*;
+import soot.jimple.FieldRef;
 import soot.jimple.InvokeExpr;
 import soot.jimple.ParameterRef;
-import soot.jimple.StaticFieldRef;
 import soot.jimple.internal.JArrayRef;
 import soot.jimple.internal.JAssignStmt;
 import soot.jimple.internal.JDynamicInvokeExpr;
@@ -132,8 +132,8 @@ public class MyVeryOwnEscapeAnalysis {
             Value rhs,lhs;
             lhs = stmt.getLeftOp();
             rhs = stmt.getRightOp();
-            if(lhs instanceof StaticFieldRef){
-                //assignment to global vars
+            if(lhs instanceof FieldRef){
+                //assignment to field of the enclosing class.
                 fillEscapingVarsFromExpression(goingIn, escapingVars, rhs, u);
             }
             else if(lhs instanceof JInstanceFieldRef){

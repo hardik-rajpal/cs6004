@@ -1,32 +1,55 @@
-Soot started on Sun Mar 03 14:25:36 IST 2024
-Params for <init>:
+Soot started on Mon Mar 04 12:00:13 IST 2024
 Params for <init>:
 0
+Params for <init>:
 0
 Unit: "r0 := @this: Test"{
 	In: 
+	{
+		stack{
+			global->[ @field_global, ]
+			x->[ @field_x, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			global->[ @field_global, ]
+			x->[ @field_x, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "specialinvoke r0.<java.lang.Object: void <init>()>()"{
+	In: 
+	{
+		stack{
+			global->[ @field_global, ]
+			x->[ @field_x, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			global->[ @field_global, ]
+			x->[ @field_x, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "return"{
 Unit: "r0 := @this: Node"{
 	In: 
 	{
 		stack{
-	{
-		stack{
-			global->[ @field_global, ]
-			f->[ 			x->[ @field_x, ]
-@field_f, ]
-		}
-		heap{
-		}
-	}
-	Out: 
-	{
-		stack{
-			global->[ @field_global, ]
-			x->[ 			g->[ @field_x, ]
-		}
-		heap{
-		}
-@field_g, ]
+			f->[ @field_f, ]
+			g->[ @field_g, ]
 		}
 		heap{
 		}
@@ -41,92 +64,69 @@ Unit: "r0 := @this: Node"{
 		}
 	}
 }
-	}
-}
-Unit: "specialinvoke r0.<java.lang.Object: void <init>()>()"{
 	In: 
 Unit: "specialinvoke r0.<java.lang.Object: void <init>()>()"{
 	In: 
 	{
 		stack{
-	{
-		stack{
-			f->[ @field_f, ]
 			global->[ @field_global, ]
-			x->[ @field_x, ]
-		}
-		heap{
-		}
-			g->[ 	}
-	Out: 
-	{
+			x->[ 	{
 		stack{
-			global->[ @field_global, ]
-			x->[ @field_x, ]
-		}
-		heap{
-		}
-	}
-}
-Unit: "return"{
-	In: 
-	{
-		stack{
-			global->[ @field_global, ]
-			x->[ @field_x, ]
-		}
-		heap{
-		}
-	}
-	Out: 
-@field_g, ]
-		}
-		heap{
-		}
-	}
-	Out: 
-	{
-		stack{
-			f->[ @field_f, ]
-			g->[ @field_g, ]
-		}
-		heap{
-		}
-	}
-}
-Unit: "return"{
-	In: 
-	{
-		stack{
-			f->[ @field_f, ]
-			g->[ @field_g, ]
-		}
-		heap{
-		}
-	}
-	{
-		stack{
-			global->[ @field_global, ]
-			x->[ 	Out: 
-	{
-		stack{
-			f->[ @field_f, ]
-			g->[ @field_g, ]
 @field_x, ]
 		}
 		heap{
 		}
+	}
+	Out: 
+			f->[ @field_f, ]
+			g->[ @field_g, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			f->[ @field_f, ]
+			g->[ @field_g, ]
+		}
 		heap{
 		}
 	}
 }
+	{
+		stack{
+Unit: "return"{
+	In: 
+			global->[ 	{
+		stack{
+@field_global, ]
+			x->[ @field_x, ]
+		}
+		heap{
+			f->[ 		}
+	}
+}
+@field_f, ]
+			g->[ @field_g, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			f->[ @field_f, ]
+			g->[ @field_g, ]
+		}
+		heap{
 		}
 	}
 }
 Escaping Info
+Node:<init> 
 Escaping Info
-Node:<init> Test:<init> 
-
+Test:<init> 
 Params for main:
 1
 r2 := @parameter0: java.lang.String[]
@@ -358,14 +358,14 @@ Escaping Info
 Test:bar 
 Params for foo:
 1
-r0 := @parameter0: Node
+r6 := @parameter0: Node
 class soot.jimple.internal.JIdentityStmt
-Unit: "r0 := @parameter0: Node"{
+Unit: "r6 := @parameter0: Node"{
 	In: 
 	{
 		stack{
 			global->[ @field_global, ]
-			r0->[ @param0, ]
+			r6->[ @param0, ]
 			x->[ @field_x, ]
 		}
 		heap{
@@ -375,547 +375,324 @@ Unit: "r0 := @parameter0: Node"{
 	{
 		stack{
 			global->[ @field_global, ]
-			r0->[ @param0, ]
+			r6->[ @param0, ]
 			x->[ @field_x, ]
 		}
 		heap{
 		}
 	}
 }
-Unit: "$r2 = r0.<Node: Node f>"{
+Unit: "$r0 = <Test: Node global>"{
 	In: 
 	{
 		stack{
-			$r1->[ @Obj_18, @field_global, ]
-			$r2->[ @Obj_17, ]
-			$r7->[ @Obj_18, @field_global, ]
-			$r8->[ @Obj_18, ]
-			global->[ @Obj_18, @field_global, ]
-			r0->[ @param0, ]
+			global->[ @field_global, ]
+			r6->[ @param0, ]
 			x->[ @field_x, ]
 		}
 		heap{
-			@Obj_18.f->[ @Obj_18, ]
-			@field_global.f->[ @Obj_18, ]
-			@param0.f->[ @Obj_17, ]
 		}
 	}
 	Out: 
 	{
 		stack{
-			$r1->[ @Obj_18, @field_global, ]
-			$r2->[ @Obj_17, ]
-			$r7->[ @Obj_18, @field_global, ]
-			$r8->[ @Obj_18, ]
-			global->[ @Obj_18, @field_global, ]
-			r0->[ @param0, ]
+			$r0->[ @field_global, ]
+			global->[ @field_global, ]
+			r6->[ @param0, ]
 			x->[ @field_x, ]
 		}
 		heap{
-			@Obj_18.f->[ @Obj_18, ]
-			@field_global.f->[ @Obj_18, ]
-			@param0.f->[ @Obj_17, ]
 		}
 	}
 }
-Unit: "$r1 = <Test: Node global>"{
+Unit: "$r1 = $r0.<Node: Node f>"{
 	In: 
 	{
 		stack{
-			$r1->[ @Obj_18, @field_global, ]
-			$r2->[ @Obj_17, ]
-			$r7->[ @Obj_18, @field_global, ]
-			$r8->[ @Obj_18, ]
-			global->[ @Obj_18, @field_global, ]
-			r0->[ @param0, ]
+			$r0->[ @field_global, ]
+			global->[ @field_global, ]
+			r6->[ @param0, ]
 			x->[ @field_x, ]
 		}
 		heap{
-			@Obj_18.f->[ @Obj_18, ]
-			@field_global.f->[ @Obj_18, ]
-			@param0.f->[ @Obj_17, ]
+			@field_global.f->[ @Obj_17, ]
 		}
 	}
 	Out: 
 	{
 		stack{
-			$r1->[ @Obj_18, @field_global, ]
-			$r2->[ @Obj_17, ]
-			$r7->[ @Obj_18, @field_global, ]
-			$r8->[ @Obj_18, ]
-			global->[ @Obj_18, @field_global, ]
-			r0->[ @param0, ]
+			$r0->[ @field_global, ]
+			$r1->[ @Obj_17, ]
+			global->[ @field_global, ]
+			r6->[ @param0, ]
 			x->[ @field_x, ]
 		}
 		heap{
-			@Obj_18.f->[ @Obj_18, ]
-			@field_global.f->[ @Obj_18, ]
-			@param0.f->[ @Obj_17, ]
+			@field_global.f->[ @Obj_17, ]
 		}
 	}
 }
-Unit: "if $r2 != $r1 goto $r3 = new Node"{
+Unit: "<Test: Node global> = $r1"{
 	In: 
 	{
 		stack{
-			$r1->[ @Obj_18, @field_global, ]
-			$r2->[ @Obj_17, ]
-			$r7->[ @Obj_18, @field_global, ]
-			$r8->[ @Obj_18, ]
-			global->[ @Obj_18, @field_global, ]
-			r0->[ @param0, ]
+			$r0->[ @field_global, ]
+			$r1->[ @Obj_17, ]
+			global->[ @field_global, ]
+			r6->[ @param0, ]
 			x->[ @field_x, ]
 		}
 		heap{
-			@Obj_18.f->[ @Obj_18, ]
-			@field_global.f->[ @Obj_18, ]
-			@param0.f->[ @Obj_17, ]
+			@field_global.f->[ @Obj_17, ]
 		}
 	}
 	Out: 
 	{
 		stack{
-			$r1->[ @Obj_18, @field_global, ]
-			$r2->[ @Obj_17, ]
-			$r7->[ @Obj_18, @field_global, ]
-			$r8->[ @Obj_18, ]
-			global->[ @Obj_18, @field_global, ]
-			r0->[ @param0, ]
+			$r0->[ @field_global, ]
+			$r1->[ @Obj_17, ]
+			global->[ @Obj_17, ]
+			r6->[ @param0, ]
 			x->[ @field_x, ]
 		}
 		heap{
-			@Obj_18.f->[ @Obj_18, ]
-			@field_global.f->[ @Obj_18, ]
-			@param0.f->[ @Obj_17, ]
+			@field_global.f->[ @Obj_17, ]
 		}
 	}
 }
-Unit: "$r7 = <Test: Node global>"{
+Unit: "$r3 = <Test: Node global>"{
 	In: 
 	{
 		stack{
-			$r1->[ @Obj_18, @field_global, ]
-			$r2->[ @Obj_17, ]
-			$r7->[ @Obj_18, @field_global, ]
-			$r8->[ @Obj_18, ]
-			global->[ @Obj_18, @field_global, ]
-			r0->[ @param0, ]
+			$r0->[ @field_global, ]
+			$r1->[ @Obj_17, ]
+			global->[ @Obj_17, ]
+			r6->[ @param0, ]
 			x->[ @field_x, ]
 		}
 		heap{
-			@Obj_18.f->[ @Obj_18, ]
-			@field_global.f->[ @Obj_18, ]
-			@param0.f->[ @Obj_17, ]
+			@field_global.f->[ @Obj_17, ]
 		}
 	}
 	Out: 
 	{
 		stack{
-			$r1->[ @Obj_18, @field_global, ]
-			$r2->[ @Obj_17, ]
-			$r7->[ @Obj_18, @field_global, ]
-			$r8->[ @Obj_18, ]
-			global->[ @Obj_18, @field_global, ]
-			r0->[ @param0, ]
+			$r0->[ @field_global, ]
+			$r1->[ @Obj_17, ]
+			$r3->[ @Obj_17, ]
+			global->[ @Obj_17, ]
+			r6->[ @param0, ]
 			x->[ @field_x, ]
 		}
 		heap{
-			@Obj_18.f->[ @Obj_18, ]
-			@field_global.f->[ @Obj_18, ]
-			@param0.f->[ @Obj_17, ]
+			@field_global.f->[ @Obj_17, ]
 		}
 	}
 }
-Unit: "$r8 = $r7.<Node: Node f>"{
+Unit: "$r2 = new Node"{
 	In: 
 	{
 		stack{
-			$r1->[ @Obj_18, @field_global, ]
-			$r2->[ @Obj_17, ]
-			$r7->[ @Obj_18, @field_global, ]
-			$r8->[ @Obj_18, ]
-			global->[ @Obj_18, @field_global, ]
-			r0->[ @param0, ]
+			$r0->[ @field_global, ]
+			$r1->[ @Obj_17, ]
+			$r3->[ @Obj_17, ]
+			global->[ @Obj_17, ]
+			r6->[ @param0, ]
 			x->[ @field_x, ]
 		}
 		heap{
-			@Obj_18.f->[ @Obj_18, ]
-			@field_global.f->[ @Obj_18, ]
-			@param0.f->[ @Obj_17, ]
+			@field_global.f->[ @Obj_17, ]
 		}
 	}
 	Out: 
 	{
 		stack{
-			$r1->[ @Obj_18, @field_global, ]
-			$r2->[ @Obj_17, ]
-			$r7->[ @Obj_18, @field_global, ]
-			$r8->[ @Obj_18, ]
-			global->[ @Obj_18, @field_global, ]
-			r0->[ @param0, ]
+			$r0->[ @field_global, ]
+			$r1->[ @Obj_17, ]
+			$r2->[ Obj_18, ]
+			$r3->[ @Obj_17, ]
+			global->[ @Obj_17, ]
+			r6->[ @param0, ]
 			x->[ @field_x, ]
 		}
 		heap{
-			@Obj_18.f->[ @Obj_18, ]
-			@field_global.f->[ @Obj_18, ]
-			@param0.f->[ @Obj_17, ]
+			@field_global.f->[ @Obj_17, ]
 		}
 	}
 }
-Unit: "<Test: Node global> = $r8"{
+Unit: "specialinvoke $r2.<Node: void <init>()>()"{
 	In: 
 	{
 		stack{
-			$r1->[ @Obj_18, @field_global, ]
-			$r2->[ @Obj_17, ]
-			$r7->[ @Obj_18, @field_global, ]
-			$r8->[ @Obj_18, ]
-			global->[ @Obj_18, @field_global, ]
-			r0->[ @param0, ]
+			$r0->[ @field_global, ]
+			$r1->[ @Obj_17, ]
+			$r2->[ Obj_18, ]
+			$r3->[ @Obj_17, ]
+			global->[ @Obj_17, ]
+			r6->[ @param0, ]
 			x->[ @field_x, ]
 		}
 		heap{
-			@Obj_18.f->[ @Obj_18, ]
-			@field_global.f->[ @Obj_18, ]
-			@param0.f->[ @Obj_17, ]
+			@field_global.f->[ @Obj_17, ]
 		}
 	}
 	Out: 
 	{
 		stack{
-			$r1->[ @Obj_18, @field_global, ]
-			$r2->[ @Obj_17, ]
-			$r7->[ @Obj_18, @field_global, ]
-			$r8->[ @Obj_18, ]
-			global->[ @Obj_18, ]
-			r0->[ @param0, ]
+			$r0->[ @field_global, ]
+			$r1->[ @Obj_17, ]
+			$r2->[ Obj_18, ]
+			$r3->[ @Obj_17, ]
+			global->[ @Obj_17, ]
+			r6->[ @param0, ]
 			x->[ @field_x, ]
 		}
 		heap{
-			@Obj_18.f->[ @Obj_18, ]
-			@field_global.f->[ @Obj_18, ]
-			@param0.f->[ @Obj_17, ]
+			@field_global.f->[ @Obj_17, ]
 		}
 	}
 }
-Unit: "goto [?= $r2 = r0.<Node: Node f>]"{
+Unit: "$r3.<Node: Node f> = $r2"{
 	In: 
 	{
 		stack{
-			$r1->[ @Obj_18, @field_global, ]
-			$r2->[ @Obj_17, ]
-			$r7->[ @Obj_18, @field_global, ]
-			$r8->[ @Obj_18, ]
-			global->[ @Obj_18, ]
-			r0->[ @param0, ]
+			$r0->[ @field_global, ]
+			$r1->[ @Obj_17, ]
+			$r2->[ Obj_18, ]
+			$r3->[ @Obj_17, ]
+			global->[ @Obj_17, ]
+			r6->[ @param0, ]
 			x->[ @field_x, ]
 		}
 		heap{
-			@Obj_18.f->[ @Obj_18, ]
-			@field_global.f->[ @Obj_18, ]
-			@param0.f->[ @Obj_17, ]
+			@field_global.f->[ @Obj_17, ]
 		}
 	}
 	Out: 
 	{
 		stack{
-			$r1->[ @Obj_18, @field_global, ]
-			$r2->[ @Obj_17, ]
-			$r7->[ @Obj_18, @field_global, ]
-			$r8->[ @Obj_18, ]
-			global->[ @Obj_18, ]
-			r0->[ @param0, ]
+			$r0->[ @field_global, ]
+			$r1->[ @Obj_17, ]
+			$r2->[ Obj_18, ]
+			$r3->[ @Obj_17, ]
+			global->[ @Obj_17, ]
+			r6->[ @param0, ]
 			x->[ @field_x, ]
 		}
 		heap{
-			@Obj_18.f->[ @Obj_18, ]
-			@field_global.f->[ @Obj_18, ]
-			@param0.f->[ @Obj_17, ]
+			@Obj_17.f->[ Obj_18, ]
+			@field_global.f->[ @Obj_17, ]
 		}
 	}
 }
-Unit: "$r3 = new Node"{
+Unit: "$r4 = new Node"{
 	In: 
 	{
 		stack{
-			$r1->[ @Obj_18, @field_global, ]
-			$r2->[ @Obj_17, ]
-			$r7->[ @Obj_18, @field_global, ]
-			$r8->[ @Obj_18, ]
-			global->[ @Obj_18, @field_global, ]
-			r0->[ @param0, ]
+			$r0->[ @field_global, ]
+			$r1->[ @Obj_17, ]
+			$r2->[ Obj_18, ]
+			$r3->[ @Obj_17, ]
+			global->[ @Obj_17, ]
+			r6->[ @param0, ]
 			x->[ @field_x, ]
 		}
 		heap{
-			@Obj_18.f->[ @Obj_18, ]
-			@field_global.f->[ @Obj_18, ]
-			@param0.f->[ @Obj_17, ]
+			@Obj_17.f->[ Obj_18, ]
+			@field_global.f->[ @Obj_17, ]
 		}
 	}
 	Out: 
 	{
 		stack{
-			$r1->[ @Obj_18, @field_global, ]
-			$r2->[ @Obj_17, ]
-			$r3->[ Obj_20, ]
-			$r7->[ @Obj_18, @field_global, ]
-			$r8->[ @Obj_18, ]
-			global->[ @Obj_18, @field_global, ]
-			r0->[ @param0, ]
+			$r0->[ @field_global, ]
+			$r1->[ @Obj_17, ]
+			$r2->[ Obj_18, ]
+			$r3->[ @Obj_17, ]
+			$r4->[ Obj_19, ]
+			global->[ @Obj_17, ]
+			r6->[ @param0, ]
 			x->[ @field_x, ]
 		}
 		heap{
-			@Obj_18.f->[ @Obj_18, ]
-			@field_global.f->[ @Obj_18, ]
-			@param0.f->[ @Obj_17, ]
+			@Obj_17.f->[ Obj_18, ]
+			@field_global.f->[ @Obj_17, ]
 		}
 	}
 }
-Unit: "specialinvoke $r3.<Node: void <init>()>()"{
+Unit: "specialinvoke $r4.<Node: void <init>()>()"{
 	In: 
 	{
 		stack{
-			$r1->[ @Obj_18, @field_global, ]
-			$r2->[ @Obj_17, ]
-			$r3->[ Obj_20, ]
-			$r7->[ @Obj_18, @field_global, ]
-			$r8->[ @Obj_18, ]
-			global->[ @Obj_18, @field_global, ]
-			r0->[ @param0, ]
+			$r0->[ @field_global, ]
+			$r1->[ @Obj_17, ]
+			$r2->[ Obj_18, ]
+			$r3->[ @Obj_17, ]
+			$r4->[ Obj_19, ]
+			global->[ @Obj_17, ]
+			r6->[ @param0, ]
 			x->[ @field_x, ]
 		}
 		heap{
-			@Obj_18.f->[ @Obj_18, ]
-			@field_global.f->[ @Obj_18, ]
-			@param0.f->[ @Obj_17, ]
+			@Obj_17.f->[ Obj_18, ]
+			@field_global.f->[ @Obj_17, ]
 		}
 	}
 	Out: 
 	{
 		stack{
-			$r1->[ @Obj_18, @field_global, ]
-			$r2->[ @Obj_17, ]
-			$r3->[ Obj_20, ]
-			$r7->[ @Obj_18, @field_global, ]
-			$r8->[ @Obj_18, ]
-			global->[ @Obj_18, @field_global, ]
-			r0->[ @param0, ]
+			$r0->[ @field_global, ]
+			$r1->[ @Obj_17, ]
+			$r2->[ Obj_18, ]
+			$r3->[ @Obj_17, ]
+			$r4->[ Obj_19, ]
+			global->[ @Obj_17, ]
+			r6->[ @param0, ]
 			x->[ @field_x, ]
 		}
 		heap{
-			@Obj_18.f->[ @Obj_18, ]
-			@field_global.f->[ @Obj_18, ]
-			@param0.f->[ @Obj_17, ]
+			@Obj_17.f->[ Obj_18, ]
+			@field_global.f->[ @Obj_17, ]
 		}
 	}
 }
-Unit: "$r6 = <Test: Node global>"{
+Unit: "return $r4"{
 	In: 
 	{
 		stack{
-			$r1->[ @Obj_18, @field_global, ]
-			$r2->[ @Obj_17, ]
-			$r3->[ Obj_20, ]
-			$r7->[ @Obj_18, @field_global, ]
-			$r8->[ @Obj_18, ]
-			global->[ @Obj_18, @field_global, ]
-			r0->[ @param0, ]
+			$r0->[ @field_global, ]
+			$r1->[ @Obj_17, ]
+			$r2->[ Obj_18, ]
+			$r3->[ @Obj_17, ]
+			$r4->[ Obj_19, ]
+			global->[ @Obj_17, ]
+			r6->[ @param0, ]
 			x->[ @field_x, ]
 		}
 		heap{
-			@Obj_18.f->[ @Obj_18, ]
-			@field_global.f->[ @Obj_18, ]
-			@param0.f->[ @Obj_17, ]
+			@Obj_17.f->[ Obj_18, ]
+			@field_global.f->[ @Obj_17, ]
 		}
 	}
 	Out: 
 	{
 		stack{
-			$r1->[ @Obj_18, @field_global, ]
-			$r2->[ @Obj_17, ]
-			$r3->[ Obj_20, ]
-			$r6->[ @Obj_18, @field_global, ]
-			$r7->[ @Obj_18, @field_global, ]
-			$r8->[ @Obj_18, ]
-			global->[ @Obj_18, @field_global, ]
-			r0->[ @param0, ]
+			$r0->[ @field_global, ]
+			$r1->[ @Obj_17, ]
+			$r2->[ Obj_18, ]
+			$r3->[ @Obj_17, ]
+			$r4->[ Obj_19, ]
+			global->[ @Obj_17, ]
+			r6->[ @param0, ]
 			x->[ @field_x, ]
 		}
 		heap{
-			@Obj_18.f->[ @Obj_18, ]
-			@field_global.f->[ @Obj_18, ]
-			@param0.f->[ @Obj_17, ]
-		}
-	}
-}
-Unit: "$r5 = new Node"{
-	In: 
-	{
-		stack{
-			$r1->[ @Obj_18, @field_global, ]
-			$r2->[ @Obj_17, ]
-			$r3->[ Obj_20, ]
-			$r6->[ @Obj_18, @field_global, ]
-			$r7->[ @Obj_18, @field_global, ]
-			$r8->[ @Obj_18, ]
-			global->[ @Obj_18, @field_global, ]
-			r0->[ @param0, ]
-			x->[ @field_x, ]
-		}
-		heap{
-			@Obj_18.f->[ @Obj_18, ]
-			@field_global.f->[ @Obj_18, ]
-			@param0.f->[ @Obj_17, ]
-		}
-	}
-	Out: 
-	{
-		stack{
-			$r1->[ @Obj_18, @field_global, ]
-			$r2->[ @Obj_17, ]
-			$r3->[ Obj_20, ]
-			$r5->[ Obj_21, ]
-			$r6->[ @Obj_18, @field_global, ]
-			$r7->[ @Obj_18, @field_global, ]
-			$r8->[ @Obj_18, ]
-			global->[ @Obj_18, @field_global, ]
-			r0->[ @param0, ]
-			x->[ @field_x, ]
-		}
-		heap{
-			@Obj_18.f->[ @Obj_18, ]
-			@field_global.f->[ @Obj_18, ]
-			@param0.f->[ @Obj_17, ]
-		}
-	}
-}
-Unit: "specialinvoke $r5.<Node: void <init>()>()"{
-	In: 
-	{
-		stack{
-			$r1->[ @Obj_18, @field_global, ]
-			$r2->[ @Obj_17, ]
-			$r3->[ Obj_20, ]
-			$r5->[ Obj_21, ]
-			$r6->[ @Obj_18, @field_global, ]
-			$r7->[ @Obj_18, @field_global, ]
-			$r8->[ @Obj_18, ]
-			global->[ @Obj_18, @field_global, ]
-			r0->[ @param0, ]
-			x->[ @field_x, ]
-		}
-		heap{
-			@Obj_18.f->[ @Obj_18, ]
-			@field_global.f->[ @Obj_18, ]
-			@param0.f->[ @Obj_17, ]
-		}
-	}
-	Out: 
-	{
-		stack{
-			$r1->[ @Obj_18, @field_global, ]
-			$r2->[ @Obj_17, ]
-			$r3->[ Obj_20, ]
-			$r5->[ Obj_21, ]
-			$r6->[ @Obj_18, @field_global, ]
-			$r7->[ @Obj_18, @field_global, ]
-			$r8->[ @Obj_18, ]
-			global->[ @Obj_18, @field_global, ]
-			r0->[ @param0, ]
-			x->[ @field_x, ]
-		}
-		heap{
-			@Obj_18.f->[ @Obj_18, ]
-			@field_global.f->[ @Obj_18, ]
-			@param0.f->[ @Obj_17, ]
-		}
-	}
-}
-Unit: "$r6.<Node: Node f> = $r5"{
-	In: 
-	{
-		stack{
-			$r1->[ @Obj_18, @field_global, ]
-			$r2->[ @Obj_17, ]
-			$r3->[ Obj_20, ]
-			$r5->[ Obj_21, ]
-			$r6->[ @Obj_18, @field_global, ]
-			$r7->[ @Obj_18, @field_global, ]
-			$r8->[ @Obj_18, ]
-			global->[ @Obj_18, @field_global, ]
-			r0->[ @param0, ]
-			x->[ @field_x, ]
-		}
-		heap{
-			@Obj_18.f->[ @Obj_18, ]
-			@field_global.f->[ @Obj_18, ]
-			@param0.f->[ @Obj_17, ]
-		}
-	}
-	Out: 
-	{
-		stack{
-			$r1->[ @Obj_18, @field_global, ]
-			$r2->[ @Obj_17, ]
-			$r3->[ Obj_20, ]
-			$r5->[ Obj_21, ]
-			$r6->[ @Obj_18, @field_global, ]
-			$r7->[ @Obj_18, @field_global, ]
-			$r8->[ @Obj_18, ]
-			global->[ @Obj_18, @field_global, ]
-			r0->[ @param0, ]
-			x->[ @field_x, ]
-		}
-		heap{
-			@Obj_18.f->[ @Obj_18, Obj_21, ]
-			@field_global.f->[ @Obj_18, Obj_21, ]
-			@param0.f->[ @Obj_17, ]
-		}
-	}
-}
-Unit: "return $r3"{
-	In: 
-	{
-		stack{
-			$r1->[ @Obj_18, @field_global, ]
-			$r2->[ @Obj_17, ]
-			$r3->[ Obj_20, ]
-			$r5->[ Obj_21, ]
-			$r6->[ @Obj_18, @field_global, ]
-			$r7->[ @Obj_18, @field_global, ]
-			$r8->[ @Obj_18, ]
-			global->[ @Obj_18, @field_global, ]
-			r0->[ @param0, ]
-			x->[ @field_x, ]
-		}
-		heap{
-			@Obj_18.f->[ @Obj_18, Obj_21, ]
-			@field_global.f->[ @Obj_18, Obj_21, ]
-			@param0.f->[ @Obj_17, ]
-		}
-	}
-	Out: 
-	{
-		stack{
-			$r1->[ @Obj_18, @field_global, ]
-			$r2->[ @Obj_17, ]
-			$r3->[ Obj_20, ]
-			$r5->[ Obj_21, ]
-			$r6->[ @Obj_18, @field_global, ]
-			$r7->[ @Obj_18, @field_global, ]
-			$r8->[ @Obj_18, ]
-			global->[ @Obj_18, @field_global, ]
-			r0->[ @param0, ]
-			x->[ @field_x, ]
-		}
-		heap{
-			@Obj_18.f->[ @Obj_18, Obj_21, ]
-			@field_global.f->[ @Obj_18, Obj_21, ]
-			@param0.f->[ @Obj_17, ]
+			@Obj_17.f->[ Obj_18, ]
+			@field_global.f->[ @Obj_17, ]
 		}
 	}
 }
 Escaping Info
-Test:foo Obj_20 Obj_21 
-Soot finished on Sun Mar 03 14:25:38 IST 2024
-Soot has run for 0 min. 2 sec.
+Test:foo Obj_18 Obj_19 
+Soot finished on Mon Mar 04 12:00:13 IST 2024
+Soot has run for 0 min. 0 sec.

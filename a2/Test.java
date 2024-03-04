@@ -14,11 +14,9 @@ public class Test {
 		y = global.f;
 	}
 	public static Node foo(Node p){
-		while(p.f==global){
-			global = global.f;
-		}
-		Node x = new Node();
+		global = global.f;
 		global.f = new Node();
+		Node x = new Node();
 		return x;
 	}
 }
