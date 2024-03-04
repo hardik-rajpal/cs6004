@@ -1,6 +1,6 @@
 public class Test extends java.lang.Object
 {
-    public static Node global;
+    public static Node[] global;
     public Node x;
 
     public void <init>()
@@ -14,59 +14,81 @@ public class Test extends java.lang.Object
         return;
     }
 
-    public static void main(java.lang.String[])
+    public void main(java.lang.String[])
     {
-        Node $r0;
-        java.lang.String[] r2;
+        Test r0;
+        Node $r1;
+        java.lang.String[] r3;
 
-        r2 := @parameter0: java.lang.String[];
+        r0 := @this: Test;
 
-        $r0 = new Node;
+        r3 := @parameter0: java.lang.String[];
 
-        specialinvoke $r0.<Node: void <init>()>();
+        $r1 = new Node;
 
-        staticinvoke <Test: Node foo(Node)>($r0);
+        specialinvoke $r1.<Node: void <init>()>();
+
+        virtualinvoke r0.<Test: Node foo(Node)>($r1);
 
         return;
     }
 
-    public static void bar(Node)
+    public static Node bar(Node)
     {
-        Node $r0, r1, r2;
+        Node[] $r0, $r2;
+        Node $r1, $r3, r4, r5;
 
-        r1 := @parameter0: Node;
+        r4 := @parameter0: Node;
 
-        $r0 = <Test: Node global>;
+        $r0 = <Test: Node[] global>;
 
-        r2 = $r0.<Node: Node f>;
+        $r1 = $r0[0];
 
-        return;
+        r5 = $r1.<Node: Node f>;
+
+        $r2 = <Test: Node[] global>;
+
+        $r3 = $r2[0];
+
+        return $r3;
     }
 
-    public static Node foo(Node)
+    public Node foo(Node)
     {
-        Node $r0, $r1, $r2, $r3, $r4, r6;
+        Node[] $r0;
+        Node $r1, $r2, $r3, $r4, $r5, $r6, $r7, $r8, $r9, r11;
+        Test r10;
 
-        r6 := @parameter0: Node;
+        r10 := @this: Test;
 
-        $r0 = <Test: Node global>;
+        r11 := @parameter0: Node;
 
-        $r1 = $r0.<Node: Node f>;
+        $r0 = <Test: Node[] global>;
 
-        <Test: Node global> = $r1;
+        $r1 = $r0[0];
 
-        $r3 = <Test: Node global>;
+        $r2 = $r1.<Node: Node f>;
 
-        $r2 = new Node;
+        $r3 = $r2.<Node: Node f>;
 
-        specialinvoke $r2.<Node: void <init>()>();
+        $r4 = $r3.<Node: Node f>;
 
-        $r3.<Node: Node f> = $r2;
+        $r5 = $r4.<Node: Node f>;
 
-        $r4 = new Node;
+        $r6 = $r5.<Node: Node g>;
 
-        specialinvoke $r4.<Node: void <init>()>();
+        $r8 = $r6.<Node: Node f>;
 
-        return $r4;
+        $r7 = new Node;
+
+        specialinvoke $r7.<Node: void <init>()>();
+
+        $r8.<Node: Node g> = $r7;
+
+        $r9 = new Node;
+
+        specialinvoke $r9.<Node: void <init>()>();
+
+        return $r9;
     }
 }

@@ -1,7 +1,9 @@
+
 //TODO: initialization to ->? for strong updates validity.
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -12,6 +14,7 @@ import java.util.TreeSet;
 import soot.Body;
 import soot.Local;
 import soot.PatchingChain;
+import soot.Scene;
 import soot.SootField;
 import soot.SootMethod;
 import soot.Unit;
@@ -268,18 +271,15 @@ public class PTA {
                     hr.object = s;
                     kgset.gen.heapMap.put(hr, newPointees);
                 }
-            } else {
-
             }
         } else {
-            if(lhs instanceof StaticFieldRef){
-                StaticFieldRef sfref = (StaticFieldRef)(lhs);
+            if (lhs instanceof StaticFieldRef) {
+                StaticFieldRef sfref = (StaticFieldRef) (lhs);
                 String stackVarName = sfref.getField().getName();
                 // unconditional kill:
                 kgset.killStack.add(stackVarName);
                 kgset.gen.stackMap.put(stackVarName, newPointees);
-            }
-            else{
+            } else {
                 String stackVarName = lhs.toString();
                 // unconditional kill:
                 kgset.killStack.add(stackVarName);
@@ -300,12 +300,28 @@ public class PTA {
             // allocation site abstraction:
             String objectName = "Obj_" + Integer.toString(u.getJavaSourceStartLineNumber());
             newPointees.add(objectName);
+            //updates to inheap:
+            JNewExpr expr = (JNewExpr)(rhs);
+            Chain<SootField> fields = Scene.v().getSootClass(expr.getType().toString()).getFields();
+            TreeSet<String> fieldStrs = new TreeSet<>();
+            for(SootField field:fields){
+                fieldStrs.add(field.getName());
+            }
+            initializeHeapMapForObject(in, objectName, fieldStrs);
+            // System.exit(0);
         } else if (rhs instanceof JNewArrayExpr) {
-            String objectName = "Arr_" + Integer.toString(u.getJavaSourceStartLineNumber());
+            String objectName = "Obj_" + Integer.toString(u.getJavaSourceStartLineNumber());
             newPointees.add(objectName);
+            TreeSet<String> fields = new TreeSet<String>();
+            fields.add("[]");
+            initializeHeapMapForObject(in, objectName, fields);
         } else if (rhs instanceof JNewMultiArrayExpr) {
-            String objectName = "Arr_" + Integer.toString(u.getJavaSourceStartLineNumber());
+            String objectName = "Obj_" + Integer.toString(u.getJavaSourceStartLineNumber());
             newPointees.add(objectName);
+        } else if (rhs instanceof InvokeExpr) {
+            String objName = "@Obj_" + Integer.toString(u.getJavaSourceStartLineNumber());
+
+            newPointees.add(objName);
         } else if (rhs instanceof JInstanceFieldRef) {
             // new pointees only if reftype
             JInstanceFieldRef fieldRef = (JInstanceFieldRef) (rhs);
@@ -319,20 +335,16 @@ public class PTA {
                     hr.object = baseObject;
                     if (in.heapMap.containsKey(hr)) {
                         newPointees.addAll(in.heapMap.get(hr));
-                    } else {
-                        // may happen because dummy objects.
-                        // assume null check analysis has been done.
-                        // =>no null objects are used.
-                        // =>must be dummy object (params)
-                        if(baseObject.contains("@")){
-                           //dummy object
-                           String objectName = "@Obj_"+Integer.toString(u.getJavaSourceStartLineNumber());
-                           newPointees.add(objectName);
-                           //update to heapmap:
-                           TreeSet<String> dummyPointees = new TreeSet<>();
-                           dummyPointees.add(objectName);
-                           in.heapMap.put(hr, dummyPointees);
+                        if (baseObject.contains("@")) {
+                            // dummy object
+                            String objectName = "@Obj_" + Integer.toString(u.getJavaSourceStartLineNumber());
+                            newPointees.add(objectName);
+                            // update to heapmap:
+                            TreeSet<String> dummyPointees = new TreeSet<>();
+                            dummyPointees.add(objectName);
+                            in.heapMap.put(hr, dummyPointees);
                         }
+                    } else {
                     }
                 }
             } else {
@@ -355,8 +367,15 @@ public class PTA {
                         // assume null check analysis has been done.
                         // =>no null objects are used.
                         // =>must be dummy object (params)
-                        // regardless, gen is phi.
-                        // newpointees.add(phi).
+                        if (baseObject.contains("@")) {
+                            // dummy object
+                            String objectName = "@Obj_" + Integer.toString(u.getJavaSourceStartLineNumber());
+                            newPointees.add(objectName);
+                            // update to heapmap:
+                            TreeSet<String> dummyPointees = new TreeSet<>();
+                            dummyPointees.add(objectName);
+                            in.heapMap.put(hr, dummyPointees);
+                        }
                     }
                 }
             } else {
@@ -374,18 +393,27 @@ public class PTA {
                 // because getDummyGraphtakes takes care of this.
             } else if (rhs instanceof StaticFieldRef) {
                 // TODO: store info about obj being global
-                StaticFieldRef sfref = (StaticFieldRef)(rhs);
+                StaticFieldRef sfref = (StaticFieldRef) (rhs);
                 String varName = sfref.getField().getName();
                 if (in.stackMap.containsKey(varName)) {
                     newPointees.addAll(in.stackMap.get(varName));
                 }
             } else if (rhs instanceof ThisRef) {
                 // what?
-            } else if (rhs instanceof InvokeExpr){
-                //TODO return-vals are dummies.
             }
         }
         return newPointees;
+    }
+
+    private void initializeHeapMapForObject(PointsToGraph in, String objectName, TreeSet<String> fields) {
+        for(String field:fields){
+            TreeSet<String> pointees = new TreeSet<>();
+            pointees.add("?");
+            HeapReference hr = new HeapReference();
+            hr.field = field;
+            hr.object = objectName;
+            in.heapMap.put(hr, pointees);
+        }
     }
 
     PointsToGraph flow(PointsToGraph in, Unit u) {
@@ -407,14 +435,19 @@ public class PTA {
         return ans;
     }
 
-    PointsToGraph getDummyPointsToGraph(Body body) {
+    PointsToGraph getInitPointsToGraph(Body body) {
+        Chain<Local> locals = body.getLocals();
         PointsToGraph g = new PointsToGraph();
         SootMethod method = body.getMethod();
-        // TODO: dummy objects for fields and params
         // heap objects should be identifiable
+        //locals init to ->?
+        for(Local local:locals){
+            TreeSet<String> pointees = new TreeSet<>();
+            pointees.add("?");
+            g.stackMap.put(local.getName(), pointees);
+        }
+        //params init to dummies
         List<Local> params = body.getParameterLocals();
-        print("Params for " + method.getName() + ":");
-        print(Integer.toString(params.size()));
         for (int i = 0; i < params.size(); i++) {
             Local param = params.get(i);
             String stackParamName = param.getName();
@@ -423,6 +456,7 @@ public class PTA {
             pointees.add(dummyObjName);
             g.stackMap.put(stackParamName, pointees);
         }
+        //class fields init to dummies:
         Chain<SootField> fields = method.getDeclaringClass().getFields();
         for (SootField field : fields) {
             String stackParamName = field.getName();
@@ -471,7 +505,7 @@ public class PTA {
             if (u == first) {
                 // equality holds because no new unit objects are created.
                 // equality in value must imply equality in reference.
-                newIn = getDummyPointsToGraph(body);
+                newIn = getInitPointsToGraph(body);
             } else {
                 newIn = mergeOutsOf(graph.getPredsOf(u), pointsToInfo);
             }
@@ -502,11 +536,13 @@ public class PTA {
     public TreeSet<String> getDummyHeapObjects(PointsToGraph goingIn) {
         TreeSet<String> dummies = new TreeSet<>();
         Set<String> stackvars = goingIn.stackMap.keySet();
-        for(String svarname:stackvars){
+        for (String svarname : stackvars) {
             dummies.addAll(goingIn.stackMap.get(svarname));
         }
-        dummies.removeIf((s)->{return (!s.contains("@"));});
+        dummies.removeIf((s) -> {
+            return (!s.contains("@"));
+        });
         return dummies;
-        
+
     }
 }
