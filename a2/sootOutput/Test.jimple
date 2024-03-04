@@ -1,8 +1,6 @@
 public class Test extends java.lang.Object
 {
-    public static Node[] global;
-    public Node x;
-    public Man y;
+    public static Node global;
 
     public void <init>()
     {
@@ -15,97 +13,121 @@ public class Test extends java.lang.Object
         return;
     }
 
-    public void main(java.lang.String[])
+    public static void main(java.lang.String[])
     {
-        Test r0;
-        Node $r1;
-        java.lang.String[] r3;
+        java.lang.String[] r1;
 
-        r0 := @this: Test;
+        r1 := @parameter0: java.lang.String[];
 
-        r3 := @parameter0: java.lang.String[];
-
-        $r1 = new Node;
-
-        specialinvoke $r1.<Node: void <init>()>();
-
-        virtualinvoke r0.<Test: Node foo(Node)>($r1);
+        staticinvoke <Test: Node foo()>();
 
         return;
     }
 
-    public static Node bar(Node)
+    public static Node foo()
     {
-        Node[] $r0, $r2;
-        Node $r1, $r3, r4, r5;
+        Node $r0, $r2, $r3, $r5, r7, $r8, $r9, $r10, $r11, $r12, $r13, $r14, $r15, $r17, $r18, $r19, $r20;
+        Node[] r16;
 
-        r4 := @parameter0: Node;
+        $r0 = new Node;
 
-        $r0 = <Test: Node[] global>;
+        specialinvoke $r0.<Node: void <init>()>();
 
-        $r1 = $r0[0];
+        $r2 = new Node;
 
-        r5 = $r1.<Node: Node f>;
+        specialinvoke $r2.<Node: void <init>()>();
 
-        $r2 = <Test: Node[] global>;
+        $r0.<Node: Node f> = $r2;
 
-        $r3 = $r2[0];
+        $r3 = new Node;
 
-        return $r3;
-    }
+        specialinvoke $r3.<Node: void <init>()>();
 
-    public Node foo(Node)
-    {
-        Man $r0, $r12;
-        Node[] $r2;
-        Node $r3, $r4, $r5, $r6, $r7, $r8, $r9, $r10, $r13, r14;
-        Test r11;
-        int $i0, $i1;
+        $r5 = new Node;
 
-        r11 := @this: Test;
+        specialinvoke $r5.<Node: void <init>()>();
 
-        r14 := @parameter0: Node;
+        r7 = staticinvoke <Test: Node bar(Node,Node)>($r3, $r5);
 
-        $r0 = new Man;
+        $r8 = new Node;
 
-        specialinvoke $r0.<Man: void <init>()>();
+        specialinvoke $r8.<Node: void <init>()>();
 
-        $r2 = <Test: Node[] global>;
+        r7.<Node: Node f> = $r8;
 
-        $r3 = $r2[0];
+        $r9 = <Test: Node global>;
 
-        $r4 = $r3.<Node: Node f>;
+        $r10 = $r9.<Node: Node f>;
 
-        $r5 = $r4.<Node: Node f>;
+        $r11 = $r10.<Node: Node g>;
 
-        $r6 = $r5.<Node: Node f>;
+        $r12 = $r11.<Node: Node g>;
 
-        $r7 = $r6.<Node: Node f>;
-
-        $r8 = $r7.<Node: Node g>;
-
-        $r10 = $r8.<Node: Node f>;
-
-        $r9 = new Node;
-
-        specialinvoke $r9.<Node: void <init>()>();
-
-        $r10.<Node: Node g> = $r9;
-
-        $r12 = r11.<Test: Man y>;
-
-        $i0 = $r12.<Man: int h>;
-
-        $i1 = $i0 + 1;
-
-        $r0.<Man: int h> = $i1;
-
-        r11.<Test: Man y> = $r0;
+        $r14 = $r12.<Node: Node f>;
 
         $r13 = new Node;
 
         specialinvoke $r13.<Node: void <init>()>();
 
-        return $r13;
+        $r14.<Node: Node f> = $r13;
+
+        $r15 = new Node;
+
+        specialinvoke $r15.<Node: void <init>()>();
+
+        <Test: Node global> = $r15;
+
+        r16 = newarray (Node)[10];
+
+        $r17 = r16[1];
+
+        if $r17 != $r3 goto label1;
+
+        $r20 = new Node;
+
+        specialinvoke $r20.<Node: void <init>()>();
+
+        r16[0] = $r20;
+
+        goto label2;
+
+     label1:
+        $r18 = new Node;
+
+        specialinvoke $r18.<Node: void <init>()>();
+
+        r16[2] = $r18;
+
+     label2:
+        $r19 = r16[1];
+
+        <Test: Node global> = $r19;
+
+        return $r0;
+    }
+
+    public static Node bar(Node, Node)
+    {
+        Node $r0, $r2, r3, $r4, r5;
+
+        r5 := @parameter0: Node;
+
+        r3 := @parameter1: Node;
+
+        $r0 = new Node;
+
+        specialinvoke $r0.<Node: void <init>()>();
+
+        $r2 = new Node;
+
+        specialinvoke $r2.<Node: void <init>()>();
+
+        $r0.<Node: Node f> = $r2;
+
+        $r4 = $r0.<Node: Node f>;
+
+        r3.<Node: Node f> = $r4;
+
+        return r5;
     }
 }

@@ -11,6 +11,8 @@ import soot.SootField;
 import soot.Unit;
 import soot.Value;
 import soot.jimple.InvokeExpr;
+import soot.jimple.internal.AbstractInvokeExpr;
+import soot.jimple.internal.JAssignStmt;
 import soot.jimple.internal.JDynamicInvokeExpr;
 import soot.jimple.internal.JInterfaceInvokeExpr;
 import soot.jimple.internal.JInvokeStmt;
@@ -145,18 +147,24 @@ public class MyVeryOwnEscapeAnalysis {
                 Value arg = expr.getArg(i);
                 if (arg instanceof Local) {
                     Local local = (Local) arg;
-                    // args are always locals.
                     addLocalToEscapingVars(goingIn, escapingVars, local);
                 }
             }
             // any object passed as a parameter to a function call.
-        // } else if (u instanceof JAssignStmt) {
-        //     // TODO: ensure this block isn't necessary at all.
-        //     JAssignStmt stmt = ((JAssignStmt) u);
-        //     Value rhs, lhs;
-        //     lhs = stmt.getLeftOp();
-            // rhs = stmt.getRightOp();
-        // }
+        } else if (u instanceof JAssignStmt) {
+            JAssignStmt stmt = ((JAssignStmt) u);
+            Value rhs;
+            rhs = stmt.getRightOp();
+            if(isInvokeExpression(rhs)){
+                AbstractInvokeExpr expr = (AbstractInvokeExpr)rhs;
+                for (int i = 0; i < expr.getArgCount(); i++) {
+                    Value arg = expr.getArg(i);
+                    if (arg instanceof Local) {
+                        Local local = (Local) arg;
+                        addLocalToEscapingVars(goingIn, escapingVars, local);
+                    }
+                }   
+            }
         // // assignment to parameter's fields.
         // // assignment to global vars.
         // if(lhs instanceof FieldRef){
