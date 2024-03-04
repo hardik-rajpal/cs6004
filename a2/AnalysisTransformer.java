@@ -5,6 +5,7 @@ public class AnalysisTransformer extends BodyTransformer {
     void print(String s){
         System.out.println(s);
     }
+    static TreeSet<String> results = new TreeSet<>();
     @Override
     protected void internalTransform(Body body, String phaseName, Map<String, String> options) {
         PTA pta = new PTA();
@@ -16,14 +17,16 @@ public class AnalysisTransformer extends BodyTransformer {
         TreeSet<String> fugitives = ea.doEscapeAnalysis(body, pointsToInfo,pta);
         String methodName = body.getMethod().getName();
         String enclosingClass = body.getMethod().getDeclaringClass().getName();
-        synchronized(System.out){
-            // pta.printPointsToInfo(pointsToInfo);
-            // System.out.println("Escaping Info");
-            System.out.print(enclosingClass+":"+methodName+" ");
-            for(String fugitive:fugitives){
-                System.out.print(fugitive.replace("Obj_", "")+" ");
-            }
-            System.out.print("\n");
+        String ans = "";
+        ans += (enclosingClass+":"+methodName+" ");
+        for(String fugitive:fugitives){
+            ans += (fugitive.replace("Obj_", "")+" ");
+        }
+        // synchronized(System.out){
+        //     pta.printPointsToInfo(pointsToInfo);
+        // }
+        synchronized(results){
+            results.add(ans);
         }
     }
 }

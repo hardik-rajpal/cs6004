@@ -1,27 +1,26 @@
-
 class Node {
 	Node f;
 	Node g;
 }
-class Man{
-	int h;
-}
+
 public class Test {
-	public static Node[] global;
-	public Node x;
-	public Man y;
-	public void main(String[] args) {
-		foo(new Node());
+	public static Node global;
+	public static void main(String[] args) {
+		foo();
 	}
-	public static Node bar(Node y){
-		y = global[0].f;
-		return global[0];
+	public static Node foo(){
+		Node x = new Node();
+		x.f = new Node();
+		x.f.g = new Node(); 
+		Node y = new Node(); 
+		Node z = new Node();
+		y.f = z;
+		bar(x.f, y);
+		return y.f;
 	}
-	public Node foo(Node p){
-		Man m = new Man();
-		global[0].f.f.f.f.g.f.g = new Node();
-		m.h = y.h+1;
-		y = m;	
-		return new Node();
+	public static void bar(Node p1, Node p2){
+		Node w = new Node();
+		w.f = new Node(); 
+		p2.f = w.f;		
 	}
 }

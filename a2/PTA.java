@@ -17,6 +17,7 @@ import soot.SootMethod;
 import soot.Unit;
 import soot.Value;
 import soot.jimple.InvokeExpr;
+import soot.jimple.ParameterRef;
 import soot.jimple.StaticFieldRef;
 import soot.jimple.ThisRef;
 import soot.jimple.internal.AbstractDefinitionStmt;
@@ -236,7 +237,7 @@ public class PTA {
                     hr.field = field;
                     hr.object = s;
                     // strong update's kill.
-                    kgset.killHeap.add(hr);
+                    // kgset.killHeap.add(hr);
                     kgset.gen.heapMap.put(hr, newPointees);
                 } else {
                     // weak update, always done.
@@ -264,19 +265,18 @@ public class PTA {
                     kgset.gen.heapMap.put(hr, newPointees);
                 }
             }
-        } else {
-            if (lhs instanceof StaticFieldRef) {
-                StaticFieldRef sfref = (StaticFieldRef) (lhs);
-                String stackVarName = sfref.getField().getName();
-                // unconditional kill:
-                kgset.killStack.add(stackVarName);
-                kgset.gen.stackMap.put(stackVarName, newPointees);
-            } else {
-                String stackVarName = lhs.toString();
-                // unconditional kill:
-                kgset.killStack.add(stackVarName);
-                kgset.gen.stackMap.put(stackVarName, newPointees);
-            }
+        } else if (lhs instanceof StaticFieldRef) {
+            StaticFieldRef sfref = (StaticFieldRef) (lhs);
+            String stackVarName = sfref.getField().getName();
+            // unconditional kill:
+            kgset.killStack.add(stackVarName);
+            kgset.gen.stackMap.put(stackVarName, newPointees);
+        } else if(lhs instanceof Local) {
+            Local local = (Local)lhs;
+            String stackVarName = local.getName();
+            // unconditional kill:
+            kgset.killStack.add(stackVarName);
+            kgset.gen.stackMap.put(stackVarName, newPointees);
         }
     }
 
@@ -302,7 +302,7 @@ public class PTA {
         } else if (rhs instanceof InvokeExpr) {
             String objName = "@Obj_" + Integer.toString(u.getJavaSourceStartLineNumber());
             newPointees.add(objName);
-        }else if (rhs instanceof JInstanceFieldRef) {
+        } else if (rhs instanceof JInstanceFieldRef) {
             // new pointees only if reftype
             JInstanceFieldRef fieldRef = (JInstanceFieldRef) (rhs);
             String field = fieldRef.getField().getName();
@@ -379,6 +379,10 @@ public class PTA {
             }
         } else if (rhs instanceof ThisRef) {
             newPointees.add("@this");
+        } else if (rhs instanceof ParameterRef){
+            ParameterRef pref = (ParameterRef)rhs;
+            String pointee = "@param"+Integer.toString(pref.getIndex());
+            newPointees.add(pointee);
         }
         return newPointees;
     }

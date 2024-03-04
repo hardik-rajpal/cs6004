@@ -32,5 +32,10 @@ public class PA2 {
 
         // Call Soot's main method with arguments
         soot.Main.main(sootArgs);
+
+        //print output
+        for(String res:AnalysisTransformer.results){
+            System.out.println(res);
+        }        
     }
 }
