@@ -207,14 +207,9 @@ public class PTA {
         kgset.gen = new PointsToGraph();
         kgset.killHeap = new TreeSet<HeapReference>(new HeapReferenceComparator());
         kgset.killStack = new TreeSet<String>();
-        String unitstr = u.toString();
-        if (unitstr.contains("parameter")) {
-            System.out.println(unitstr);
-            System.out.println(u.getClass());
-        }
         AbstractDefinitionStmt stmt;
-        // not accounting for JIdentityStmt
-        // as that's only used for parameter aliasing.
+        // accounting for JIdentityStmt
+        // as that's used for @this aliasing.
         // That's handled by getDummyPointsToGraph
         if (u instanceof JAssignStmt || u instanceof JIdentityStmt) {
             stmt = (AbstractDefinitionStmt) u;
@@ -412,8 +407,6 @@ public class PTA {
         SootMethod method = body.getMethod();
         // heap objects should be identifiable
         List<Local> params = body.getParameterLocals();
-        print("Params for " + method.getName() + ":");
-        print(Integer.toString(params.size()));
         for (int i = 0; i < params.size(); i++) {
             Local param = params.get(i);
             String stackParamName = param.getName();
