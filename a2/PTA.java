@@ -1,3 +1,4 @@
+//TODO: initialization to ->? for strong updates validity.
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -15,6 +16,7 @@ import soot.SootField;
 import soot.SootMethod;
 import soot.Unit;
 import soot.Value;
+import soot.jimple.InvokeExpr;
 import soot.jimple.ParameterRef;
 import soot.jimple.StaticFieldRef;
 import soot.jimple.ThisRef;
@@ -379,8 +381,8 @@ public class PTA {
                 }
             } else if (rhs instanceof ThisRef) {
                 // what?
-            } else {
-                // function calls; ignored.
+            } else if (rhs instanceof InvokeExpr){
+                //TODO return-vals are dummies.
             }
         }
         return newPointees;
