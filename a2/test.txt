@@ -1,82 +1,115 @@
-Soot started on Mon Mar 04 13:57:37 IST 2024
+Soot started on Mon Mar 04 14:23:00 IST 2024
+Params for <init>:
+0
+Params for <init>:
+0
+Unit: "r0 := @this: Test"{
+	In: 
 Unit: "r0 := @this: Node"{
 	In: 
-Unit: "r0 := @this: Test"{
-	In: 
 	{
 		stack{
-	{
-		stack{
-			f->[ 			global->[ @field_global, @field_f, ]
-			g->[ @field_g, ]
-			r0->[ ?, ]
-		}
-		heap{
-		}
-]
-			r0->[ ?, ]
-			x->[ @field_x, ]
-		}
-		heap{
-		}
-	}
-	Out: 
 	{
 		stack{
 			global->[ @field_global, ]
-			r0->[ ?, ]
+			x->[ @field_x, ]
+			y->[ @field_y, ]
+		}
+		heap{
+		}
+			f->[ 	}
+	Out: 
+@field_f, ]
+			g->[ 	{
+		stack{
+			global->[ @field_g, ]
+		}
+		heap{
+		}
 	}
 	Out: 
 	{
 		stack{
-			f->[ @field_f, ]
-			g->[ 			x->[ @field_g, ]
+			f->[ @field_global, ]
+@field_f, ]
+			g->[ @field_g, ]
+			r0->[ @this, ]
+		}
+		heap{
+		}
+	}
+}
+			r0->[ @this, ]
+			x->[ Unit: "specialinvoke r0.<java.lang.Object: void <init>()>()"{
+	In: 
+	{
+		stack{
 @field_x, ]
+			y->[ 			f->[ @field_f, ]
+			g->[ @field_g, ]
+			r0->[ @this, ]
 		}
-		heap{
-		}
-	}
-			r0->[ ?, ]
+@field_y, ]
 		}
 		heap{
 		}
 	}
 }
-}
+		heap{
 Unit: "specialinvoke r0.<java.lang.Object: void <init>()>()"{
 	In: 
 	{
 		stack{
-Unit: "specialinvoke r0.<java.lang.Object: void <init>()>()"{
-	In: 
+			global->[ @field_global, ]
+		}
+	}
+	Out: 
+	{
+		stack{
 			f->[ @field_f, ]
 			g->[ @field_g, ]
-	{
-		stack{
-			global->[ 			r0->[ @field_global, ]
-?, ]
+			r0->[ @this, ]
 		}
 		heap{
+		}
+	}
+}
+Unit: "return"{
+	In: 
+	{
+		stack{
+			f->[ 			r0->[ @this, ]
+			x->[ @field_x, ]
+			y->[ @field_y, ]
+@field_f, ]
+			g->[ @field_g, ]
 			r0->[ 		}
-	}
-	Out: 
-	{
-		stack{
-?, ]
-			x->[ @field_x, ]
+		heap{
+@this, ]
 		}
 		heap{
 		}
-			f->[ @field_f, ]
 	}
 	Out: 
 	{
 		stack{
-			global->[ 			g->[ @field_g, ]
-			r0->[ ?, ]
-@field_global, ]
-			r0->[ ?, ]
-			x->[ @field_x, ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			global->[ @field_global, ]
+			r0->[ @this, ]
+			f->[ @field_f, ]
+			g->[ @field_g, ]
+			x->[ @field_x, 			r0->[ @this, ]
+		}
+		heap{
+		}
+	}
+}
+]
+			y->[ @field_y, ]
 		}
 		heap{
 		}
@@ -86,36 +119,10 @@ Unit: "return"{
 	In: 
 	{
 		stack{
-		}
-		heap{
-		}
-	}
-}
-Unit: "return"{
-	In: 
-	{
-		stack{
-			f->[ @field_f, ]
-			g->[ @field_g, ]
-			r0->[ ?, ]
-		}
-		heap{
-		}
-	}
-	Out: 
-			global->[ 	{
-		stack{
-			f->[ @field_f, ]
-			g->[ @field_g, ]
-			r0->[ ?, ]
-		}
-		heap{
-		}
-	}
-}
-@field_global, ]
-			r0->[ ?, ]
+			global->[ @field_global, ]
+			r0->[ @this, ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
 		}
@@ -124,29 +131,30 @@ Unit: "return"{
 	{
 		stack{
 			global->[ @field_global, ]
-			r0->[ ?, ]
+			r0->[ @this, ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
 		}
 	}
 }
 Escaping Info
-Node:<init> 
 Escaping Info
-Test:<init> 
+Node:<init> Test:<init> 
+
+Params for main:
+1
 r3 := @parameter0: java.lang.String[]
 class soot.jimple.internal.JIdentityStmt
-$r1 = new Node fields:<Node: Node f>
 Unit: "r0 := @this: Test"{
 	In: 
 	{
 		stack{
-			$r1->[ ?, ]
 			global->[ @field_global, ]
-			r0->[ ?, ]
 			r3->[ @param0, ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
 		}
@@ -154,11 +162,11 @@ Unit: "r0 := @this: Test"{
 	Out: 
 	{
 		stack{
-			$r1->[ ?, ]
 			global->[ @field_global, ]
-			r0->[ ?, ]
+			r0->[ @this, ]
 			r3->[ @param0, ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
 		}
@@ -168,11 +176,11 @@ Unit: "r3 := @parameter0: java.lang.String[]"{
 	In: 
 	{
 		stack{
-			$r1->[ ?, ]
 			global->[ @field_global, ]
-			r0->[ ?, ]
+			r0->[ @this, ]
 			r3->[ @param0, ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
 		}
@@ -180,11 +188,11 @@ Unit: "r3 := @parameter0: java.lang.String[]"{
 	Out: 
 	{
 		stack{
-			$r1->[ ?, ]
 			global->[ @field_global, ]
-			r0->[ ?, ]
-			r3->[ @param0, ]
+			r0->[ @this, ]
+			r3->[ ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
 		}
@@ -194,11 +202,11 @@ Unit: "$r1 = new Node"{
 	In: 
 	{
 		stack{
-			$r1->[ ?, ]
 			global->[ @field_global, ]
-			r0->[ ?, ]
-			r3->[ @param0, ]
+			r0->[ @this, ]
+			r3->[ ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
 		}
@@ -206,11 +214,12 @@ Unit: "$r1 = new Node"{
 	Out: 
 	{
 		stack{
-			$r1->[ Obj_13, ]
+			$r1->[ Obj_14, ]
 			global->[ @field_global, ]
-			r0->[ ?, ]
-			r3->[ @param0, ]
+			r0->[ @this, ]
+			r3->[ ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
 		}
@@ -220,11 +229,12 @@ Unit: "specialinvoke $r1.<Node: void <init>()>()"{
 	In: 
 	{
 		stack{
-			$r1->[ Obj_13, ]
+			$r1->[ Obj_14, ]
 			global->[ @field_global, ]
-			r0->[ ?, ]
-			r3->[ @param0, ]
+			r0->[ @this, ]
+			r3->[ ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
 		}
@@ -232,11 +242,12 @@ Unit: "specialinvoke $r1.<Node: void <init>()>()"{
 	Out: 
 	{
 		stack{
-			$r1->[ Obj_13, ]
+			$r1->[ Obj_14, ]
 			global->[ @field_global, ]
-			r0->[ ?, ]
-			r3->[ @param0, ]
+			r0->[ @this, ]
+			r3->[ ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
 		}
@@ -246,11 +257,12 @@ Unit: "virtualinvoke r0.<Test: Node foo(Node)>($r1)"{
 	In: 
 	{
 		stack{
-			$r1->[ Obj_13, ]
+			$r1->[ Obj_14, ]
 			global->[ @field_global, ]
-			r0->[ ?, ]
-			r3->[ @param0, ]
+			r0->[ @this, ]
+			r3->[ ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
 		}
@@ -258,11 +270,12 @@ Unit: "virtualinvoke r0.<Test: Node foo(Node)>($r1)"{
 	Out: 
 	{
 		stack{
-			$r1->[ Obj_13, ]
+			$r1->[ Obj_14, ]
 			global->[ @field_global, ]
-			r0->[ ?, ]
-			r3->[ @param0, ]
+			r0->[ @this, ]
+			r3->[ ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
 		}
@@ -272,11 +285,12 @@ Unit: "return"{
 	In: 
 	{
 		stack{
-			$r1->[ Obj_13, ]
+			$r1->[ Obj_14, ]
 			global->[ @field_global, ]
-			r0->[ ?, ]
-			r3->[ @param0, ]
+			r0->[ @this, ]
+			r3->[ ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
 		}
@@ -284,32 +298,31 @@ Unit: "return"{
 	Out: 
 	{
 		stack{
-			$r1->[ Obj_13, ]
+			$r1->[ Obj_14, ]
 			global->[ @field_global, ]
-			r0->[ ?, ]
-			r3->[ @param0, ]
+			r0->[ @this, ]
+			r3->[ ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
 		}
 	}
 }
 Escaping Info
-Test:main Obj_13 
+Test:main Obj_14 
+Params for bar:
+1
 r4 := @parameter0: Node
 class soot.jimple.internal.JIdentityStmt
 Unit: "r4 := @parameter0: Node"{
 	In: 
 	{
 		stack{
-			$r0->[ ?, ]
-			$r1->[ ?, ]
-			$r2->[ ?, ]
-			$r3->[ ?, ]
 			global->[ @field_global, ]
 			r4->[ @param0, ]
-			r5->[ ?, ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
 		}
@@ -317,14 +330,10 @@ Unit: "r4 := @parameter0: Node"{
 	Out: 
 	{
 		stack{
-			$r0->[ ?, ]
-			$r1->[ ?, ]
-			$r2->[ ?, ]
-			$r3->[ ?, ]
 			global->[ @field_global, ]
-			r4->[ @param0, ]
-			r5->[ ?, ]
+			r4->[ ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
 		}
@@ -334,14 +343,10 @@ Unit: "$r0 = <Test: Node[] global>"{
 	In: 
 	{
 		stack{
-			$r0->[ ?, ]
-			$r1->[ ?, ]
-			$r2->[ ?, ]
-			$r3->[ ?, ]
 			global->[ @field_global, ]
-			r4->[ @param0, ]
-			r5->[ ?, ]
+			r4->[ ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
 		}
@@ -350,13 +355,10 @@ Unit: "$r0 = <Test: Node[] global>"{
 	{
 		stack{
 			$r0->[ @field_global, ]
-			$r1->[ ?, ]
-			$r2->[ ?, ]
-			$r3->[ ?, ]
 			global->[ @field_global, ]
-			r4->[ @param0, ]
-			r5->[ ?, ]
+			r4->[ ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
 		}
@@ -367,32 +369,27 @@ Unit: "$r1 = $r0[0]"{
 	{
 		stack{
 			$r0->[ @field_global, ]
-			$r1->[ ?, ]
-			$r2->[ ?, ]
-			$r3->[ ?, ]
 			global->[ @field_global, ]
-			r4->[ @param0, ]
-			r5->[ ?, ]
+			r4->[ ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
-			@field_global.[]->[ @Obj_16, ]
+			@field_global.[]->[ @Obj_17, ]
 		}
 	}
 	Out: 
 	{
 		stack{
 			$r0->[ @field_global, ]
-			$r1->[ @Obj_16, ]
-			$r2->[ ?, ]
-			$r3->[ ?, ]
+			$r1->[ @Obj_17, ]
 			global->[ @field_global, ]
-			r4->[ @param0, ]
-			r5->[ ?, ]
+			r4->[ ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
-			@field_global.[]->[ @Obj_16, ]
+			@field_global.[]->[ @Obj_17, ]
 		}
 	}
 }
@@ -401,34 +398,31 @@ Unit: "r5 = $r1.<Node: Node f>"{
 	{
 		stack{
 			$r0->[ @field_global, ]
-			$r1->[ @Obj_16, ]
-			$r2->[ ?, ]
-			$r3->[ ?, ]
+			$r1->[ @Obj_17, ]
 			global->[ @field_global, ]
-			r4->[ @param0, ]
-			r5->[ ?, ]
+			r4->[ ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
-			@Obj_16.f->[ @Obj_16, ]
-			@field_global.[]->[ @Obj_16, ]
+			@Obj_17.f->[ @Obj_17, ]
+			@field_global.[]->[ @Obj_17, ]
 		}
 	}
 	Out: 
 	{
 		stack{
 			$r0->[ @field_global, ]
-			$r1->[ @Obj_16, ]
-			$r2->[ ?, ]
-			$r3->[ ?, ]
+			$r1->[ @Obj_17, ]
 			global->[ @field_global, ]
-			r4->[ @param0, ]
-			r5->[ @Obj_16, ]
+			r4->[ ]
+			r5->[ @Obj_17, ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
-			@Obj_16.f->[ @Obj_16, ]
-			@field_global.[]->[ @Obj_16, ]
+			@Obj_17.f->[ @Obj_17, ]
+			@field_global.[]->[ @Obj_17, ]
 		}
 	}
 }
@@ -437,34 +431,33 @@ Unit: "$r2 = <Test: Node[] global>"{
 	{
 		stack{
 			$r0->[ @field_global, ]
-			$r1->[ @Obj_16, ]
-			$r2->[ ?, ]
-			$r3->[ ?, ]
+			$r1->[ @Obj_17, ]
 			global->[ @field_global, ]
-			r4->[ @param0, ]
-			r5->[ @Obj_16, ]
+			r4->[ ]
+			r5->[ @Obj_17, ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
-			@Obj_16.f->[ @Obj_16, ]
-			@field_global.[]->[ @Obj_16, ]
+			@Obj_17.f->[ @Obj_17, ]
+			@field_global.[]->[ @Obj_17, ]
 		}
 	}
 	Out: 
 	{
 		stack{
 			$r0->[ @field_global, ]
-			$r1->[ @Obj_16, ]
+			$r1->[ @Obj_17, ]
 			$r2->[ @field_global, ]
-			$r3->[ ?, ]
 			global->[ @field_global, ]
-			r4->[ @param0, ]
-			r5->[ @Obj_16, ]
+			r4->[ ]
+			r5->[ @Obj_17, ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
-			@Obj_16.f->[ @Obj_16, ]
-			@field_global.[]->[ @Obj_16, ]
+			@Obj_17.f->[ @Obj_17, ]
+			@field_global.[]->[ @Obj_17, ]
 		}
 	}
 }
@@ -473,34 +466,35 @@ Unit: "$r3 = $r2[0]"{
 	{
 		stack{
 			$r0->[ @field_global, ]
-			$r1->[ @Obj_16, ]
+			$r1->[ @Obj_17, ]
 			$r2->[ @field_global, ]
-			$r3->[ ?, ]
 			global->[ @field_global, ]
-			r4->[ @param0, ]
-			r5->[ @Obj_16, ]
+			r4->[ ]
+			r5->[ @Obj_17, ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
-			@Obj_16.f->[ @Obj_16, ]
-			@field_global.[]->[ @Obj_16, ]
+			@Obj_17.f->[ @Obj_17, ]
+			@field_global.[]->[ @Obj_17, ]
 		}
 	}
 	Out: 
 	{
 		stack{
 			$r0->[ @field_global, ]
-			$r1->[ @Obj_16, ]
+			$r1->[ @Obj_17, ]
 			$r2->[ @field_global, ]
-			$r3->[ @Obj_16, ]
+			$r3->[ @Obj_17, ]
 			global->[ @field_global, ]
-			r4->[ @param0, ]
-			r5->[ @Obj_16, ]
+			r4->[ ]
+			r5->[ @Obj_17, ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
-			@Obj_16.f->[ @Obj_16, ]
-			@field_global.[]->[ @Obj_16, ]
+			@Obj_17.f->[ @Obj_17, ]
+			@field_global.[]->[ @Obj_17, ]
 		}
 	}
 }
@@ -509,65 +503,53 @@ Unit: "return $r3"{
 	{
 		stack{
 			$r0->[ @field_global, ]
-			$r1->[ @Obj_16, ]
+			$r1->[ @Obj_17, ]
 			$r2->[ @field_global, ]
-			$r3->[ @Obj_16, ]
+			$r3->[ @Obj_17, ]
 			global->[ @field_global, ]
-			r4->[ @param0, ]
-			r5->[ @Obj_16, ]
+			r4->[ ]
+			r5->[ @Obj_17, ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
-			@Obj_16.f->[ @Obj_16, ]
-			@field_global.[]->[ @Obj_16, ]
+			@Obj_17.f->[ @Obj_17, ]
+			@field_global.[]->[ @Obj_17, ]
 		}
 	}
 	Out: 
 	{
 		stack{
 			$r0->[ @field_global, ]
-			$r1->[ @Obj_16, ]
+			$r1->[ @Obj_17, ]
 			$r2->[ @field_global, ]
-			$r3->[ @Obj_16, ]
+			$r3->[ @Obj_17, ]
 			global->[ @field_global, ]
-			r4->[ @param0, ]
-			r5->[ @Obj_16, ]
+			r4->[ ]
+			r5->[ @Obj_17, ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
-			@Obj_16.f->[ @Obj_16, ]
-			@field_global.[]->[ @Obj_16, ]
+			@Obj_17.f->[ @Obj_17, ]
+			@field_global.[]->[ @Obj_17, ]
 		}
 	}
 }
 Escaping Info
 Test:bar 
-r13 := @parameter0: Node
+Params for foo:
+1
+r14 := @parameter0: Node
 class soot.jimple.internal.JIdentityStmt
-$r0 = new Man fields:<Man: int h>
-$r9 = new Node fields:<Node: Node f>
-$r11 = new Node fields:<Node: Node f>
-Unit: "r12 := @this: Test"{
+Unit: "r11 := @this: Test"{
 	In: 
 	{
 		stack{
-			$i0->[ ?, ]
-			$i1->[ ?, ]
-			$r0->[ ?, ]
-			$r10->[ ?, ]
-			$r11->[ ?, ]
-			$r2->[ ?, ]
-			$r3->[ ?, ]
-			$r4->[ ?, ]
-			$r5->[ ?, ]
-			$r6->[ ?, ]
-			$r7->[ ?, ]
-			$r8->[ ?, ]
-			$r9->[ ?, ]
 			global->[ @field_global, ]
-			r12->[ ?, ]
-			r13->[ @param0, ]
+			r14->[ @param0, ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
 		}
@@ -575,49 +557,25 @@ Unit: "r12 := @this: Test"{
 	Out: 
 	{
 		stack{
-			$i0->[ ?, ]
-			$i1->[ ?, ]
-			$r0->[ ?, ]
-			$r10->[ ?, ]
-			$r11->[ ?, ]
-			$r2->[ ?, ]
-			$r3->[ ?, ]
-			$r4->[ ?, ]
-			$r5->[ ?, ]
-			$r6->[ ?, ]
-			$r7->[ ?, ]
-			$r8->[ ?, ]
-			$r9->[ ?, ]
 			global->[ @field_global, ]
-			r12->[ ?, ]
-			r13->[ @param0, ]
+			r11->[ @this, ]
+			r14->[ @param0, ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
 		}
 	}
 }
-Unit: "r13 := @parameter0: Node"{
+Unit: "r14 := @parameter0: Node"{
 	In: 
 	{
 		stack{
-			$i0->[ ?, ]
-			$i1->[ ?, ]
-			$r0->[ ?, ]
-			$r10->[ ?, ]
-			$r11->[ ?, ]
-			$r2->[ ?, ]
-			$r3->[ ?, ]
-			$r4->[ ?, ]
-			$r5->[ ?, ]
-			$r6->[ ?, ]
-			$r7->[ ?, ]
-			$r8->[ ?, ]
-			$r9->[ ?, ]
 			global->[ @field_global, ]
-			r12->[ ?, ]
-			r13->[ @param0, ]
+			r11->[ @this, ]
+			r14->[ @param0, ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
 		}
@@ -625,23 +583,11 @@ Unit: "r13 := @parameter0: Node"{
 	Out: 
 	{
 		stack{
-			$i0->[ ?, ]
-			$i1->[ ?, ]
-			$r0->[ ?, ]
-			$r10->[ ?, ]
-			$r11->[ ?, ]
-			$r2->[ ?, ]
-			$r3->[ ?, ]
-			$r4->[ ?, ]
-			$r5->[ ?, ]
-			$r6->[ ?, ]
-			$r7->[ ?, ]
-			$r8->[ ?, ]
-			$r9->[ ?, ]
 			global->[ @field_global, ]
-			r12->[ ?, ]
-			r13->[ @param0, ]
+			r11->[ @this, ]
+			r14->[ ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
 		}
@@ -651,23 +597,11 @@ Unit: "$r0 = new Man"{
 	In: 
 	{
 		stack{
-			$i0->[ ?, ]
-			$i1->[ ?, ]
-			$r0->[ ?, ]
-			$r10->[ ?, ]
-			$r11->[ ?, ]
-			$r2->[ ?, ]
-			$r3->[ ?, ]
-			$r4->[ ?, ]
-			$r5->[ ?, ]
-			$r6->[ ?, ]
-			$r7->[ ?, ]
-			$r8->[ ?, ]
-			$r9->[ ?, ]
 			global->[ @field_global, ]
-			r12->[ ?, ]
-			r13->[ @param0, ]
+			r11->[ @this, ]
+			r14->[ ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
 		}
@@ -675,23 +609,12 @@ Unit: "$r0 = new Man"{
 	Out: 
 	{
 		stack{
-			$i0->[ ?, ]
-			$i1->[ ?, ]
-			$r0->[ Obj_20, ]
-			$r10->[ ?, ]
-			$r11->[ ?, ]
-			$r2->[ ?, ]
-			$r3->[ ?, ]
-			$r4->[ ?, ]
-			$r5->[ ?, ]
-			$r6->[ ?, ]
-			$r7->[ ?, ]
-			$r8->[ ?, ]
-			$r9->[ ?, ]
+			$r0->[ Obj_21, ]
 			global->[ @field_global, ]
-			r12->[ ?, ]
-			r13->[ @param0, ]
+			r11->[ @this, ]
+			r14->[ ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
 		}
@@ -701,23 +624,12 @@ Unit: "specialinvoke $r0.<Man: void <init>()>()"{
 	In: 
 	{
 		stack{
-			$i0->[ ?, ]
-			$i1->[ ?, ]
-			$r0->[ Obj_20, ]
-			$r10->[ ?, ]
-			$r11->[ ?, ]
-			$r2->[ ?, ]
-			$r3->[ ?, ]
-			$r4->[ ?, ]
-			$r5->[ ?, ]
-			$r6->[ ?, ]
-			$r7->[ ?, ]
-			$r8->[ ?, ]
-			$r9->[ ?, ]
+			$r0->[ Obj_21, ]
 			global->[ @field_global, ]
-			r12->[ ?, ]
-			r13->[ @param0, ]
+			r11->[ @this, ]
+			r14->[ ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
 		}
@@ -725,23 +637,12 @@ Unit: "specialinvoke $r0.<Man: void <init>()>()"{
 	Out: 
 	{
 		stack{
-			$i0->[ ?, ]
-			$i1->[ ?, ]
-			$r0->[ Obj_20, ]
-			$r10->[ ?, ]
-			$r11->[ ?, ]
-			$r2->[ ?, ]
-			$r3->[ ?, ]
-			$r4->[ ?, ]
-			$r5->[ ?, ]
-			$r6->[ ?, ]
-			$r7->[ ?, ]
-			$r8->[ ?, ]
-			$r9->[ ?, ]
+			$r0->[ Obj_21, ]
 			global->[ @field_global, ]
-			r12->[ ?, ]
-			r13->[ @param0, ]
+			r11->[ @this, ]
+			r14->[ ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
 		}
@@ -751,23 +652,12 @@ Unit: "$r2 = <Test: Node[] global>"{
 	In: 
 	{
 		stack{
-			$i0->[ ?, ]
-			$i1->[ ?, ]
-			$r0->[ Obj_20, ]
-			$r10->[ ?, ]
-			$r11->[ ?, ]
-			$r2->[ ?, ]
-			$r3->[ ?, ]
-			$r4->[ ?, ]
-			$r5->[ ?, ]
-			$r6->[ ?, ]
-			$r7->[ ?, ]
-			$r8->[ ?, ]
-			$r9->[ ?, ]
+			$r0->[ Obj_21, ]
 			global->[ @field_global, ]
-			r12->[ ?, ]
-			r13->[ @param0, ]
+			r11->[ @this, ]
+			r14->[ ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
 		}
@@ -775,23 +665,13 @@ Unit: "$r2 = <Test: Node[] global>"{
 	Out: 
 	{
 		stack{
-			$i0->[ ?, ]
-			$i1->[ ?, ]
-			$r0->[ Obj_20, ]
-			$r10->[ ?, ]
-			$r11->[ ?, ]
+			$r0->[ Obj_21, ]
 			$r2->[ @field_global, ]
-			$r3->[ ?, ]
-			$r4->[ ?, ]
-			$r5->[ ?, ]
-			$r6->[ ?, ]
-			$r7->[ ?, ]
-			$r8->[ ?, ]
-			$r9->[ ?, ]
 			global->[ @field_global, ]
-			r12->[ ?, ]
-			r13->[ @param0, ]
+			r11->[ @this, ]
+			r14->[ ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
 		}
@@ -801,51 +681,32 @@ Unit: "$r3 = $r2[0]"{
 	In: 
 	{
 		stack{
-			$i0->[ ?, ]
-			$i1->[ ?, ]
-			$r0->[ Obj_20, ]
-			$r10->[ ?, ]
-			$r11->[ ?, ]
+			$r0->[ Obj_21, ]
 			$r2->[ @field_global, ]
-			$r3->[ ?, ]
-			$r4->[ ?, ]
-			$r5->[ ?, ]
-			$r6->[ ?, ]
-			$r7->[ ?, ]
-			$r8->[ ?, ]
-			$r9->[ ?, ]
 			global->[ @field_global, ]
-			r12->[ ?, ]
-			r13->[ @param0, ]
+			r11->[ @this, ]
+			r14->[ ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
-			@field_global.[]->[ @Obj_21, ]
+			@field_global.[]->[ @Obj_22, ]
 		}
 	}
 	Out: 
 	{
 		stack{
-			$i0->[ ?, ]
-			$i1->[ ?, ]
-			$r0->[ Obj_20, ]
-			$r10->[ ?, ]
-			$r11->[ ?, ]
+			$r0->[ Obj_21, ]
 			$r2->[ @field_global, ]
-			$r3->[ @Obj_21, ]
-			$r4->[ ?, ]
-			$r5->[ ?, ]
-			$r6->[ ?, ]
-			$r7->[ ?, ]
-			$r8->[ ?, ]
-			$r9->[ ?, ]
+			$r3->[ @Obj_22, ]
 			global->[ @field_global, ]
-			r12->[ ?, ]
-			r13->[ @param0, ]
+			r11->[ @this, ]
+			r14->[ ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
-			@field_global.[]->[ @Obj_21, ]
+			@field_global.[]->[ @Obj_22, ]
 		}
 	}
 }
@@ -853,53 +714,36 @@ Unit: "$r4 = $r3.<Node: Node f>"{
 	In: 
 	{
 		stack{
-			$i0->[ ?, ]
-			$i1->[ ?, ]
-			$r0->[ Obj_20, ]
-			$r10->[ ?, ]
-			$r11->[ ?, ]
+			$r0->[ Obj_21, ]
 			$r2->[ @field_global, ]
-			$r3->[ @Obj_21, ]
-			$r4->[ ?, ]
-			$r5->[ ?, ]
-			$r6->[ ?, ]
-			$r7->[ ?, ]
-			$r8->[ ?, ]
-			$r9->[ ?, ]
+			$r3->[ @Obj_22, ]
 			global->[ @field_global, ]
-			r12->[ ?, ]
-			r13->[ @param0, ]
+			r11->[ @this, ]
+			r14->[ ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
-			@Obj_21.f->[ @Obj_21, ]
-			@field_global.[]->[ @Obj_21, ]
+			@Obj_22.f->[ @Obj_22, ]
+			@field_global.[]->[ @Obj_22, ]
 		}
 	}
 	Out: 
 	{
 		stack{
-			$i0->[ ?, ]
-			$i1->[ ?, ]
-			$r0->[ Obj_20, ]
-			$r10->[ ?, ]
-			$r11->[ ?, ]
+			$r0->[ Obj_21, ]
 			$r2->[ @field_global, ]
-			$r3->[ @Obj_21, ]
-			$r4->[ @Obj_21, ]
-			$r5->[ ?, ]
-			$r6->[ ?, ]
-			$r7->[ ?, ]
-			$r8->[ ?, ]
-			$r9->[ ?, ]
+			$r3->[ @Obj_22, ]
+			$r4->[ @Obj_22, ]
 			global->[ @field_global, ]
-			r12->[ ?, ]
-			r13->[ @param0, ]
+			r11->[ @this, ]
+			r14->[ ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
-			@Obj_21.f->[ @Obj_21, ]
-			@field_global.[]->[ @Obj_21, ]
+			@Obj_22.f->[ @Obj_22, ]
+			@field_global.[]->[ @Obj_22, ]
 		}
 	}
 }
@@ -907,53 +751,38 @@ Unit: "$r5 = $r4.<Node: Node f>"{
 	In: 
 	{
 		stack{
-			$i0->[ ?, ]
-			$i1->[ ?, ]
-			$r0->[ Obj_20, ]
-			$r10->[ ?, ]
-			$r11->[ ?, ]
+			$r0->[ Obj_21, ]
 			$r2->[ @field_global, ]
-			$r3->[ @Obj_21, ]
-			$r4->[ @Obj_21, ]
-			$r5->[ ?, ]
-			$r6->[ ?, ]
-			$r7->[ ?, ]
-			$r8->[ ?, ]
-			$r9->[ ?, ]
+			$r3->[ @Obj_22, ]
+			$r4->[ @Obj_22, ]
 			global->[ @field_global, ]
-			r12->[ ?, ]
-			r13->[ @param0, ]
+			r11->[ @this, ]
+			r14->[ ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
-			@Obj_21.f->[ @Obj_21, ]
-			@field_global.[]->[ @Obj_21, ]
+			@Obj_22.f->[ @Obj_22, ]
+			@field_global.[]->[ @Obj_22, ]
 		}
 	}
 	Out: 
 	{
 		stack{
-			$i0->[ ?, ]
-			$i1->[ ?, ]
-			$r0->[ Obj_20, ]
-			$r10->[ ?, ]
-			$r11->[ ?, ]
+			$r0->[ Obj_21, ]
 			$r2->[ @field_global, ]
-			$r3->[ @Obj_21, ]
-			$r4->[ @Obj_21, ]
-			$r5->[ @Obj_21, ]
-			$r6->[ ?, ]
-			$r7->[ ?, ]
-			$r8->[ ?, ]
-			$r9->[ ?, ]
+			$r3->[ @Obj_22, ]
+			$r4->[ @Obj_22, ]
+			$r5->[ @Obj_22, ]
 			global->[ @field_global, ]
-			r12->[ ?, ]
-			r13->[ @param0, ]
+			r11->[ @this, ]
+			r14->[ ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
-			@Obj_21.f->[ @Obj_21, ]
-			@field_global.[]->[ @Obj_21, ]
+			@Obj_22.f->[ @Obj_22, ]
+			@field_global.[]->[ @Obj_22, ]
 		}
 	}
 }
@@ -961,53 +790,40 @@ Unit: "$r6 = $r5.<Node: Node f>"{
 	In: 
 	{
 		stack{
-			$i0->[ ?, ]
-			$i1->[ ?, ]
-			$r0->[ Obj_20, ]
-			$r10->[ ?, ]
-			$r11->[ ?, ]
+			$r0->[ Obj_21, ]
 			$r2->[ @field_global, ]
-			$r3->[ @Obj_21, ]
-			$r4->[ @Obj_21, ]
-			$r5->[ @Obj_21, ]
-			$r6->[ ?, ]
-			$r7->[ ?, ]
-			$r8->[ ?, ]
-			$r9->[ ?, ]
+			$r3->[ @Obj_22, ]
+			$r4->[ @Obj_22, ]
+			$r5->[ @Obj_22, ]
 			global->[ @field_global, ]
-			r12->[ ?, ]
-			r13->[ @param0, ]
+			r11->[ @this, ]
+			r14->[ ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
-			@Obj_21.f->[ @Obj_21, ]
-			@field_global.[]->[ @Obj_21, ]
+			@Obj_22.f->[ @Obj_22, ]
+			@field_global.[]->[ @Obj_22, ]
 		}
 	}
 	Out: 
 	{
 		stack{
-			$i0->[ ?, ]
-			$i1->[ ?, ]
-			$r0->[ Obj_20, ]
-			$r10->[ ?, ]
-			$r11->[ ?, ]
+			$r0->[ Obj_21, ]
 			$r2->[ @field_global, ]
-			$r3->[ @Obj_21, ]
-			$r4->[ @Obj_21, ]
-			$r5->[ @Obj_21, ]
-			$r6->[ @Obj_21, ]
-			$r7->[ ?, ]
-			$r8->[ ?, ]
-			$r9->[ ?, ]
+			$r3->[ @Obj_22, ]
+			$r4->[ @Obj_22, ]
+			$r5->[ @Obj_22, ]
+			$r6->[ @Obj_22, ]
 			global->[ @field_global, ]
-			r12->[ ?, ]
-			r13->[ @param0, ]
+			r11->[ @this, ]
+			r14->[ ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
-			@Obj_21.f->[ @Obj_21, ]
-			@field_global.[]->[ @Obj_21, ]
+			@Obj_22.f->[ @Obj_22, ]
+			@field_global.[]->[ @Obj_22, ]
 		}
 	}
 }
@@ -1015,53 +831,42 @@ Unit: "$r7 = $r6.<Node: Node f>"{
 	In: 
 	{
 		stack{
-			$i0->[ ?, ]
-			$i1->[ ?, ]
-			$r0->[ Obj_20, ]
-			$r10->[ ?, ]
-			$r11->[ ?, ]
+			$r0->[ Obj_21, ]
 			$r2->[ @field_global, ]
-			$r3->[ @Obj_21, ]
-			$r4->[ @Obj_21, ]
-			$r5->[ @Obj_21, ]
-			$r6->[ @Obj_21, ]
-			$r7->[ ?, ]
-			$r8->[ ?, ]
-			$r9->[ ?, ]
+			$r3->[ @Obj_22, ]
+			$r4->[ @Obj_22, ]
+			$r5->[ @Obj_22, ]
+			$r6->[ @Obj_22, ]
 			global->[ @field_global, ]
-			r12->[ ?, ]
-			r13->[ @param0, ]
+			r11->[ @this, ]
+			r14->[ ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
-			@Obj_21.f->[ @Obj_21, ]
-			@field_global.[]->[ @Obj_21, ]
+			@Obj_22.f->[ @Obj_22, ]
+			@field_global.[]->[ @Obj_22, ]
 		}
 	}
 	Out: 
 	{
 		stack{
-			$i0->[ ?, ]
-			$i1->[ ?, ]
-			$r0->[ Obj_20, ]
-			$r10->[ ?, ]
-			$r11->[ ?, ]
+			$r0->[ Obj_21, ]
 			$r2->[ @field_global, ]
-			$r3->[ @Obj_21, ]
-			$r4->[ @Obj_21, ]
-			$r5->[ @Obj_21, ]
-			$r6->[ @Obj_21, ]
-			$r7->[ @Obj_21, ]
-			$r8->[ ?, ]
-			$r9->[ ?, ]
+			$r3->[ @Obj_22, ]
+			$r4->[ @Obj_22, ]
+			$r5->[ @Obj_22, ]
+			$r6->[ @Obj_22, ]
+			$r7->[ @Obj_22, ]
 			global->[ @field_global, ]
-			r12->[ ?, ]
-			r13->[ @param0, ]
+			r11->[ @this, ]
+			r14->[ ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
-			@Obj_21.f->[ @Obj_21, ]
-			@field_global.[]->[ @Obj_21, ]
+			@Obj_22.f->[ @Obj_22, ]
+			@field_global.[]->[ @Obj_22, ]
 		}
 	}
 }
@@ -1069,55 +874,46 @@ Unit: "$r8 = $r7.<Node: Node g>"{
 	In: 
 	{
 		stack{
-			$i0->[ ?, ]
-			$i1->[ ?, ]
-			$r0->[ Obj_20, ]
-			$r10->[ ?, ]
-			$r11->[ ?, ]
+			$r0->[ Obj_21, ]
 			$r2->[ @field_global, ]
-			$r3->[ @Obj_21, ]
-			$r4->[ @Obj_21, ]
-			$r5->[ @Obj_21, ]
-			$r6->[ @Obj_21, ]
-			$r7->[ @Obj_21, ]
-			$r8->[ ?, ]
-			$r9->[ ?, ]
+			$r3->[ @Obj_22, ]
+			$r4->[ @Obj_22, ]
+			$r5->[ @Obj_22, ]
+			$r6->[ @Obj_22, ]
+			$r7->[ @Obj_22, ]
 			global->[ @field_global, ]
-			r12->[ ?, ]
-			r13->[ @param0, ]
+			r11->[ @this, ]
+			r14->[ ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
-			@Obj_21.f->[ @Obj_21, ]
-			@Obj_21.g->[ @Obj_21, ]
-			@field_global.[]->[ @Obj_21, ]
+			@Obj_22.f->[ @Obj_22, ]
+			@Obj_22.g->[ @Obj_22, ]
+			@field_global.[]->[ @Obj_22, ]
 		}
 	}
 	Out: 
 	{
 		stack{
-			$i0->[ ?, ]
-			$i1->[ ?, ]
-			$r0->[ Obj_20, ]
-			$r10->[ ?, ]
-			$r11->[ ?, ]
+			$r0->[ Obj_21, ]
 			$r2->[ @field_global, ]
-			$r3->[ @Obj_21, ]
-			$r4->[ @Obj_21, ]
-			$r5->[ @Obj_21, ]
-			$r6->[ @Obj_21, ]
-			$r7->[ @Obj_21, ]
-			$r8->[ @Obj_21, ]
-			$r9->[ ?, ]
+			$r3->[ @Obj_22, ]
+			$r4->[ @Obj_22, ]
+			$r5->[ @Obj_22, ]
+			$r6->[ @Obj_22, ]
+			$r7->[ @Obj_22, ]
+			$r8->[ @Obj_22, ]
 			global->[ @field_global, ]
-			r12->[ ?, ]
-			r13->[ @param0, ]
+			r11->[ @this, ]
+			r14->[ ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
-			@Obj_21.f->[ @Obj_21, ]
-			@Obj_21.g->[ @Obj_21, ]
-			@field_global.[]->[ @Obj_21, ]
+			@Obj_22.f->[ @Obj_22, ]
+			@Obj_22.g->[ @Obj_22, ]
+			@field_global.[]->[ @Obj_22, ]
 		}
 	}
 }
@@ -1125,55 +921,48 @@ Unit: "$r10 = $r8.<Node: Node f>"{
 	In: 
 	{
 		stack{
-			$i0->[ ?, ]
-			$i1->[ ?, ]
-			$r0->[ Obj_20, ]
-			$r10->[ ?, ]
-			$r11->[ ?, ]
+			$r0->[ Obj_21, ]
 			$r2->[ @field_global, ]
-			$r3->[ @Obj_21, ]
-			$r4->[ @Obj_21, ]
-			$r5->[ @Obj_21, ]
-			$r6->[ @Obj_21, ]
-			$r7->[ @Obj_21, ]
-			$r8->[ @Obj_21, ]
-			$r9->[ ?, ]
+			$r3->[ @Obj_22, ]
+			$r4->[ @Obj_22, ]
+			$r5->[ @Obj_22, ]
+			$r6->[ @Obj_22, ]
+			$r7->[ @Obj_22, ]
+			$r8->[ @Obj_22, ]
 			global->[ @field_global, ]
-			r12->[ ?, ]
-			r13->[ @param0, ]
+			r11->[ @this, ]
+			r14->[ ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
-			@Obj_21.f->[ @Obj_21, ]
-			@Obj_21.g->[ @Obj_21, ]
-			@field_global.[]->[ @Obj_21, ]
+			@Obj_22.f->[ @Obj_22, ]
+			@Obj_22.g->[ @Obj_22, ]
+			@field_global.[]->[ @Obj_22, ]
 		}
 	}
 	Out: 
 	{
 		stack{
-			$i0->[ ?, ]
-			$i1->[ ?, ]
-			$r0->[ Obj_20, ]
-			$r10->[ @Obj_21, ]
-			$r11->[ ?, ]
+			$r0->[ Obj_21, ]
+			$r10->[ @Obj_22, ]
 			$r2->[ @field_global, ]
-			$r3->[ @Obj_21, ]
-			$r4->[ @Obj_21, ]
-			$r5->[ @Obj_21, ]
-			$r6->[ @Obj_21, ]
-			$r7->[ @Obj_21, ]
-			$r8->[ @Obj_21, ]
-			$r9->[ ?, ]
+			$r3->[ @Obj_22, ]
+			$r4->[ @Obj_22, ]
+			$r5->[ @Obj_22, ]
+			$r6->[ @Obj_22, ]
+			$r7->[ @Obj_22, ]
+			$r8->[ @Obj_22, ]
 			global->[ @field_global, ]
-			r12->[ ?, ]
-			r13->[ @param0, ]
+			r11->[ @this, ]
+			r14->[ ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
-			@Obj_21.f->[ @Obj_21, ]
-			@Obj_21.g->[ @Obj_21, ]
-			@field_global.[]->[ @Obj_21, ]
+			@Obj_22.f->[ @Obj_22, ]
+			@Obj_22.g->[ @Obj_22, ]
+			@field_global.[]->[ @Obj_22, ]
 		}
 	}
 }
@@ -1181,55 +970,50 @@ Unit: "$r9 = new Node"{
 	In: 
 	{
 		stack{
-			$i0->[ ?, ]
-			$i1->[ ?, ]
-			$r0->[ Obj_20, ]
-			$r10->[ @Obj_21, ]
-			$r11->[ ?, ]
+			$r0->[ Obj_21, ]
+			$r10->[ @Obj_22, ]
 			$r2->[ @field_global, ]
-			$r3->[ @Obj_21, ]
-			$r4->[ @Obj_21, ]
-			$r5->[ @Obj_21, ]
-			$r6->[ @Obj_21, ]
-			$r7->[ @Obj_21, ]
-			$r8->[ @Obj_21, ]
-			$r9->[ ?, ]
+			$r3->[ @Obj_22, ]
+			$r4->[ @Obj_22, ]
+			$r5->[ @Obj_22, ]
+			$r6->[ @Obj_22, ]
+			$r7->[ @Obj_22, ]
+			$r8->[ @Obj_22, ]
 			global->[ @field_global, ]
-			r12->[ ?, ]
-			r13->[ @param0, ]
+			r11->[ @this, ]
+			r14->[ ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
-			@Obj_21.f->[ @Obj_21, ]
-			@Obj_21.g->[ @Obj_21, ]
-			@field_global.[]->[ @Obj_21, ]
+			@Obj_22.f->[ @Obj_22, ]
+			@Obj_22.g->[ @Obj_22, ]
+			@field_global.[]->[ @Obj_22, ]
 		}
 	}
 	Out: 
 	{
 		stack{
-			$i0->[ ?, ]
-			$i1->[ ?, ]
-			$r0->[ Obj_20, ]
-			$r10->[ @Obj_21, ]
-			$r11->[ ?, ]
+			$r0->[ Obj_21, ]
+			$r10->[ @Obj_22, ]
 			$r2->[ @field_global, ]
-			$r3->[ @Obj_21, ]
-			$r4->[ @Obj_21, ]
-			$r5->[ @Obj_21, ]
-			$r6->[ @Obj_21, ]
-			$r7->[ @Obj_21, ]
-			$r8->[ @Obj_21, ]
-			$r9->[ Obj_21, ]
+			$r3->[ @Obj_22, ]
+			$r4->[ @Obj_22, ]
+			$r5->[ @Obj_22, ]
+			$r6->[ @Obj_22, ]
+			$r7->[ @Obj_22, ]
+			$r8->[ @Obj_22, ]
+			$r9->[ Obj_22, ]
 			global->[ @field_global, ]
-			r12->[ ?, ]
-			r13->[ @param0, ]
+			r11->[ @this, ]
+			r14->[ ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
-			@Obj_21.f->[ @Obj_21, ]
-			@Obj_21.g->[ @Obj_21, ]
-			@field_global.[]->[ @Obj_21, ]
+			@Obj_22.f->[ @Obj_22, ]
+			@Obj_22.g->[ @Obj_22, ]
+			@field_global.[]->[ @Obj_22, ]
 		}
 	}
 }
@@ -1237,55 +1021,51 @@ Unit: "specialinvoke $r9.<Node: void <init>()>()"{
 	In: 
 	{
 		stack{
-			$i0->[ ?, ]
-			$i1->[ ?, ]
-			$r0->[ Obj_20, ]
-			$r10->[ @Obj_21, ]
-			$r11->[ ?, ]
+			$r0->[ Obj_21, ]
+			$r10->[ @Obj_22, ]
 			$r2->[ @field_global, ]
-			$r3->[ @Obj_21, ]
-			$r4->[ @Obj_21, ]
-			$r5->[ @Obj_21, ]
-			$r6->[ @Obj_21, ]
-			$r7->[ @Obj_21, ]
-			$r8->[ @Obj_21, ]
-			$r9->[ Obj_21, ]
+			$r3->[ @Obj_22, ]
+			$r4->[ @Obj_22, ]
+			$r5->[ @Obj_22, ]
+			$r6->[ @Obj_22, ]
+			$r7->[ @Obj_22, ]
+			$r8->[ @Obj_22, ]
+			$r9->[ Obj_22, ]
 			global->[ @field_global, ]
-			r12->[ ?, ]
-			r13->[ @param0, ]
+			r11->[ @this, ]
+			r14->[ ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
-			@Obj_21.f->[ @Obj_21, ]
-			@Obj_21.g->[ @Obj_21, ]
-			@field_global.[]->[ @Obj_21, ]
+			@Obj_22.f->[ @Obj_22, ]
+			@Obj_22.g->[ @Obj_22, ]
+			@field_global.[]->[ @Obj_22, ]
 		}
 	}
 	Out: 
 	{
 		stack{
-			$i0->[ ?, ]
-			$i1->[ ?, ]
-			$r0->[ Obj_20, ]
-			$r10->[ @Obj_21, ]
-			$r11->[ ?, ]
+			$r0->[ Obj_21, ]
+			$r10->[ @Obj_22, ]
 			$r2->[ @field_global, ]
-			$r3->[ @Obj_21, ]
-			$r4->[ @Obj_21, ]
-			$r5->[ @Obj_21, ]
-			$r6->[ @Obj_21, ]
-			$r7->[ @Obj_21, ]
-			$r8->[ @Obj_21, ]
-			$r9->[ Obj_21, ]
+			$r3->[ @Obj_22, ]
+			$r4->[ @Obj_22, ]
+			$r5->[ @Obj_22, ]
+			$r6->[ @Obj_22, ]
+			$r7->[ @Obj_22, ]
+			$r8->[ @Obj_22, ]
+			$r9->[ Obj_22, ]
 			global->[ @field_global, ]
-			r12->[ ?, ]
-			r13->[ @param0, ]
+			r11->[ @this, ]
+			r14->[ ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
-			@Obj_21.f->[ @Obj_21, ]
-			@Obj_21.g->[ @Obj_21, ]
-			@field_global.[]->[ @Obj_21, ]
+			@Obj_22.f->[ @Obj_22, ]
+			@Obj_22.g->[ @Obj_22, ]
+			@field_global.[]->[ @Obj_22, ]
 		}
 	}
 }
@@ -1293,111 +1073,165 @@ Unit: "$r10.<Node: Node g> = $r9"{
 	In: 
 	{
 		stack{
-			$i0->[ ?, ]
-			$i1->[ ?, ]
-			$r0->[ Obj_20, ]
-			$r10->[ @Obj_21, ]
-			$r11->[ ?, ]
+			$r0->[ Obj_21, ]
+			$r10->[ @Obj_22, ]
 			$r2->[ @field_global, ]
-			$r3->[ @Obj_21, ]
-			$r4->[ @Obj_21, ]
-			$r5->[ @Obj_21, ]
-			$r6->[ @Obj_21, ]
-			$r7->[ @Obj_21, ]
-			$r8->[ @Obj_21, ]
-			$r9->[ Obj_21, ]
+			$r3->[ @Obj_22, ]
+			$r4->[ @Obj_22, ]
+			$r5->[ @Obj_22, ]
+			$r6->[ @Obj_22, ]
+			$r7->[ @Obj_22, ]
+			$r8->[ @Obj_22, ]
+			$r9->[ Obj_22, ]
 			global->[ @field_global, ]
-			r12->[ ?, ]
-			r13->[ @param0, ]
+			r11->[ @this, ]
+			r14->[ ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
-			@Obj_21.f->[ @Obj_21, ]
-			@Obj_21.g->[ @Obj_21, ]
-			@field_global.[]->[ @Obj_21, ]
+			@Obj_22.f->[ @Obj_22, ]
+			@Obj_22.g->[ @Obj_22, ]
+			@field_global.[]->[ @Obj_22, ]
 		}
 	}
 	Out: 
 	{
 		stack{
-			$i0->[ ?, ]
-			$i1->[ ?, ]
-			$r0->[ Obj_20, ]
-			$r10->[ @Obj_21, ]
-			$r11->[ ?, ]
+			$r0->[ Obj_21, ]
+			$r10->[ @Obj_22, ]
 			$r2->[ @field_global, ]
-			$r3->[ @Obj_21, ]
-			$r4->[ @Obj_21, ]
-			$r5->[ @Obj_21, ]
-			$r6->[ @Obj_21, ]
-			$r7->[ @Obj_21, ]
-			$r8->[ @Obj_21, ]
-			$r9->[ Obj_21, ]
+			$r3->[ @Obj_22, ]
+			$r4->[ @Obj_22, ]
+			$r5->[ @Obj_22, ]
+			$r6->[ @Obj_22, ]
+			$r7->[ @Obj_22, ]
+			$r8->[ @Obj_22, ]
+			$r9->[ Obj_22, ]
 			global->[ @field_global, ]
-			r12->[ ?, ]
-			r13->[ @param0, ]
+			r11->[ @this, ]
+			r14->[ ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
-			@Obj_21.f->[ @Obj_21, ]
-			@Obj_21.g->[ Obj_21, ]
-			@field_global.[]->[ @Obj_21, ]
+			@Obj_22.f->[ @Obj_22, ]
+			@Obj_22.g->[ Obj_22, ]
+			@field_global.[]->[ @Obj_22, ]
 		}
 	}
 }
-Unit: "$i0 = $r0.<Man: int h>"{
+Unit: "$r12 = r11.<Test: Man y>"{
 	In: 
 	{
 		stack{
-			$i0->[ ?, ]
-			$i1->[ ?, ]
-			$r0->[ Obj_20, ]
-			$r10->[ @Obj_21, ]
-			$r11->[ ?, ]
+			$r0->[ Obj_21, ]
+			$r10->[ @Obj_22, ]
 			$r2->[ @field_global, ]
-			$r3->[ @Obj_21, ]
-			$r4->[ @Obj_21, ]
-			$r5->[ @Obj_21, ]
-			$r6->[ @Obj_21, ]
-			$r7->[ @Obj_21, ]
-			$r8->[ @Obj_21, ]
-			$r9->[ Obj_21, ]
+			$r3->[ @Obj_22, ]
+			$r4->[ @Obj_22, ]
+			$r5->[ @Obj_22, ]
+			$r6->[ @Obj_22, ]
+			$r7->[ @Obj_22, ]
+			$r8->[ @Obj_22, ]
+			$r9->[ Obj_22, ]
 			global->[ @field_global, ]
-			r12->[ ?, ]
-			r13->[ @param0, ]
+			r11->[ @this, ]
+			r14->[ ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
-			@Obj_21.f->[ @Obj_21, ]
-			@Obj_21.g->[ Obj_21, ]
-			@field_global.[]->[ @Obj_21, ]
+			@Obj_22.f->[ @Obj_22, ]
+			@Obj_22.g->[ Obj_22, ]
+			@field_global.[]->[ @Obj_22, ]
+			@this.y->[ @Obj_23, ]
 		}
 	}
 	Out: 
 	{
 		stack{
-			$i0->[ ]
-			$i1->[ ?, ]
-			$r0->[ Obj_20, ]
-			$r10->[ @Obj_21, ]
-			$r11->[ ?, ]
+			$r0->[ Obj_21, ]
+			$r10->[ @Obj_22, ]
+			$r12->[ @Obj_23, ]
 			$r2->[ @field_global, ]
-			$r3->[ @Obj_21, ]
-			$r4->[ @Obj_21, ]
-			$r5->[ @Obj_21, ]
-			$r6->[ @Obj_21, ]
-			$r7->[ @Obj_21, ]
-			$r8->[ @Obj_21, ]
-			$r9->[ Obj_21, ]
+			$r3->[ @Obj_22, ]
+			$r4->[ @Obj_22, ]
+			$r5->[ @Obj_22, ]
+			$r6->[ @Obj_22, ]
+			$r7->[ @Obj_22, ]
+			$r8->[ @Obj_22, ]
+			$r9->[ Obj_22, ]
 			global->[ @field_global, ]
-			r12->[ ?, ]
-			r13->[ @param0, ]
+			r11->[ @this, ]
+			r14->[ ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
-			@Obj_21.f->[ @Obj_21, ]
-			@Obj_21.g->[ Obj_21, ]
-			@field_global.[]->[ @Obj_21, ]
+			@Obj_22.f->[ @Obj_22, ]
+			@Obj_22.g->[ Obj_22, ]
+			@field_global.[]->[ @Obj_22, ]
+			@this.y->[ @Obj_23, ]
+		}
+	}
+}
+Unit: "$i0 = $r12.<Man: int h>"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_21, ]
+			$r10->[ @Obj_22, ]
+			$r12->[ @Obj_23, ]
+			$r2->[ @field_global, ]
+			$r3->[ @Obj_22, ]
+			$r4->[ @Obj_22, ]
+			$r5->[ @Obj_22, ]
+			$r6->[ @Obj_22, ]
+			$r7->[ @Obj_22, ]
+			$r8->[ @Obj_22, ]
+			$r9->[ Obj_22, ]
+			global->[ @field_global, ]
+			r11->[ @this, ]
+			r14->[ ]
+			x->[ @field_x, ]
+			y->[ @field_y, ]
+		}
+		heap{
+			@Obj_22.f->[ @Obj_22, ]
+			@Obj_22.g->[ Obj_22, ]
+			@Obj_23.h->[ @Obj_23, ]
+			@field_global.[]->[ @Obj_22, ]
+			@this.y->[ @Obj_23, ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			$i0->[ @Obj_23, ]
+			$r0->[ Obj_21, ]
+			$r10->[ @Obj_22, ]
+			$r12->[ @Obj_23, ]
+			$r2->[ @field_global, ]
+			$r3->[ @Obj_22, ]
+			$r4->[ @Obj_22, ]
+			$r5->[ @Obj_22, ]
+			$r6->[ @Obj_22, ]
+			$r7->[ @Obj_22, ]
+			$r8->[ @Obj_22, ]
+			$r9->[ Obj_22, ]
+			global->[ @field_global, ]
+			r11->[ @this, ]
+			r14->[ ]
+			x->[ @field_x, ]
+			y->[ @field_y, ]
+		}
+		heap{
+			@Obj_22.f->[ @Obj_22, ]
+			@Obj_22.g->[ Obj_22, ]
+			@Obj_23.h->[ @Obj_23, ]
+			@field_global.[]->[ @Obj_22, ]
+			@this.y->[ @Obj_23, ]
 		}
 	}
 }
@@ -1405,55 +1239,60 @@ Unit: "$i1 = $i0 + 1"{
 	In: 
 	{
 		stack{
-			$i0->[ ]
-			$i1->[ ?, ]
-			$r0->[ Obj_20, ]
-			$r10->[ @Obj_21, ]
-			$r11->[ ?, ]
+			$i0->[ @Obj_23, ]
+			$r0->[ Obj_21, ]
+			$r10->[ @Obj_22, ]
+			$r12->[ @Obj_23, ]
 			$r2->[ @field_global, ]
-			$r3->[ @Obj_21, ]
-			$r4->[ @Obj_21, ]
-			$r5->[ @Obj_21, ]
-			$r6->[ @Obj_21, ]
-			$r7->[ @Obj_21, ]
-			$r8->[ @Obj_21, ]
-			$r9->[ Obj_21, ]
+			$r3->[ @Obj_22, ]
+			$r4->[ @Obj_22, ]
+			$r5->[ @Obj_22, ]
+			$r6->[ @Obj_22, ]
+			$r7->[ @Obj_22, ]
+			$r8->[ @Obj_22, ]
+			$r9->[ Obj_22, ]
 			global->[ @field_global, ]
-			r12->[ ?, ]
-			r13->[ @param0, ]
+			r11->[ @this, ]
+			r14->[ ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
-			@Obj_21.f->[ @Obj_21, ]
-			@Obj_21.g->[ Obj_21, ]
-			@field_global.[]->[ @Obj_21, ]
+			@Obj_22.f->[ @Obj_22, ]
+			@Obj_22.g->[ Obj_22, ]
+			@Obj_23.h->[ @Obj_23, ]
+			@field_global.[]->[ @Obj_22, ]
+			@this.y->[ @Obj_23, ]
 		}
 	}
 	Out: 
 	{
 		stack{
-			$i0->[ ]
+			$i0->[ @Obj_23, ]
 			$i1->[ ]
-			$r0->[ Obj_20, ]
-			$r10->[ @Obj_21, ]
-			$r11->[ ?, ]
+			$r0->[ Obj_21, ]
+			$r10->[ @Obj_22, ]
+			$r12->[ @Obj_23, ]
 			$r2->[ @field_global, ]
-			$r3->[ @Obj_21, ]
-			$r4->[ @Obj_21, ]
-			$r5->[ @Obj_21, ]
-			$r6->[ @Obj_21, ]
-			$r7->[ @Obj_21, ]
-			$r8->[ @Obj_21, ]
-			$r9->[ Obj_21, ]
+			$r3->[ @Obj_22, ]
+			$r4->[ @Obj_22, ]
+			$r5->[ @Obj_22, ]
+			$r6->[ @Obj_22, ]
+			$r7->[ @Obj_22, ]
+			$r8->[ @Obj_22, ]
+			$r9->[ Obj_22, ]
 			global->[ @field_global, ]
-			r12->[ ?, ]
-			r13->[ @param0, ]
+			r11->[ @this, ]
+			r14->[ ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
-			@Obj_21.f->[ @Obj_21, ]
-			@Obj_21.g->[ Obj_21, ]
-			@field_global.[]->[ @Obj_21, ]
+			@Obj_22.f->[ @Obj_22, ]
+			@Obj_22.g->[ Obj_22, ]
+			@Obj_23.h->[ @Obj_23, ]
+			@field_global.[]->[ @Obj_22, ]
+			@this.y->[ @Obj_23, ]
 		}
 	}
 }
@@ -1461,234 +1300,327 @@ Unit: "$r0.<Man: int h> = $i1"{
 	In: 
 	{
 		stack{
-			$i0->[ ]
+			$i0->[ @Obj_23, ]
 			$i1->[ ]
-			$r0->[ Obj_20, ]
-			$r10->[ @Obj_21, ]
-			$r11->[ ?, ]
+			$r0->[ Obj_21, ]
+			$r10->[ @Obj_22, ]
+			$r12->[ @Obj_23, ]
 			$r2->[ @field_global, ]
-			$r3->[ @Obj_21, ]
-			$r4->[ @Obj_21, ]
-			$r5->[ @Obj_21, ]
-			$r6->[ @Obj_21, ]
-			$r7->[ @Obj_21, ]
-			$r8->[ @Obj_21, ]
-			$r9->[ Obj_21, ]
+			$r3->[ @Obj_22, ]
+			$r4->[ @Obj_22, ]
+			$r5->[ @Obj_22, ]
+			$r6->[ @Obj_22, ]
+			$r7->[ @Obj_22, ]
+			$r8->[ @Obj_22, ]
+			$r9->[ Obj_22, ]
 			global->[ @field_global, ]
-			r12->[ ?, ]
-			r13->[ @param0, ]
+			r11->[ @this, ]
+			r14->[ ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
-			@Obj_21.f->[ @Obj_21, ]
-			@Obj_21.g->[ Obj_21, ]
-			@field_global.[]->[ @Obj_21, ]
+			@Obj_22.f->[ @Obj_22, ]
+			@Obj_22.g->[ Obj_22, ]
+			@Obj_23.h->[ @Obj_23, ]
+			@field_global.[]->[ @Obj_22, ]
+			@this.y->[ @Obj_23, ]
 		}
 	}
 	Out: 
 	{
 		stack{
-			$i0->[ ]
+			$i0->[ @Obj_23, ]
 			$i1->[ ]
-			$r0->[ Obj_20, ]
-			$r10->[ @Obj_21, ]
-			$r11->[ ?, ]
+			$r0->[ Obj_21, ]
+			$r10->[ @Obj_22, ]
+			$r12->[ @Obj_23, ]
 			$r2->[ @field_global, ]
-			$r3->[ @Obj_21, ]
-			$r4->[ @Obj_21, ]
-			$r5->[ @Obj_21, ]
-			$r6->[ @Obj_21, ]
-			$r7->[ @Obj_21, ]
-			$r8->[ @Obj_21, ]
-			$r9->[ Obj_21, ]
+			$r3->[ @Obj_22, ]
+			$r4->[ @Obj_22, ]
+			$r5->[ @Obj_22, ]
+			$r6->[ @Obj_22, ]
+			$r7->[ @Obj_22, ]
+			$r8->[ @Obj_22, ]
+			$r9->[ Obj_22, ]
 			global->[ @field_global, ]
-			r12->[ ?, ]
-			r13->[ @param0, ]
+			r11->[ @this, ]
+			r14->[ ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
-			@Obj_21.f->[ @Obj_21, ]
-			@Obj_21.g->[ Obj_21, ]
-			@field_global.[]->[ @Obj_21, ]
-			Obj_20.h->[ ]
+			@Obj_22.f->[ @Obj_22, ]
+			@Obj_22.g->[ Obj_22, ]
+			@Obj_23.h->[ @Obj_23, ]
+			@field_global.[]->[ @Obj_22, ]
+			@this.y->[ @Obj_23, ]
+			Obj_21.h->[ ]
 		}
 	}
 }
-Unit: "$r11 = new Node"{
+Unit: "r11.<Test: Man y> = $r0"{
 	In: 
 	{
 		stack{
-			$i0->[ ]
+			$i0->[ @Obj_23, ]
 			$i1->[ ]
-			$r0->[ Obj_20, ]
-			$r10->[ @Obj_21, ]
-			$r11->[ ?, ]
+			$r0->[ Obj_21, ]
+			$r10->[ @Obj_22, ]
+			$r12->[ @Obj_23, ]
 			$r2->[ @field_global, ]
-			$r3->[ @Obj_21, ]
-			$r4->[ @Obj_21, ]
-			$r5->[ @Obj_21, ]
-			$r6->[ @Obj_21, ]
-			$r7->[ @Obj_21, ]
-			$r8->[ @Obj_21, ]
-			$r9->[ Obj_21, ]
+			$r3->[ @Obj_22, ]
+			$r4->[ @Obj_22, ]
+			$r5->[ @Obj_22, ]
+			$r6->[ @Obj_22, ]
+			$r7->[ @Obj_22, ]
+			$r8->[ @Obj_22, ]
+			$r9->[ Obj_22, ]
 			global->[ @field_global, ]
-			r12->[ ?, ]
-			r13->[ @param0, ]
+			r11->[ @this, ]
+			r14->[ ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
-			@Obj_21.f->[ @Obj_21, ]
-			@Obj_21.g->[ Obj_21, ]
-			@field_global.[]->[ @Obj_21, ]
-			Obj_20.h->[ ]
+			@Obj_22.f->[ @Obj_22, ]
+			@Obj_22.g->[ Obj_22, ]
+			@Obj_23.h->[ @Obj_23, ]
+			@field_global.[]->[ @Obj_22, ]
+			@this.y->[ @Obj_23, ]
+			Obj_21.h->[ ]
 		}
 	}
 	Out: 
 	{
 		stack{
-			$i0->[ ]
+			$i0->[ @Obj_23, ]
 			$i1->[ ]
-			$r0->[ Obj_20, ]
-			$r10->[ @Obj_21, ]
-			$r11->[ Obj_23, ]
+			$r0->[ Obj_21, ]
+			$r10->[ @Obj_22, ]
+			$r12->[ @Obj_23, ]
 			$r2->[ @field_global, ]
-			$r3->[ @Obj_21, ]
-			$r4->[ @Obj_21, ]
-			$r5->[ @Obj_21, ]
-			$r6->[ @Obj_21, ]
-			$r7->[ @Obj_21, ]
-			$r8->[ @Obj_21, ]
-			$r9->[ Obj_21, ]
+			$r3->[ @Obj_22, ]
+			$r4->[ @Obj_22, ]
+			$r5->[ @Obj_22, ]
+			$r6->[ @Obj_22, ]
+			$r7->[ @Obj_22, ]
+			$r8->[ @Obj_22, ]
+			$r9->[ Obj_22, ]
 			global->[ @field_global, ]
-			r12->[ ?, ]
-			r13->[ @param0, ]
+			r11->[ @this, ]
+			r14->[ ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
-			@Obj_21.f->[ @Obj_21, ]
-			@Obj_21.g->[ Obj_21, ]
-			@field_global.[]->[ @Obj_21, ]
-			Obj_20.h->[ ]
+			@Obj_22.f->[ @Obj_22, ]
+			@Obj_22.g->[ Obj_22, ]
+			@Obj_23.h->[ @Obj_23, ]
+			@field_global.[]->[ @Obj_22, ]
+			@this.y->[ Obj_21, ]
+			Obj_21.h->[ ]
 		}
 	}
 }
-Unit: "specialinvoke $r11.<Node: void <init>()>()"{
+Unit: "$r13 = new Node"{
 	In: 
 	{
 		stack{
-			$i0->[ ]
+			$i0->[ @Obj_23, ]
 			$i1->[ ]
-			$r0->[ Obj_20, ]
-			$r10->[ @Obj_21, ]
-			$r11->[ Obj_23, ]
+			$r0->[ Obj_21, ]
+			$r10->[ @Obj_22, ]
+			$r12->[ @Obj_23, ]
 			$r2->[ @field_global, ]
-			$r3->[ @Obj_21, ]
-			$r4->[ @Obj_21, ]
-			$r5->[ @Obj_21, ]
-			$r6->[ @Obj_21, ]
-			$r7->[ @Obj_21, ]
-			$r8->[ @Obj_21, ]
-			$r9->[ Obj_21, ]
+			$r3->[ @Obj_22, ]
+			$r4->[ @Obj_22, ]
+			$r5->[ @Obj_22, ]
+			$r6->[ @Obj_22, ]
+			$r7->[ @Obj_22, ]
+			$r8->[ @Obj_22, ]
+			$r9->[ Obj_22, ]
 			global->[ @field_global, ]
-			r12->[ ?, ]
-			r13->[ @param0, ]
+			r11->[ @this, ]
+			r14->[ ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
-			@Obj_21.f->[ @Obj_21, ]
-			@Obj_21.g->[ Obj_21, ]
-			@field_global.[]->[ @Obj_21, ]
-			Obj_20.h->[ ]
+			@Obj_22.f->[ @Obj_22, ]
+			@Obj_22.g->[ Obj_22, ]
+			@Obj_23.h->[ @Obj_23, ]
+			@field_global.[]->[ @Obj_22, ]
+			@this.y->[ Obj_21, ]
+			Obj_21.h->[ ]
 		}
 	}
 	Out: 
 	{
 		stack{
-			$i0->[ ]
+			$i0->[ @Obj_23, ]
 			$i1->[ ]
-			$r0->[ Obj_20, ]
-			$r10->[ @Obj_21, ]
-			$r11->[ Obj_23, ]
+			$r0->[ Obj_21, ]
+			$r10->[ @Obj_22, ]
+			$r12->[ @Obj_23, ]
+			$r13->[ Obj_25, ]
 			$r2->[ @field_global, ]
-			$r3->[ @Obj_21, ]
-			$r4->[ @Obj_21, ]
-			$r5->[ @Obj_21, ]
-			$r6->[ @Obj_21, ]
-			$r7->[ @Obj_21, ]
-			$r8->[ @Obj_21, ]
-			$r9->[ Obj_21, ]
+			$r3->[ @Obj_22, ]
+			$r4->[ @Obj_22, ]
+			$r5->[ @Obj_22, ]
+			$r6->[ @Obj_22, ]
+			$r7->[ @Obj_22, ]
+			$r8->[ @Obj_22, ]
+			$r9->[ Obj_22, ]
 			global->[ @field_global, ]
-			r12->[ ?, ]
-			r13->[ @param0, ]
+			r11->[ @this, ]
+			r14->[ ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
-			@Obj_21.f->[ @Obj_21, ]
-			@Obj_21.g->[ Obj_21, ]
-			@field_global.[]->[ @Obj_21, ]
-			Obj_20.h->[ ]
+			@Obj_22.f->[ @Obj_22, ]
+			@Obj_22.g->[ Obj_22, ]
+			@Obj_23.h->[ @Obj_23, ]
+			@field_global.[]->[ @Obj_22, ]
+			@this.y->[ Obj_21, ]
+			Obj_21.h->[ ]
 		}
 	}
 }
-Unit: "return $r11"{
+Unit: "specialinvoke $r13.<Node: void <init>()>()"{
 	In: 
 	{
 		stack{
-			$i0->[ ]
+			$i0->[ @Obj_23, ]
 			$i1->[ ]
-			$r0->[ Obj_20, ]
-			$r10->[ @Obj_21, ]
-			$r11->[ Obj_23, ]
+			$r0->[ Obj_21, ]
+			$r10->[ @Obj_22, ]
+			$r12->[ @Obj_23, ]
+			$r13->[ Obj_25, ]
 			$r2->[ @field_global, ]
-			$r3->[ @Obj_21, ]
-			$r4->[ @Obj_21, ]
-			$r5->[ @Obj_21, ]
-			$r6->[ @Obj_21, ]
-			$r7->[ @Obj_21, ]
-			$r8->[ @Obj_21, ]
-			$r9->[ Obj_21, ]
+			$r3->[ @Obj_22, ]
+			$r4->[ @Obj_22, ]
+			$r5->[ @Obj_22, ]
+			$r6->[ @Obj_22, ]
+			$r7->[ @Obj_22, ]
+			$r8->[ @Obj_22, ]
+			$r9->[ Obj_22, ]
 			global->[ @field_global, ]
-			r12->[ ?, ]
-			r13->[ @param0, ]
+			r11->[ @this, ]
+			r14->[ ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
-			@Obj_21.f->[ @Obj_21, ]
-			@Obj_21.g->[ Obj_21, ]
-			@field_global.[]->[ @Obj_21, ]
-			Obj_20.h->[ ]
+			@Obj_22.f->[ @Obj_22, ]
+			@Obj_22.g->[ Obj_22, ]
+			@Obj_23.h->[ @Obj_23, ]
+			@field_global.[]->[ @Obj_22, ]
+			@this.y->[ Obj_21, ]
+			Obj_21.h->[ ]
 		}
 	}
 	Out: 
 	{
 		stack{
-			$i0->[ ]
+			$i0->[ @Obj_23, ]
 			$i1->[ ]
-			$r0->[ Obj_20, ]
-			$r10->[ @Obj_21, ]
-			$r11->[ Obj_23, ]
+			$r0->[ Obj_21, ]
+			$r10->[ @Obj_22, ]
+			$r12->[ @Obj_23, ]
+			$r13->[ Obj_25, ]
 			$r2->[ @field_global, ]
-			$r3->[ @Obj_21, ]
-			$r4->[ @Obj_21, ]
-			$r5->[ @Obj_21, ]
-			$r6->[ @Obj_21, ]
-			$r7->[ @Obj_21, ]
-			$r8->[ @Obj_21, ]
-			$r9->[ Obj_21, ]
+			$r3->[ @Obj_22, ]
+			$r4->[ @Obj_22, ]
+			$r5->[ @Obj_22, ]
+			$r6->[ @Obj_22, ]
+			$r7->[ @Obj_22, ]
+			$r8->[ @Obj_22, ]
+			$r9->[ Obj_22, ]
 			global->[ @field_global, ]
-			r12->[ ?, ]
-			r13->[ @param0, ]
+			r11->[ @this, ]
+			r14->[ ]
 			x->[ @field_x, ]
+			y->[ @field_y, ]
 		}
 		heap{
-			@Obj_21.f->[ @Obj_21, ]
-			@Obj_21.g->[ Obj_21, ]
-			@field_global.[]->[ @Obj_21, ]
-			Obj_20.h->[ ]
+			@Obj_22.f->[ @Obj_22, ]
+			@Obj_22.g->[ Obj_22, ]
+			@Obj_23.h->[ @Obj_23, ]
+			@field_global.[]->[ @Obj_22, ]
+			@this.y->[ Obj_21, ]
+			Obj_21.h->[ ]
+		}
+	}
+}
+Unit: "return $r13"{
+	In: 
+	{
+		stack{
+			$i0->[ @Obj_23, ]
+			$i1->[ ]
+			$r0->[ Obj_21, ]
+			$r10->[ @Obj_22, ]
+			$r12->[ @Obj_23, ]
+			$r13->[ Obj_25, ]
+			$r2->[ @field_global, ]
+			$r3->[ @Obj_22, ]
+			$r4->[ @Obj_22, ]
+			$r5->[ @Obj_22, ]
+			$r6->[ @Obj_22, ]
+			$r7->[ @Obj_22, ]
+			$r8->[ @Obj_22, ]
+			$r9->[ Obj_22, ]
+			global->[ @field_global, ]
+			r11->[ @this, ]
+			r14->[ ]
+			x->[ @field_x, ]
+			y->[ @field_y, ]
+		}
+		heap{
+			@Obj_22.f->[ @Obj_22, ]
+			@Obj_22.g->[ Obj_22, ]
+			@Obj_23.h->[ @Obj_23, ]
+			@field_global.[]->[ @Obj_22, ]
+			@this.y->[ Obj_21, ]
+			Obj_21.h->[ ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			$i0->[ @Obj_23, ]
+			$i1->[ ]
+			$r0->[ Obj_21, ]
+			$r10->[ @Obj_22, ]
+			$r12->[ @Obj_23, ]
+			$r13->[ Obj_25, ]
+			$r2->[ @field_global, ]
+			$r3->[ @Obj_22, ]
+			$r4->[ @Obj_22, ]
+			$r5->[ @Obj_22, ]
+			$r6->[ @Obj_22, ]
+			$r7->[ @Obj_22, ]
+			$r8->[ @Obj_22, ]
+			$r9->[ Obj_22, ]
+			global->[ @field_global, ]
+			r11->[ @this, ]
+			r14->[ ]
+			x->[ @field_x, ]
+			y->[ @field_y, ]
+		}
+		heap{
+			@Obj_22.f->[ @Obj_22, ]
+			@Obj_22.g->[ Obj_22, ]
+			@Obj_23.h->[ @Obj_23, ]
+			@field_global.[]->[ @Obj_22, ]
+			@this.y->[ Obj_21, ]
+			Obj_21.h->[ ]
 		}
 	}
 }
 Escaping Info
-Test:foo Obj_21 Obj_23 
-Soot finished on Mon Mar 04 13:57:37 IST 2024
+Test:foo Obj_21 Obj_22 Obj_25 
+Soot finished on Mon Mar 04 14:23:00 IST 2024
 Soot has run for 0 min. 0 sec.

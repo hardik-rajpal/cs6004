@@ -9,6 +9,7 @@ class Man{
 public class Test {
 	public static Node[] global;
 	public Node x;
+	public Man y;
 	public void main(String[] args) {
 		foo(new Node());
 	}
@@ -19,7 +20,8 @@ public class Test {
 	public Node foo(Node p){
 		Man m = new Man();
 		global[0].f.f.f.f.g.f.g = new Node();
-		m.h = m.h+1;		
+		m.h = y.h+1;
+		y = m;	
 		return new Node();
 	}
 }

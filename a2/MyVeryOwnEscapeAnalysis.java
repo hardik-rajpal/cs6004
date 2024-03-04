@@ -1,14 +1,17 @@
 
 // import java.util.*;
-//TODO: return objects from invokeExpr must be made dummy.
-import soot.*;
-import soot.jimple.FieldRef;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.TreeMap;
+import java.util.TreeSet;
+
+import soot.Body;
+import soot.Local;
+import soot.SootField;
+import soot.Unit;
+import soot.Value;
 import soot.jimple.InvokeExpr;
-import soot.jimple.ParameterRef;
-import soot.jimple.internal.JArrayRef;
-import soot.jimple.internal.JAssignStmt;
 import soot.jimple.internal.JDynamicInvokeExpr;
-import soot.jimple.internal.JInstanceFieldRef;
 import soot.jimple.internal.JInterfaceInvokeExpr;
 import soot.jimple.internal.JInvokeStmt;
 import soot.jimple.internal.JReturnStmt;
@@ -29,8 +32,6 @@ import soot.jimple.internal.JVirtualInvokeExpr;
 // import soot.toolkits.graph.ExceptionalUnitGraph;
 import soot.toolkits.graph.ExceptionalUnitGraph;
 import soot.util.Chain;
-
-import java.util.*;
 
 public class MyVeryOwnEscapeAnalysis {
     PTA pta;
@@ -181,45 +182,7 @@ public class MyVeryOwnEscapeAnalysis {
     }return escapingVars;
     }
 
-    private void fillEscapingVarsFromExpression(PTA.PointsToGraph goingIn, TreeSet<String> escapingVars, Value expr, Unit u) {
-        if(expr instanceof Local){
-            addLocalToEscapingVars(goingIn, escapingVars, (Local)expr);
-        }
-        else if(expr instanceof JInstanceFieldRef){
-            JInstanceFieldRef fref = (JInstanceFieldRef)(expr);
-            String field = fref.getField().getName();
-            String varName = fref.getBase().toString();
-            if(goingIn.stackMap.containsKey(varName)){
-                TreeSet<String> pointees = goingIn.stackMap.get(varName);
-                for(String pointee:pointees){
-                    PTA.HeapReference hr = new PTA.HeapReference();
-                    hr.field = field;
-                    hr.object = pointee;
-                    if(goingIn.heapMap.containsKey(hr)){
-                        escapingVars.addAll(goingIn.heapMap.get(hr));
-                    }
-                }
-            }
-        }
-        else if(expr instanceof JArrayRef){
-            JArrayRef aref = (JArrayRef)(expr);
-            String field = "[]";
-            String varName = aref.getBase().toString();
-            if(goingIn.stackMap.containsKey(varName)){
-                TreeSet<String> pointees = goingIn.stackMap.get(varName);
-                for(String pointee:pointees){
-                    PTA.HeapReference hr = new PTA.HeapReference();
-                    hr.field = field;
-                    hr.object = pointee;
-                    if(goingIn.heapMap.containsKey(hr)){
-                        escapingVars.addAll(goingIn.heapMap.get(hr));
-                    }
-                }
-            }
-        }
-    }
-
-    private void addLocalToEscapingVars(PTA.PointsToGraph goingIn, TreeSet<String> escapingVars, Local expr) {
+    public void addLocalToEscapingVars(PTA.PointsToGraph goingIn, TreeSet<String> escapingVars, Local expr) {
         if(goingIn.stackMap.containsKey(expr.getName())){
             escapingVars.addAll(goingIn.stackMap.get(expr.getName()));
         }

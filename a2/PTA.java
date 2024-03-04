@@ -1,9 +1,7 @@
 
 //TODO: initialization to ->? for strong updates validity.
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -14,13 +12,11 @@ import java.util.TreeSet;
 import soot.Body;
 import soot.Local;
 import soot.PatchingChain;
-import soot.Scene;
 import soot.SootField;
 import soot.SootMethod;
 import soot.Unit;
 import soot.Value;
 import soot.jimple.InvokeExpr;
-import soot.jimple.ParameterRef;
 import soot.jimple.StaticFieldRef;
 import soot.jimple.ThisRef;
 import soot.jimple.internal.AbstractDefinitionStmt;
@@ -28,6 +24,7 @@ import soot.jimple.internal.JArrayRef;
 // import soot.jimple.AnyNewExpr;
 import soot.jimple.internal.JAssignStmt;
 import soot.jimple.internal.JDynamicInvokeExpr;
+import soot.jimple.internal.JIdentityStmt;
 import soot.jimple.internal.JInstanceFieldRef;
 import soot.jimple.internal.JInterfaceInvokeExpr;
 import soot.jimple.internal.JNewArrayExpr;
@@ -219,7 +216,7 @@ public class PTA {
         // not accounting for JIdentityStmt
         // as that's only used for parameter aliasing.
         // That's handled by getDummyPointsToGraph
-        if (u instanceof JAssignStmt) {
+        if (u instanceof JAssignStmt || u instanceof JIdentityStmt) {
             stmt = (AbstractDefinitionStmt) u;
             Value rhs = stmt.getRightOp();
             Value lhs = stmt.getLeftOp();
@@ -300,29 +297,17 @@ public class PTA {
             // allocation site abstraction:
             String objectName = "Obj_" + Integer.toString(u.getJavaSourceStartLineNumber());
             newPointees.add(objectName);
-            //updates to inheap:
-            JNewExpr expr = (JNewExpr)(rhs);
-            Chain<SootField> fields = Scene.v().getSootClass(expr.getType().toString()).getFields();
-            TreeSet<String> fieldStrs = new TreeSet<>();
-            for(SootField field:fields){
-                fieldStrs.add(field.getName());
-            }
-            initializeHeapMapForObject(in, objectName, fieldStrs);
-            // System.exit(0);
         } else if (rhs instanceof JNewArrayExpr) {
-            String objectName = "Obj_" + Integer.toString(u.getJavaSourceStartLineNumber());
+            String objectName = "Arr_" + Integer.toString(u.getJavaSourceStartLineNumber());
             newPointees.add(objectName);
-            TreeSet<String> fields = new TreeSet<String>();
-            fields.add("[]");
-            initializeHeapMapForObject(in, objectName, fields);
         } else if (rhs instanceof JNewMultiArrayExpr) {
-            String objectName = "Obj_" + Integer.toString(u.getJavaSourceStartLineNumber());
+            String objectName = "Arr_" + Integer.toString(u.getJavaSourceStartLineNumber());
             newPointees.add(objectName);
+
         } else if (rhs instanceof InvokeExpr) {
             String objName = "@Obj_" + Integer.toString(u.getJavaSourceStartLineNumber());
-
             newPointees.add(objName);
-        } else if (rhs instanceof JInstanceFieldRef) {
+        }else if (rhs instanceof JInstanceFieldRef) {
             // new pointees only if reftype
             JInstanceFieldRef fieldRef = (JInstanceFieldRef) (rhs);
             String field = fieldRef.getField().getName();
@@ -335,6 +320,11 @@ public class PTA {
                     hr.object = baseObject;
                     if (in.heapMap.containsKey(hr)) {
                         newPointees.addAll(in.heapMap.get(hr));
+                    } else {
+                        // may happen because dummy objects.
+                        // assume null check analysis has been done.
+                        // =>no null objects are used.
+                        // =>must be dummy object (params)
                         if (baseObject.contains("@")) {
                             // dummy object
                             String objectName = "@Obj_" + Integer.toString(u.getJavaSourceStartLineNumber());
@@ -344,7 +334,6 @@ public class PTA {
                             dummyPointees.add(objectName);
                             in.heapMap.put(hr, dummyPointees);
                         }
-                    } else {
                     }
                 }
             } else {
@@ -381,39 +370,22 @@ public class PTA {
             } else {
                 // throw new RuntimeException(base+" not contained in in.stackMap!");
             }
-        } else {
-            if (rhs instanceof Local) {
-                Local variable = (Local) (rhs);
-                String varName = variable.getName();
-                if (in.stackMap.containsKey(varName)) {
-                    newPointees.addAll(in.stackMap.get(varName));
-                }
-            } else if (rhs instanceof ParameterRef) {
-                // nop
-                // because getDummyGraphtakes takes care of this.
-            } else if (rhs instanceof StaticFieldRef) {
-                // TODO: store info about obj being global
-                StaticFieldRef sfref = (StaticFieldRef) (rhs);
-                String varName = sfref.getField().getName();
-                if (in.stackMap.containsKey(varName)) {
-                    newPointees.addAll(in.stackMap.get(varName));
-                }
-            } else if (rhs instanceof ThisRef) {
-                // what?
+        } else if (rhs instanceof Local) {
+            Local variable = (Local) (rhs);
+            String varName = variable.getName();
+            if (in.stackMap.containsKey(varName)) {
+                newPointees.addAll(in.stackMap.get(varName));
             }
+        } else if (rhs instanceof StaticFieldRef) {
+            StaticFieldRef sfref = (StaticFieldRef) (rhs);
+            String varName = sfref.getField().getName();
+            if (in.stackMap.containsKey(varName)) {
+                newPointees.addAll(in.stackMap.get(varName));
+            }
+        } else if (rhs instanceof ThisRef) {
+            newPointees.add("@this");
         }
         return newPointees;
-    }
-
-    private void initializeHeapMapForObject(PointsToGraph in, String objectName, TreeSet<String> fields) {
-        for(String field:fields){
-            TreeSet<String> pointees = new TreeSet<>();
-            pointees.add("?");
-            HeapReference hr = new HeapReference();
-            hr.field = field;
-            hr.object = objectName;
-            in.heapMap.put(hr, pointees);
-        }
     }
 
     PointsToGraph flow(PointsToGraph in, Unit u) {
@@ -435,19 +407,13 @@ public class PTA {
         return ans;
     }
 
-    PointsToGraph getInitPointsToGraph(Body body) {
-        Chain<Local> locals = body.getLocals();
+    PointsToGraph getDummyPointsToGraph(Body body) {
         PointsToGraph g = new PointsToGraph();
         SootMethod method = body.getMethod();
         // heap objects should be identifiable
-        //locals init to ->?
-        for(Local local:locals){
-            TreeSet<String> pointees = new TreeSet<>();
-            pointees.add("?");
-            g.stackMap.put(local.getName(), pointees);
-        }
-        //params init to dummies
         List<Local> params = body.getParameterLocals();
+        print("Params for " + method.getName() + ":");
+        print(Integer.toString(params.size()));
         for (int i = 0; i < params.size(); i++) {
             Local param = params.get(i);
             String stackParamName = param.getName();
@@ -456,7 +422,6 @@ public class PTA {
             pointees.add(dummyObjName);
             g.stackMap.put(stackParamName, pointees);
         }
-        //class fields init to dummies:
         Chain<SootField> fields = method.getDeclaringClass().getFields();
         for (SootField field : fields) {
             String stackParamName = field.getName();
@@ -505,7 +470,7 @@ public class PTA {
             if (u == first) {
                 // equality holds because no new unit objects are created.
                 // equality in value must imply equality in reference.
-                newIn = getInitPointsToGraph(body);
+                newIn = getDummyPointsToGraph(body);
             } else {
                 newIn = mergeOutsOf(graph.getPredsOf(u), pointsToInfo);
             }
