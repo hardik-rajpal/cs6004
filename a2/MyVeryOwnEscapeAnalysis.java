@@ -16,7 +16,6 @@ import soot.jimple.internal.JAssignStmt;
 import soot.jimple.internal.JDynamicInvokeExpr;
 import soot.jimple.internal.JInvokeStmt;
 import soot.jimple.internal.JReturnStmt;
-import soot.jimple.internal.JSpecialInvokeExpr;
 import soot.jimple.internal.JStaticInvokeExpr;
 import soot.jimple.internal.JVirtualInvokeExpr;
 // import soot.jimple.internal.AbstractDefinitionStmt;
@@ -133,8 +132,7 @@ public class MyVeryOwnEscapeAnalysis {
 
     boolean isInvokeExpression(Value expression) {
         return expression instanceof JVirtualInvokeExpr
-                || expression instanceof JStaticInvokeExpr || expression instanceof JDynamicInvokeExpr
-                || expression instanceof JSpecialInvokeExpr;
+                || expression instanceof JStaticInvokeExpr || expression instanceof JDynamicInvokeExpr;
     }
 
     private TreeSet<String> getEscapingVariables(Unit u, PTA.PointsToGraph goingIn) {
@@ -142,7 +140,10 @@ public class MyVeryOwnEscapeAnalysis {
         if (u instanceof JInvokeStmt) {
             JInvokeStmt stmt = (JInvokeStmt) (u);
             InvokeExpr expr = stmt.getInvokeExpr();
-            handleEscapeFromInvokeExpr(goingIn, escapingVars, expr);
+            if(isInvokeExpression(expr)){
+                //to ignore specialinvoke
+                handleEscapeFromInvokeExpr(goingIn, escapingVars, expr);
+            }
             // any object passed as a parameter to a function call.
         } else if (u instanceof JAssignStmt) {
             JAssignStmt stmt = ((JAssignStmt) u);
