@@ -3,13 +3,28 @@ class Node extends java.lang.Object
     Node f;
     Node g;
 
+    Node foo2(Node)
+    {
+        Node this, f, temp$0, temp$1;
+
+        this := @this: Node;
+
+        f := @parameter0: Node;
+
+        temp$0 = f.<Node: Node g>;
+
+        temp$1 = temp$0.<Node: Node f>;
+
+        return temp$1;
+    }
+
     void <init>()
     {
-        Node r0;
+        Node this;
 
-        r0 := @this: Node;
+        this := @this: Node;
 
-        specialinvoke r0.<java.lang.Object: void <init>()>();
+        specialinvoke this.<java.lang.Object: void <init>()>();
 
         return;
     }

@@ -20,8 +20,8 @@ public class PA2 {
         String[] sootArgs = {
             "-cp", classPath, "-pp", // sets the class path for Soot
             "-keep-line-number", // preserves line numbers in input Java files  
-            "-main-class", "Test",
-            "Test","Node"	// specify the main class
+            "-main-class", "TestManish",
+            "TestManish","Node"	// specify the main class
         };
 
         // Create transformer for analysis

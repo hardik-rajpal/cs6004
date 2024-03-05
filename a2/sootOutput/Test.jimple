@@ -29,11 +29,11 @@ public class Test extends java.lang.Object
 
     public Node foo()
     {
-        Node $r0, $r2, $r3, $r5, $r6, r8, $r9, $r11, $r12, $r13, $r14, $r15, $r16, $r17, $r19, $r20, $r21, $r22;
-        Test r10;
-        Node[] r18;
+        Node $r0, $r2, $r3, $r4, $r5, $r6, $r7, $r8, $r10, $r11, $r13, $r14, $r15, $r16, $r17, $r18, $r19, $r21, $r22, $r23, $r24;
+        Test r12;
+        Node[] r20;
 
-        r10 := @this: Test;
+        r12 := @this: Test;
 
         $r0 = new Node;
 
@@ -49,71 +49,91 @@ public class Test extends java.lang.Object
 
         specialinvoke $r3.<Node: void <init>()>();
 
+        $r4 = new Node;
+
+        specialinvoke $r4.<Node: void <init>()>();
+
+        $r3.<Node: Node f> = $r4;
+
         $r5 = new Node;
 
         specialinvoke $r5.<Node: void <init>()>();
-
-        $r3.<Node: Node f> = $r5;
 
         $r6 = new Node;
 
         specialinvoke $r6.<Node: void <init>()>();
 
-        r8 = staticinvoke <Test: Node bar(Node,Node)>($r3, $r6);
+        $r5.<Node: Node g> = $r6;
 
-        $r9 = new Node;
+        $r7 = new Node;
 
-        specialinvoke $r9.<Node: void <init>()>();
+        specialinvoke $r7.<Node: void <init>()>();
 
-        r8.<Node: Node f> = $r9;
+        $r5.<Node: Node f> = $r7;
 
-        $r11 = r10.<Test: Node global>;
+        $r8 = new Node;
 
-        $r12 = $r11.<Node: Node f>;
+        specialinvoke $r8.<Node: void <init>()>();
 
-        $r13 = $r12.<Node: Node g>;
+        staticinvoke <Test: Node bar(Node,Node)>($r5, $r8);
 
-        $r14 = $r13.<Node: Node g>;
+        $r10 = new Node;
 
-        $r16 = $r14.<Node: Node f>;
+        specialinvoke $r10.<Node: void <init>()>();
 
-        $r15 = new Node;
+        $r11 = new Node;
 
-        specialinvoke $r15.<Node: void <init>()>();
+        specialinvoke $r11.<Node: void <init>()>();
 
-        $r16.<Node: Node f> = $r15;
+        $r10.<Node: Node f> = $r11;
+
+        $r13 = r12.<Test: Node global>;
+
+        $r14 = $r13.<Node: Node f>;
+
+        $r15 = $r14.<Node: Node g>;
+
+        $r16 = $r15.<Node: Node g>;
+
+        $r18 = $r16.<Node: Node f>;
 
         $r17 = new Node;
 
         specialinvoke $r17.<Node: void <init>()>();
 
-        r10.<Test: Node global> = $r17;
+        $r18.<Node: Node f> = $r17;
 
-        r18 = newarray (Node)[10];
+        $r19 = new Node;
 
-        $r19 = r18[1];
+        specialinvoke $r19.<Node: void <init>()>();
 
-        if $r19 != $r3 goto label1;
+        r12.<Test: Node global> = $r19;
 
-        $r22 = new Node;
+        r20 = newarray (Node)[10];
 
-        specialinvoke $r22.<Node: void <init>()>();
+        $r21 = r20[1];
 
-        r18[0] = $r22;
+        if $r21 != $r5 goto label1;
+
+        $r24 = new Node;
+
+        specialinvoke $r24.<Node: void <init>()>();
+
+        r20[0] = $r24;
 
         goto label2;
 
      label1:
-        $r20 = new Node;
+        $r22 = new Node;
 
-        specialinvoke $r20.<Node: void <init>()>();
+        specialinvoke $r22.<Node: void <init>()>();
 
-        r18[2] = $r20;
+        r20[2] = $r22;
 
      label2:
-        $r21 = r18[1];
+        $r23 = r20[1];
 
-        r10.<Test: Node global> = $r21;
+        r12.<Test: Node global> = $r23;
 
         return $r0;
     }

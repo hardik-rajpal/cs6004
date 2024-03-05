@@ -1,0 +1,506 @@
+public class TestManish extends java.lang.Object
+{
+    public static Node global;
+    public Node field;
+
+    public static void main(java.lang.String[])
+    {
+        java.lang.String[] args;
+
+        args := @parameter0: java.lang.String[];
+
+        staticinvoke <TestManish: Node foo()>();
+
+        return;
+    }
+
+    public static Node foo()
+    {
+        Node temp$0, temp$1, temp$2, temp$3, temp$4, temp$5, temp$6, temp$8;
+
+        temp$0 = new Node;
+
+        specialinvoke temp$0.<Node: void <init>()>();
+
+        temp$1 = new Node;
+
+        specialinvoke temp$1.<Node: void <init>()>();
+
+        temp$0.<Node: Node f> = temp$1;
+
+        temp$2 = temp$0.<Node: Node f>;
+
+        temp$3 = new Node;
+
+        specialinvoke temp$3.<Node: void <init>()>();
+
+        temp$2.<Node: Node g> = temp$3;
+
+        temp$4 = new Node;
+
+        specialinvoke temp$4.<Node: void <init>()>();
+
+        temp$5 = new Node;
+
+        specialinvoke temp$5.<Node: void <init>()>();
+
+        temp$4.<Node: Node f> = temp$5;
+
+        temp$6 = temp$0.<Node: Node f>;
+
+        staticinvoke <TestManish: Node bar(Node,Node)>(temp$6, temp$4);
+
+        temp$8 = temp$4.<Node: Node f>;
+
+        return temp$8;
+    }
+
+    public static Node bar(Node, Node)
+    {
+        Node p1, p2, temp$0, temp$1, temp$2;
+
+        p1 := @parameter0: Node;
+
+        p2 := @parameter1: Node;
+
+        temp$0 = new Node;
+
+        specialinvoke temp$0.<Node: void <init>()>();
+
+        temp$1 = new Node;
+
+        specialinvoke temp$1.<Node: void <init>()>();
+
+        temp$0.<Node: Node f> = temp$1;
+
+        temp$2 = temp$0.<Node: Node f>;
+
+        p2.<Node: Node f> = temp$2;
+
+        return p1;
+    }
+
+    public Node f1()
+    {
+        TestManish this;
+        Node temp$0, x, temp$1, temp$2, temp$3, temp$4, temp$5, temp$6;
+
+        this := @this: TestManish;
+
+        temp$0 = new Node;
+
+        specialinvoke temp$0.<Node: void <init>()>();
+
+        <TestManish: Node global> = temp$0;
+
+        temp$1 = <TestManish: Node global>;
+
+        x = temp$1.<Node: Node f>;
+
+        temp$2 = <TestManish: Node global>;
+
+        temp$3 = new Node;
+
+        specialinvoke temp$3.<Node: void <init>()>();
+
+        temp$2.<Node: Node f> = temp$3;
+
+        temp$4 = <TestManish: Node global>;
+
+        temp$5 = temp$4.<Node: Node f>;
+
+        x.<Node: Node g> = temp$5;
+
+        temp$6 = x.<Node: Node g>;
+
+        return temp$6;
+    }
+
+    public Node f2(Node)
+    {
+        TestManish this;
+        Node p, temp$0, temp$1;
+
+        this := @this: TestManish;
+
+        p := @parameter0: Node;
+
+        temp$0 = virtualinvoke this.<TestManish: Node f1()>();
+
+        temp$1 = new Node;
+
+        specialinvoke temp$1.<Node: void <init>()>();
+
+        temp$0.<Node: Node f> = temp$1;
+
+        return p;
+    }
+
+    public void f3()
+    {
+        TestManish this;
+        Node temp$0, temp$1, temp$2, temp$3, temp$4, temp$5;
+
+        this := @this: TestManish;
+
+        temp$0 = new Node;
+
+        specialinvoke temp$0.<Node: void <init>()>();
+
+        temp$1 = new Node;
+
+        specialinvoke temp$1.<Node: void <init>()>();
+
+        temp$0.<Node: Node g> = temp$1;
+
+        temp$2 = temp$0.<Node: Node g>;
+
+        temp$3 = temp$2.<Node: Node f>;
+
+        temp$1.<Node: Node f> = temp$3;
+
+        temp$4 = this.<TestManish: Node field>;
+
+        temp$5 = temp$0.<Node: Node g>;
+
+        temp$4.<Node: Node f> = temp$5;
+
+        return;
+    }
+
+    public void f4()
+    {
+        TestManish this;
+        Node x, temp$0, temp$1, y, temp$2, temp$3, temp$4, temp$5, temp$6, temp$7;
+
+        this := @this: TestManish;
+
+        temp$0 = new Node;
+
+        specialinvoke temp$0.<Node: void <init>()>();
+
+        x = temp$0;
+
+     label1:
+        if x != null goto label2;
+
+        goto label3;
+
+     label2:
+        temp$1 = x.<Node: Node f>;
+
+        x = temp$1;
+
+        goto label1;
+
+     label3:
+        y = x.<Node: Node f>;
+
+        temp$2 = x.<Node: Node f>;
+
+        x.<Node: Node g> = temp$2;
+
+        temp$3 = new Node;
+
+        specialinvoke temp$3.<Node: void <init>()>();
+
+        y.<Node: Node g> = temp$3;
+
+        temp$4 = x.<Node: Node g>;
+
+        temp$5 = virtualinvoke this.<TestManish: Node f2(Node)>(temp$4);
+
+        x.<Node: Node g> = temp$5;
+
+        temp$6 = x.<Node: Node g>;
+
+        temp$7 = temp$6.<Node: Node g>;
+
+        <TestManish: Node global> = temp$7;
+
+        return;
+    }
+
+    public void f5(Node)
+    {
+        TestManish this;
+        Node p, temp$0, temp$1, temp$2, temp$3, temp$4, temp$5, temp$6, temp$7;
+
+        this := @this: TestManish;
+
+        p := @parameter0: Node;
+
+        temp$0 = new Node;
+
+        specialinvoke temp$0.<Node: void <init>()>();
+
+        temp$1 = new Node;
+
+        specialinvoke temp$1.<Node: void <init>()>();
+
+        temp$0.<Node: Node f> = temp$1;
+
+        temp$2 = temp$0.<Node: Node f>;
+
+        if temp$2 != null goto label1;
+
+        goto label2;
+
+     label1:
+        temp$3 = new Node;
+
+        specialinvoke temp$3.<Node: void <init>()>();
+
+        temp$0.<Node: Node g> = temp$3;
+
+        goto label5;
+
+     label2:
+        temp$4 = temp$0.<Node: Node g>;
+
+        if temp$4 != null goto label3;
+
+        goto label4;
+
+     label3:
+        temp$5 = temp$0.<Node: Node g>;
+
+        temp$0.<Node: Node g> = temp$5;
+
+        goto label5;
+
+     label4:
+        temp$6 = temp$0.<Node: Node f>;
+
+        temp$0.<Node: Node g> = temp$6;
+
+     label5:
+        temp$7 = temp$0.<Node: Node g>;
+
+        p.<Node: Node g> = temp$7;
+
+        return;
+    }
+
+    public Node f6()
+    {
+        TestManish this;
+        Node temp$0, temp$1, temp$2, temp$3, temp$4, temp$5, temp$6, temp$7, temp$9, temp$10, temp$11, temp$12, temp$13, temp$14, temp$15, temp$16, temp$17, temp$20, temp$23, temp$26, temp$29;
+        Node[] a;
+
+        this := @this: TestManish;
+
+        temp$0 = new Node;
+
+        specialinvoke temp$0.<Node: void <init>()>();
+
+        temp$1 = new Node;
+
+        specialinvoke temp$1.<Node: void <init>()>();
+
+        temp$0.<Node: Node f> = temp$1;
+
+        temp$2 = new Node;
+
+        specialinvoke temp$2.<Node: void <init>()>();
+
+        temp$3 = new Node;
+
+        specialinvoke temp$3.<Node: void <init>()>();
+
+        temp$2.<Node: Node f> = temp$3;
+
+        temp$4 = new Node;
+
+        specialinvoke temp$4.<Node: void <init>()>();
+
+        temp$5 = new Node;
+
+        specialinvoke temp$5.<Node: void <init>()>();
+
+        temp$4.<Node: Node g> = temp$5;
+
+        temp$6 = new Node;
+
+        specialinvoke temp$6.<Node: void <init>()>();
+
+        temp$4.<Node: Node f> = temp$6;
+
+        temp$7 = new Node;
+
+        specialinvoke temp$7.<Node: void <init>()>();
+
+        staticinvoke <TestManish: Node bar(Node,Node)>(temp$4, temp$7);
+
+        temp$9 = new Node;
+
+        specialinvoke temp$9.<Node: void <init>()>();
+
+        temp$10 = new Node;
+
+        specialinvoke temp$10.<Node: void <init>()>();
+
+        temp$9.<Node: Node f> = temp$10;
+
+        temp$11 = <TestManish: Node global>;
+
+        temp$12 = temp$11.<Node: Node f>;
+
+        temp$13 = temp$12.<Node: Node g>;
+
+        temp$14 = temp$13.<Node: Node g>;
+
+        temp$15 = temp$14.<Node: Node f>;
+
+        temp$16 = new Node;
+
+        specialinvoke temp$16.<Node: void <init>()>();
+
+        temp$15.<Node: Node f> = temp$16;
+
+        temp$17 = new Node;
+
+        specialinvoke temp$17.<Node: void <init>()>();
+
+        <TestManish: Node global> = temp$17;
+
+        a = newarray (Node)[10];
+
+        temp$20 = a[1];
+
+        if temp$20 == temp$4 goto label1;
+
+        goto label2;
+
+     label1:
+        temp$23 = new Node;
+
+        specialinvoke temp$23.<Node: void <init>()>();
+
+        a[0] = temp$23;
+
+        goto label3;
+
+     label2:
+        temp$26 = new Node;
+
+        specialinvoke temp$26.<Node: void <init>()>();
+
+        a[2] = temp$26;
+
+     label3:
+        temp$29 = a[1];
+
+        <TestManish: Node global> = temp$29;
+
+        return temp$0;
+    }
+
+    public static Node[] arrtestManish()
+    {
+        Node[] global;
+        Node temp$2, temp$5, temp$6;
+
+        global = newarray (Node)[5];
+
+        temp$2 = new Node;
+
+        specialinvoke temp$2.<Node: void <init>()>();
+
+        global[1] = temp$2;
+
+        temp$5 = global[1];
+
+        temp$6 = new Node;
+
+        specialinvoke temp$6.<Node: void <init>()>();
+
+        temp$5.<Node: Node f> = temp$6;
+
+        return global;
+    }
+
+    public Node[] arrParam(Node[])
+    {
+        TestManish this;
+        Node[] p, arr;
+        Node temp$2, temp$5, temp$6, temp$11;
+
+        this := @this: TestManish;
+
+        p := @parameter0: Node[];
+
+        arr = newarray (Node)[5];
+
+        temp$2 = new Node;
+
+        specialinvoke temp$2.<Node: void <init>()>();
+
+        arr[0] = temp$2;
+
+        temp$5 = arr[1];
+
+        temp$6 = new Node;
+
+        specialinvoke temp$6.<Node: void <init>()>();
+
+        temp$5.<Node: Node f> = temp$6;
+
+        temp$11 = arr[2];
+
+        p[0] = temp$11;
+
+        return p;
+    }
+
+    public void methodCallTest()
+    {
+        TestManish this;
+        Node temp$0, temp$1, temp$3, temp$4, temp$5, temp$6, temp$7;
+
+        this := @this: TestManish;
+
+        temp$0 = new Node;
+
+        specialinvoke temp$0.<Node: void <init>()>();
+
+        temp$1 = new Node;
+
+        specialinvoke temp$1.<Node: void <init>()>();
+
+        virtualinvoke temp$0.<Node: Node foo2(Node)>(temp$1);
+
+        temp$3 = new Node;
+
+        specialinvoke temp$3.<Node: void <init>()>();
+
+        temp$4 = new Node;
+
+        specialinvoke temp$4.<Node: void <init>()>();
+
+        temp$5 = new Node;
+
+        specialinvoke temp$5.<Node: void <init>()>();
+
+        temp$6 = virtualinvoke temp$3.<Node: Node foo2(Node)>(temp$4);
+
+        temp$7 = new Node;
+
+        specialinvoke temp$7.<Node: void <init>()>();
+
+        temp$6.<Node: Node f> = temp$7;
+
+        return;
+    }
+
+    public void <init>()
+    {
+        TestManish this;
+
+        this := @this: TestManish;
+
+        specialinvoke this.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+}
