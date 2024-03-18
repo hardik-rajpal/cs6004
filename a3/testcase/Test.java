@@ -1,11 +1,9 @@
-class Node {
-	Node f;
-	Node g;
-	Node() {}
-}
-
 public class Test {
-	public static Node global;
+	class Node {
+		Node f;
+		Node g;
+		Node() {}
+	}
 	public static void main(String[] args) {
 		foo();
 	}

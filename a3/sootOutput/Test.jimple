@@ -1,0 +1,74 @@
+public class Test extends java.lang.Object
+{
+    public static Node global;
+
+    public static void main(java.lang.String[])
+    {
+        java.lang.String[] args;
+
+        args := @parameter0: java.lang.String[];
+
+        staticinvoke <Test: Node foo()>();
+
+        return;
+    }
+
+    public static Node foo()
+    {
+        Node temp$0, temp$1, temp$2, temp$3, z, a;
+
+        temp$0 = new Node;
+
+        specialinvoke temp$0.<Node: void <init>()>();
+
+        temp$1 = new Node;
+
+        specialinvoke temp$1.<Node: void <init>()>();
+
+        temp$2 = new Node;
+
+        specialinvoke temp$2.<Node: void <init>()>();
+
+        temp$1.<Node: Node f> = temp$2;
+
+        temp$3 = new Node;
+
+        specialinvoke temp$3.<Node: void <init>()>();
+
+        staticinvoke <Test: void bar(Node,Node)>(temp$0, temp$3);
+
+        z = temp$3.<Node: Node f>;
+
+        a = temp$0.<Node: Node f>;
+
+        return temp$0;
+    }
+
+    public static void bar(Node, Node)
+    {
+        Node p1, p2, temp$0;
+
+        p1 := @parameter0: Node;
+
+        p2 := @parameter1: Node;
+
+        temp$0 = new Node;
+
+        specialinvoke temp$0.<Node: void <init>()>();
+
+        p1.<Node: Node f> = temp$0;
+
+        return;
+    }
+
+    public void <init>()
+    {
+        Test this;
+
+        this := @this: Test;
+
+        specialinvoke this.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+}
