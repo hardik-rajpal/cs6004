@@ -26,6 +26,7 @@ import soot.jimple.internal.JDynamicInvokeExpr;
 import soot.jimple.internal.JIdentityStmt;
 import soot.jimple.internal.JInstanceFieldRef;
 import soot.jimple.internal.JInterfaceInvokeExpr;
+import soot.jimple.internal.JInvokeStmt;
 import soot.jimple.internal.JNewArrayExpr;
 import soot.jimple.internal.JNewExpr;
 import soot.jimple.internal.JNewMultiArrayExpr;
@@ -388,21 +389,25 @@ public class PTA {
 
     PointsToGraph flow(PointsToGraph in, Unit u) {
         PointsToGraph ans = new PointsToGraph();
-        //TODO:is invoke stmt
+        boolean useKgsets = false;
+        
+        print(u.toString()+": "+isInvokeStmt(u));
         if(isInvokeStmt(u)){
-            // 
-            Body body;
-            BriefUnitGraph cfg = new BriefUnitGraph(body);
-            TreeMap<String,String> paramMap = new TreeMap<>();
-            TreeMap<Unit, PTA.NodePointsToData> ptaInfo = getPointsToInfo(body,paramMap, in);
-            //TODO: fix interface to get return value.
-            for(Unit tail:cfg.getTails()){
-                PTA.NodePointsToData ptg = ptaInfo.get(tail);
-                mergePointsToGraphs(ans, ptg.out);
+            InvokeExpr expr = getMethodFromInvokeStmts(u);
+            SootMethod method = expr.getMethod();
+            if(method.isConstructor()){
+                useKgsets = true;
             }
-            
+            else{
+                Body body = method.getActiveBody();
+                TreeMap<String,String> paramMap = new TreeMap<>();
+                fillParamMap(paramMap,expr);
+                TreeMap<Unit, PTA.NodePointsToData> ptaInfo = getPointsToInfo(body,paramMap, in);
+                ans = mergePTGAtTails(body, ptaInfo);
+                useKgsets = false;
+            }   
         }
-        else{
+        if(useKgsets){
             KillGenSets kgsets = getKillGenSets(in, u);
             for (String stackVarName : in.stackMap.keySet()) {
                 if (!kgsets.killStack.contains(stackVarName)) {
@@ -414,16 +419,68 @@ public class PTA {
                     ans.heapMap.put(heapRef, new TreeSet<String>(in.heapMap.get(heapRef)));
                 }
             }
+            mergePointsToGraphs(ans, kgsets.gen);
         }
         // remove killed points-to info
         // add gen points-to info
-        mergePointsToGraphs(ans, kgsets.gen);
+        return ans;
+    }
+    private void fillParamMap(TreeMap<String, String> paramMap, InvokeExpr expr) {
+        List<Local> params = expr.getMethod().getActiveBody().getParameterLocals();
+        List<Value> args = expr.getArgs();
+        
+        for(int i=0;i<params.size();i++){
+            Local param = params.get(i);
+            String key = param.getName();
+            Value arg = args.get(i);
+            //assume simple args like local1, local2, local3... because of jimple!
+            if(arg instanceof Local){
+                Local obj = (Local)arg;
+                String value = obj.getName();
+                paramMap.put(key, value);
+            }
+        }
+        String s = ("ParamMap:{\n");
+        for(String key:paramMap.keySet()){
+            s+=(key+"->"+paramMap.get(key))+"\n";
+        }
+        s+=("ParamMap:{\n");
+        print(s);
+        System.exit(0);
+    }
+
+    private InvokeExpr getMethodFromInvokeStmts(Unit u) {
+        InvokeExpr ans;
+        if(u instanceof JAssignStmt){
+            Value rhs = ((JAssignStmt)u).getRightOp();
+            InvokeExpr expr = (InvokeExpr)rhs;
+            ans = expr;
+        }
+        else{
+            //u instanceof JInvokeStmt
+            JInvokeStmt stmt = (JInvokeStmt) (u);
+            InvokeExpr expr = stmt.getInvokeExpr();
+            ans = expr;
+        }
         return ans;
     }
 
     private boolean isInvokeStmt(Unit u) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'isInvokeStmt'");
+        boolean ans = false;
+        if(u instanceof JAssignStmt){
+            Value rhs = ((JAssignStmt)u).getRightOp();
+            if(isInvokeExpression(rhs)){
+                ans = true;
+            }
+        }
+        else if(u instanceof JInvokeStmt){
+            JInvokeStmt stmt = (JInvokeStmt) (u);
+            InvokeExpr expr = stmt.getInvokeExpr();
+            if(isInvokeExpression(expr)){
+                ans = true;
+            }
+        }
+        return ans;
     }
 
     PointsToGraph getBoundaryInfoGraph(Body body, PointsToGraph info, TreeMap<String,String> paramMap) {
@@ -438,11 +495,11 @@ public class PTA {
         // forward stackparamname
         for (int i = 0; i < params.size(); i++) {
             Local param = params.get(i);
-            String stackParamName = param.getName();
+            String calleeName = param.getName();
+            String callerName = paramMap.get(calleeName);
             TreeSet<String> pointees = new TreeSet<>();
-            String obj = paramMap.get(stackParamName);
-            pointees.add(obj);
-            g.stackMap.put(stackParamName, pointees);
+            pointees.addAll(info.stackMap.get(callerName));
+            g.stackMap.put(calleeName, pointees);
         }
         return g;
     }
@@ -471,11 +528,20 @@ public class PTA {
         return g;
     }
     void print(String s) {
-        System.out.println(s);
+        synchronized(System.out){
+            System.out.println(s);
+        }
     }
 
     UnitComparator unitcomparator;
-
+    public PointsToGraph mergePTGAtTails(Body body, TreeMap<Unit, NodePointsToData> ptinfo){
+        PointsToGraph ans = new PointsToGraph();
+        BriefUnitGraph cfg = new BriefUnitGraph(body);
+        for(Unit unit: cfg.getTails()){
+            mergePointsToGraphs(ans, ptinfo.get(unit).out);
+        }
+        return ans;
+    }
     public TreeMap<Unit, NodePointsToData> getPointsToInfo(Body body, TreeMap<String, String> paramMap, PointsToGraph ptgIn) {
         PatchingChain<Unit> units = body.getUnits();
         // Construct CFG for the current method's body

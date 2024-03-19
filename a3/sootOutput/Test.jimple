@@ -1,73 +1,75 @@
 public class Test extends java.lang.Object
 {
-    public static Node global;
 
-    public static void main(java.lang.String[])
+    public void <init>()
     {
-        java.lang.String[] args;
+        Test r0;
 
-        args := @parameter0: java.lang.String[];
+        r0 := @this: Test;
 
-        staticinvoke <Test: Node foo()>();
+        specialinvoke r0.<java.lang.Object: void <init>()>();
 
         return;
     }
 
-    public static Node foo()
+    public static void main(java.lang.String[])
     {
-        Node temp$0, temp$1, temp$2, temp$3, z, a;
+        java.lang.String[] r0;
 
-        temp$0 = new Node;
+        r0 := @parameter0: java.lang.String[];
 
-        specialinvoke temp$0.<Node: void <init>()>();
+        staticinvoke <Test: Node foo(java.lang.String[])>(r0);
 
-        temp$1 = new Node;
+        return;
+    }
 
-        specialinvoke temp$1.<Node: void <init>()>();
+    public static Node foo(java.lang.String[])
+    {
+        Node $r0, $r2, $r3, $r4, r5, r6;
+        java.lang.String[] r7;
 
-        temp$2 = new Node;
+        r7 := @parameter0: java.lang.String[];
 
-        specialinvoke temp$2.<Node: void <init>()>();
+        $r0 = new Node;
 
-        temp$1.<Node: Node f> = temp$2;
+        specialinvoke $r0.<Node: void <init>()>();
 
-        temp$3 = new Node;
+        $r2 = new Node;
 
-        specialinvoke temp$3.<Node: void <init>()>();
+        specialinvoke $r2.<Node: void <init>()>();
 
-        staticinvoke <Test: void bar(Node,Node)>(temp$0, temp$3);
+        $r3 = new Node;
 
-        z = temp$3.<Node: Node f>;
+        specialinvoke $r3.<Node: void <init>()>();
 
-        a = temp$0.<Node: Node f>;
+        $r2.<Node: Node f> = $r3;
 
-        return temp$0;
+        $r4 = new Node;
+
+        specialinvoke $r4.<Node: void <init>()>();
+
+        staticinvoke <Test: void bar(Node,Node)>($r0, $r4);
+
+        r5 = $r4.<Node: Node f>;
+
+        r6 = $r0.<Node: Node f>;
+
+        return $r0;
     }
 
     public static void bar(Node, Node)
     {
-        Node p1, p2, temp$0;
+        Node $r0, r2, r3;
 
-        p1 := @parameter0: Node;
+        r2 := @parameter0: Node;
 
-        p2 := @parameter1: Node;
+        r3 := @parameter1: Node;
 
-        temp$0 = new Node;
+        $r0 = new Node;
 
-        specialinvoke temp$0.<Node: void <init>()>();
+        specialinvoke $r0.<Node: void <init>()>();
 
-        p1.<Node: Node f> = temp$0;
-
-        return;
-    }
-
-    public void <init>()
-    {
-        Test this;
-
-        this := @this: Test;
-
-        specialinvoke this.<java.lang.Object: void <init>()>();
+        r2.<Node: Node f> = $r0;
 
         return;
     }

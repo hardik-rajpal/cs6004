@@ -5,11 +5,11 @@ class Node extends java.lang.Object
 
     void <init>()
     {
-        Node this;
+        Node r0;
 
-        this := @this: Node;
+        r0 := @this: Node;
 
-        specialinvoke this.<java.lang.Object: void <init>()>();
+        specialinvoke r0.<java.lang.Object: void <init>()>();
 
         return;
     }

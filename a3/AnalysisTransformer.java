@@ -1,26 +1,44 @@
-import java.util.*;
-import soot.*;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.TreeSet;
+
+import soot.Body;
+import soot.Local;
+import soot.PatchingChain;
+import soot.Scene;
+import soot.SceneTransformer;
+import soot.SootClass;
+import soot.SootMethod;
+import soot.Unit;
+import soot.UnitPatchingChain;
 import soot.jimple.toolkits.callgraph.CallGraph;
-import soot.jimple.toolkits.callgraph.Edge;
-import soot.toolkits.graph.*;
+import soot.toolkits.graph.BriefUnitGraph;
+import soot.toolkits.graph.UnitGraph;
+import soot.toolkits.scalar.LiveLocals;
 import soot.toolkits.scalar.SimpleLiveLocals;
 import soot.util.Chain;
-import soot.toolkits.scalar.LiveLocals;
 
 
 public class AnalysisTransformer extends SceneTransformer {
     static CallGraph cg;
-    static TreeSet<String> results;
+    static TreeSet<String> results = new TreeSet<>();
     @Override
     protected void internalTransform(String arg0, Map<String, String> arg1) {
         cg = Scene.v().getCallGraph();
         // Get the main method
         Chain<SootClass> classes = Scene.v().getClasses();
         for(SootClass classInstance:classes){
+            //ignore java lang classes
+            if(!classInstance.isApplicationClass()){
+                continue;
+            }
             List<SootMethod> methods = classInstance.getMethods();
             for(SootMethod method:methods){
-                String ans = processMethod(method);
-                results.add(ans);
+                if(!method.isConstructor()){
+                    String ans = processMethod(method);
+                    results.add(ans);
+                }
             }
         }
     }

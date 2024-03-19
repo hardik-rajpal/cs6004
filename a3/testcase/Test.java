@@ -1,13 +1,13 @@
+class Node {
+	Node f;
+	Node g;
+	Node() {}
+}
 public class Test {
-	class Node {
-		Node f;
-		Node g;
-		Node() {}
-	}
 	public static void main(String[] args) {
-		foo();
+		foo(args);
 	}
-	public static Node foo(){
+	public static Node foo(String [] args){
 		Node x = new Node();
 		Node y = new Node();
 		y.f = new Node();
