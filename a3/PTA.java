@@ -38,6 +38,16 @@ import soot.toolkits.graph.ExceptionalUnitGraph;
 import soot.util.Chain;
 
 public class PTA {
+    public static class CallerInfo{
+        String context;
+        PointsToGraph ptgIn;
+        TreeMap<String,String> paramMap;
+        CallerInfo(String _context, PointsToGraph _in,TreeMap<String,String> _paramMap){
+            context = _context;
+            ptgIn = _in;
+            paramMap = _paramMap;
+        }
+    }
     public static class HeapReference {
         String object;
         String field;
@@ -288,6 +298,7 @@ public class PTA {
 
     private TreeSet<String> getNewPointees(PointsToGraph in, Unit u, Value rhs) {
         TreeSet<String> newPointees = new TreeSet<>();
+        //TODO: accomodate context sensitivity.
         if (rhs instanceof JNewExpr) {
             // allocation site abstraction:
             String objectName = "Obj_" + Integer.toString(u.getJavaSourceStartLineNumber());
@@ -387,7 +398,7 @@ public class PTA {
         return newPointees;
     }
 
-    PointsToGraph flow(PointsToGraph in, Unit u) {
+    PointsToGraph flow(PointsToGraph in, Unit u, CallerInfo callerInfo) {
         PointsToGraph ans = new PointsToGraph();
         boolean useKgsets = false;
         
@@ -402,10 +413,15 @@ public class PTA {
                 Body body = method.getActiveBody();
                 TreeMap<String,String> paramMap = new TreeMap<>();
                 fillParamMap(paramMap,expr);
-                TreeMap<Unit, PTA.NodePointsToData> ptaInfo = getPointsToInfo(body,paramMap, in);
+                String newCtxString = callerInfo.context+Integer.toString(u.getJavaSourceStartLineNumber());
+                CallerInfo newCallerInfo = new CallerInfo(newCtxString, in, paramMap);
+                TreeMap<Unit, PTA.NodePointsToData> ptaInfo = getPointsToInfo(body,newCallerInfo);
                 ans = mergePTGAtTails(body, ptaInfo);
                 useKgsets = false;
             }   
+        }
+        else{
+            useKgsets = true;
         }
         if(useKgsets){
             KillGenSets kgsets = getKillGenSets(in, u);
@@ -444,9 +460,9 @@ public class PTA {
         for(String key:paramMap.keySet()){
             s+=(key+"->"+paramMap.get(key))+"\n";
         }
-        s+=("ParamMap:{\n");
+        s+=("}\n");
         print(s);
-        System.exit(0);
+        // System.exit(0);
     }
 
     private InvokeExpr getMethodFromInvokeStmts(Unit u) {
@@ -483,9 +499,11 @@ public class PTA {
         return ans;
     }
 
-    PointsToGraph getBoundaryInfoGraph(Body body, PointsToGraph info, TreeMap<String,String> paramMap) {
+    PointsToGraph getBoundaryInfoGraph(Body body, CallerInfo callerInfo) {
         PointsToGraph g = new PointsToGraph();
         // heap objects should be identifiable
+        PointsToGraph info = callerInfo.ptgIn;
+
         for(HeapReference hr:info.heapMap.keySet()){
             TreeSet<String> heapPointees = new TreeSet<>();
             heapPointees.addAll(info.heapMap.get(hr));
@@ -496,10 +514,12 @@ public class PTA {
         for (int i = 0; i < params.size(); i++) {
             Local param = params.get(i);
             String calleeName = param.getName();
-            String callerName = paramMap.get(calleeName);
-            TreeSet<String> pointees = new TreeSet<>();
-            pointees.addAll(info.stackMap.get(callerName));
-            g.stackMap.put(calleeName, pointees);
+            if(callerInfo.paramMap.containsKey(calleeName)){
+                String callerName = callerInfo.paramMap.get(calleeName);
+                TreeSet<String> pointees = new TreeSet<>();
+                pointees.addAll(info.stackMap.get(callerName));
+                g.stackMap.put(calleeName, pointees);
+            }
         }
         return g;
     }
@@ -542,7 +562,7 @@ public class PTA {
         }
         return ans;
     }
-    public TreeMap<Unit, NodePointsToData> getPointsToInfo(Body body, TreeMap<String, String> paramMap, PointsToGraph ptgIn) {
+    public TreeMap<Unit, NodePointsToData> getPointsToInfo(Body body, CallerInfo callerInfo) {
         PatchingChain<Unit> units = body.getUnits();
         // Construct CFG for the current method's body
 
@@ -572,8 +592,8 @@ public class PTA {
             if (u == first) {
                 // equality holds because no new unit objects are created.
                 // equality in value must imply equality in reference.
-                if(paramMap.size()>0){
-                    newIn = getBoundaryInfoGraph(body, ptgIn, paramMap);
+                if(callerInfo.context.length()>0){
+                    newIn = getBoundaryInfoGraph(body, callerInfo);
                 }
                 else{
                     newIn = getDummyPointsToGraph(body);
@@ -581,7 +601,7 @@ public class PTA {
             } else {
                 newIn = mergeOutsOf(graph.getPredsOf(u), pointsToInfo);
             }
-            newOut = flow(newIn, u);
+            newOut = flow(newIn, u, callerInfo);
             // assign new in.
             NodePointsToData nodeData = pointsToInfo.get(u);
             nodeData.in = newIn;

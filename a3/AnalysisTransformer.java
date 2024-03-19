@@ -59,7 +59,8 @@ public class AnalysisTransformer extends SceneTransformer {
         LiveLocals liveLocals = new SimpleLiveLocals(cfg);
         PTA pta = new PTA();
         TreeMap<String,String> paramMap = new TreeMap<>();
-        TreeMap<Unit, PTA.NodePointsToData> pointsToInfo = pta.getPointsToInfo(body,paramMap,new PTA.PointsToGraph());
+        PTA.CallerInfo callerInfo = new PTA.CallerInfo("", new PTA.PointsToGraph(), paramMap);
+        TreeMap<Unit, PTA.NodePointsToData> pointsToInfo = pta.getPointsToInfo(body,callerInfo);
         //mark all objects as dead.
         //Get line number after which object can be collected.
         for(Unit unit:units){

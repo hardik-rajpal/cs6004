@@ -1,9 +1,78 @@
-Soot started on Tue Mar 19 16:14:41 IST 2024
+Soot started on Tue Mar 19 20:08:08 IST 2024
 r0 := @parameter0: java.lang.String[]: false
+staticinvoke <Test: Node foo(java.lang.String[])>(r0): true
+ParamMap:{
+r7->r0
+}
+
 r7 := @parameter0: java.lang.String[]: false
+$r0 = new Node: false
+specialinvoke $r0.<Node: void <init>()>(): true
+r1 = $r0: false
+$r2 = new Node: false
+specialinvoke $r2.<Node: void <init>()>(): true
+r8 = $r2: false
+$r3 = new Node: false
+specialinvoke $r3.<Node: void <init>()>(): true
+r8.<Node: Node f> = $r3: false
+$r4 = new Node: false
+specialinvoke $r4.<Node: void <init>()>(): true
+r9 = $r4: false
+staticinvoke <Test: void bar(Node,Node)>(r1, r9): true
+ParamMap:{
+r2->r1
+r3->r9
+}
+
 r2 := @parameter0: Node: false
-Soot finished on Tue Mar 19 16:14:57 IST 2024
-Soot has run for 0 min. 16 sec.
+r3 := @parameter1: Node: false
+$r0 = new Node: false
+specialinvoke $r0.<Node: void <init>()>(): true
+r1 = $r0: false
+r2.<Node: Node f> = r1: false
+return: false
+r5 = r9.<Node: Node f>: false
+r6 = r1.<Node: Node f>: false
+return r1: false
+return: false
+r7 := @parameter0: java.lang.String[]: false
+$r0 = new Node: false
+specialinvoke $r0.<Node: void <init>()>(): true
+r1 = $r0: false
+$r2 = new Node: false
+specialinvoke $r2.<Node: void <init>()>(): true
+r8 = $r2: false
+$r3 = new Node: false
+specialinvoke $r3.<Node: void <init>()>(): true
+r8.<Node: Node f> = $r3: false
+$r4 = new Node: false
+specialinvoke $r4.<Node: void <init>()>(): true
+r9 = $r4: false
+staticinvoke <Test: void bar(Node,Node)>(r1, r9): true
+ParamMap:{
+r2->r1
+r3->r9
+}
+
+r2 := @parameter0: Node: false
+r3 := @parameter1: Node: false
+$r0 = new Node: false
+specialinvoke $r0.<Node: void <init>()>(): true
+r1 = $r0: false
+r2.<Node: Node f> = r1: false
+return: false
+r5 = r9.<Node: Node f>: false
+r6 = r1.<Node: Node f>: false
+return r1: false
+r2 := @parameter0: Node: false
+r3 := @parameter1: Node: false
+$r0 = new Node: false
+specialinvoke $r0.<Node: void <init>()>(): true
+r1 = $r0: false
+r2.<Node: Node f> = r1: false
+return: false
+Soot finished on Tue Mar 19 20:08:48 IST 2024
+Soot has run for 0 min. 40 sec.
 Test:bar 
 Test:foo 
 Test:main 

@@ -13,6 +13,7 @@ public class Test {
 		y.f = new Node();
 		y = new Node();
 		bar(x, y);
+		bar(y, x);
 		Node z = y.f;
 		Node a = x.f;
 		return x;
