@@ -1,4 +1,5 @@
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -30,6 +31,7 @@ import soot.jimple.internal.JInvokeStmt;
 import soot.jimple.internal.JNewArrayExpr;
 import soot.jimple.internal.JNewExpr;
 import soot.jimple.internal.JNewMultiArrayExpr;
+import soot.jimple.internal.JReturnStmt;
 import soot.jimple.internal.JSpecialInvokeExpr;
 import soot.jimple.internal.JStaticInvokeExpr;
 import soot.jimple.internal.JVirtualInvokeExpr;
@@ -39,13 +41,16 @@ import soot.util.Chain;
 
 public class PTA {
     public static class CallerInfo{
-        String context;
+        ArrayList<String> callSites;
         PointsToGraph ptgIn;
         TreeMap<String,String> paramMap;
-        CallerInfo(String _context, PointsToGraph _in,TreeMap<String,String> _paramMap){
-            context = _context;
+        CallerInfo(ArrayList<String> _callSites, PointsToGraph _in,TreeMap<String,String> _paramMap){
+            callSites = _callSites;
             ptgIn = _in;
             paramMap = _paramMap;
+        }
+        String getContext(){
+            return String.join(",",callSites);
         }
     }
     public static class HeapReference {
@@ -238,6 +243,7 @@ public class PTA {
             JInstanceFieldRef fieldRef = (JInstanceFieldRef) (lhs);
             String field = fieldRef.getField().getName();
             String base = fieldRef.getBase().toString();
+            //base==stackvar pointing to param0
             if (in.stackMap.containsKey(base)) {
                 TreeSet<String> heapObjs = in.stackMap.get(base);
                 if (heapObjs.size() == 1) {
@@ -298,20 +304,20 @@ public class PTA {
 
     private TreeSet<String> getNewPointees(PointsToGraph in, Unit u, Value rhs) {
         TreeSet<String> newPointees = new TreeSet<>();
-        //TODO: accomodate context sensitivity.
+        String ctxStr = callerInfo.getContext();
         if (rhs instanceof JNewExpr) {
             // allocation site abstraction:
-            String objectName = "Obj_" + Integer.toString(u.getJavaSourceStartLineNumber());
+            String objectName = "Obj_" + Integer.toString(u.getJavaSourceStartLineNumber())+"("+ctxStr+")";
             newPointees.add(objectName);
         } else if (rhs instanceof JNewArrayExpr) {
-            String objectName = "Obj_" + Integer.toString(u.getJavaSourceStartLineNumber());
+            String objectName = "Obj_" + Integer.toString(u.getJavaSourceStartLineNumber())+"("+ctxStr+")";
             newPointees.add(objectName);
         } else if (rhs instanceof JNewMultiArrayExpr) {
-            String objectName = "Obj_" + Integer.toString(u.getJavaSourceStartLineNumber());
+            String objectName = "Obj_" + Integer.toString(u.getJavaSourceStartLineNumber())+"("+ctxStr+")";
             newPointees.add(objectName);
 
         } else if (rhs instanceof InvokeExpr) {
-            String objName = "@Obj_" + Integer.toString(u.getJavaSourceStartLineNumber());
+            String objName = "@Obj_" + Integer.toString(u.getJavaSourceStartLineNumber())+"("+ctxStr+")";
             newPointees.add(objName);
         } else if (rhs instanceof JInstanceFieldRef) {
             // new pointees only if reftype
@@ -391,9 +397,10 @@ public class PTA {
         } else if (rhs instanceof ThisRef) {
             newPointees.add("@this");
         } else if (rhs instanceof ParameterRef){
-            ParameterRef pref = (ParameterRef)rhs;
-            String pointee = "@param"+Integer.toString(pref.getIndex());
-            newPointees.add(pointee);
+            //Fixed by dummy graph.
+            // Just forward the defn.
+            Local lhs = (Local)(((JIdentityStmt)u).getLeftOp());
+            newPointees.add(in.stackMap.get(lhs.getName()).first());
         }
         return newPointees;
     }
@@ -401,8 +408,6 @@ public class PTA {
     PointsToGraph flow(PointsToGraph in, Unit u, CallerInfo callerInfo) {
         PointsToGraph ans = new PointsToGraph();
         boolean useKgsets = false;
-        
-        print(u.toString()+": "+isInvokeStmt(u));
         if(isInvokeStmt(u)){
             InvokeExpr expr = getMethodFromInvokeStmts(u);
             SootMethod method = expr.getMethod();
@@ -413,10 +418,35 @@ public class PTA {
                 Body body = method.getActiveBody();
                 TreeMap<String,String> paramMap = new TreeMap<>();
                 fillParamMap(paramMap,expr);
-                String newCtxString = callerInfo.context+Integer.toString(u.getJavaSourceStartLineNumber());
-                CallerInfo newCallerInfo = new CallerInfo(newCtxString, in, paramMap);
-                TreeMap<Unit, PTA.NodePointsToData> ptaInfo = getPointsToInfo(body,newCallerInfo);
-                ans = mergePTGAtTails(body, ptaInfo);
+                ArrayList<String> newCallsiteList = new ArrayList<>();
+                newCallsiteList.addAll(callerInfo.callSites);
+                newCallsiteList.add(Integer.toString(u.getJavaSourceStartLineNumber()));
+                CallerInfo newCallerInfo = new CallerInfo(newCallsiteList, in, paramMap);
+                PTA calleePTA = new PTA();
+                //isolate unit comparators.
+                TreeMap<Unit, PTA.NodePointsToData> ptaInfo = calleePTA.getPointsToInfo(body,newCallerInfo);
+                PointsToGraph atCallEnd = mergePTGAtTails(body, ptaInfo);
+                //forward heapMap from callee::
+                ans.heapMap = atCallEnd.heapMap;
+                //copy stackMap from in:
+                ans.stackMap.putAll(in.stackMap);
+                //add lhs var if any
+                if(u instanceof JAssignStmt){
+                    JAssignStmt stmt = (JAssignStmt)u;
+                    Value lhs = stmt.getLeftOp();
+                    //lhs will only be a local, because of jimple specs.
+                    if(lhs instanceof Local){
+                        Local local = (Local)lhs;
+                        String stackVar = local.getName();
+                        TreeSet<String> returnedObjects = getReturnObjectSet(body,ptaInfo);
+                        ans.stackMap.put(stackVar,returnedObjects);
+                    }
+                    else{
+                        //TODO: remove post debugging.
+                        print("Non-local lhs in assignment stmt!");
+                        System.exit(1);
+                    }
+                }
                 useKgsets = false;
             }   
         }
@@ -441,6 +471,33 @@ public class PTA {
         // add gen points-to info
         return ans;
     }
+    private TreeSet<String> getReturnObjectSet(Body body, TreeMap<Unit, NodePointsToData> ptaInfo) {
+        TreeSet<String> returned = new TreeSet<>();
+        BriefUnitGraph cfg = new BriefUnitGraph(body);
+        for(Unit u:cfg.getTails()){
+            if(u instanceof JReturnStmt){
+                JReturnStmt stmt = (JReturnStmt)u;
+                Value returnValue = stmt.getOp();
+                if(returnValue instanceof Local){
+                    Local local = (Local)returnValue;
+                    String stackVar = local.getName();
+                    NodePointsToData data = ptaInfo.get(u);
+                    returned.addAll(data.in.stackMap.get(stackVar));
+                }
+                else{
+                    //TODO: test with int return values.
+                    print("Non-local return value");
+                    System.exit(1);
+                }
+            }
+            else{
+                print("Non-return stmt found at tail of function used in assignment stmt!");
+                System.exit(1);
+            }
+        }
+        return returned;
+    }
+
     private void fillParamMap(TreeMap<String, String> paramMap, InvokeExpr expr) {
         List<Local> params = expr.getMethod().getActiveBody().getParameterLocals();
         List<Value> args = expr.getArgs();
@@ -462,7 +519,6 @@ public class PTA {
         }
         s+=("}\n");
         print(s);
-        // System.exit(0);
     }
 
     private InvokeExpr getMethodFromInvokeStmts(Unit u) {
@@ -545,6 +601,10 @@ public class PTA {
             g.stackMap.put(stackParamName, pointees);
 
         }
+        synchronized(System.out){
+            print("Dummy graph: ");
+            g.print();
+        }
         return g;
     }
     void print(String s) {
@@ -554,6 +614,7 @@ public class PTA {
     }
 
     UnitComparator unitcomparator;
+    CallerInfo callerInfo;
     public PointsToGraph mergePTGAtTails(Body body, TreeMap<Unit, NodePointsToData> ptinfo){
         PointsToGraph ans = new PointsToGraph();
         BriefUnitGraph cfg = new BriefUnitGraph(body);
@@ -562,10 +623,10 @@ public class PTA {
         }
         return ans;
     }
-    public TreeMap<Unit, NodePointsToData> getPointsToInfo(Body body, CallerInfo callerInfo) {
+    public TreeMap<Unit, NodePointsToData> getPointsToInfo(Body body, CallerInfo _callerInfo) {
         PatchingChain<Unit> units = body.getUnits();
         // Construct CFG for the current method's body
-
+        callerInfo = _callerInfo;
         ExceptionalUnitGraph graph = new ExceptionalUnitGraph(body);
 
         HashMap<Unit, Integer> unitIndices = new HashMap<Unit, Integer>();
@@ -592,7 +653,7 @@ public class PTA {
             if (u == first) {
                 // equality holds because no new unit objects are created.
                 // equality in value must imply equality in reference.
-                if(callerInfo.context.length()>0){
+                if(callerInfo.callSites.size()>0){
                     newIn = getBoundaryInfoGraph(body, callerInfo);
                 }
                 else{
@@ -615,13 +676,15 @@ public class PTA {
     }
 
     void printPointsToInfo(TreeMap<Unit, NodePointsToData> pointsToInfo) {
-        for (Unit u : pointsToInfo.keySet()) {
-            print("Unit: \"" + u.toString() + "\"{");
-            print("\tIn: ");
-            pointsToInfo.get(u).in.print();
-            print("\tOut: ");
-            pointsToInfo.get(u).out.print();
-            print("}");
+        synchronized(System.out){
+            for (Unit u : pointsToInfo.keySet()) {
+                print("Unit: \"" + u.toString() + "\"{");
+                print("\tIn: ");
+                pointsToInfo.get(u).in.print();
+                print("\tOut: ");
+                pointsToInfo.get(u).out.print();
+                print("}");
+            }
         }
     }
 

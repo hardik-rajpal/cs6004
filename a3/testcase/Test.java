@@ -5,7 +5,9 @@ class Node {
 }
 public class Test {
 	public static void main(String[] args) {
-		foo(args);
+		Node a = new Node();
+		a.f = foo(args);
+		Node b = a.f;
 	}
 	public static Node foo(String [] args){
 		Node x = new Node();
@@ -13,8 +15,8 @@ public class Test {
 		y.f = new Node();
 		y = new Node();
 		bar(x, y);
-		bar(y, x);
 		Node z = y.f;
+		bar(y, x);
 		Node a = x.f;
 		return x;
 	}

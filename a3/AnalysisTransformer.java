@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -59,8 +60,9 @@ public class AnalysisTransformer extends SceneTransformer {
         LiveLocals liveLocals = new SimpleLiveLocals(cfg);
         PTA pta = new PTA();
         TreeMap<String,String> paramMap = new TreeMap<>();
-        PTA.CallerInfo callerInfo = new PTA.CallerInfo("", new PTA.PointsToGraph(), paramMap);
+        PTA.CallerInfo callerInfo = new PTA.CallerInfo(new ArrayList<String>(), new PTA.PointsToGraph(), paramMap);
         TreeMap<Unit, PTA.NodePointsToData> pointsToInfo = pta.getPointsToInfo(body,callerInfo);
+        pta.printPointsToInfo(pointsToInfo);
         //mark all objects as dead.
         //Get line number after which object can be collected.
         for(Unit unit:units){
@@ -75,6 +77,7 @@ public class AnalysisTransformer extends SceneTransformer {
         for(String obj:collectionAfter.keySet()){
             ans += obj+":"+collectionAfter.get(obj)+" ";
         }
+        // System.exit(0);
         return ans;
     }
 
