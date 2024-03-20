@@ -137,7 +137,7 @@ public class AnalysisTransformer extends SceneTransformer {
     private TreeSet<String> getObjectsUnusableAfter(HashSet<Local> localsLiveAfter,
             PTA.NodePointsToData info, TreeMap<String, String> collectionAfter) {
         TreeSet<String> allObjects = getAllObjects(info.in);
-        
+        allObjects.addAll(getAllObjects(info.out));
         TreeSet<String> liveObjectsAfter = getReachableObjects(info.out,getLocalNames(localsLiveAfter));
         
         //remove live objects
