@@ -513,12 +513,6 @@ public class PTA {
                 paramMap.put(key, value);
             }
         }
-        String s = ("ParamMap:{\n");
-        for(String key:paramMap.keySet()){
-            s+=(key+"->"+paramMap.get(key))+"\n";
-        }
-        s+=("}\n");
-        print(s);
     }
 
     private InvokeExpr getMethodFromInvokeStmts(Unit u) {
@@ -600,10 +594,6 @@ public class PTA {
             pointees.add(dummyObjName);
             g.stackMap.put(stackParamName, pointees);
 
-        }
-        synchronized(System.out){
-            print("Dummy graph: ");
-            g.print();
         }
         return g;
     }

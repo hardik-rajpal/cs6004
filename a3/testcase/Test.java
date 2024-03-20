@@ -3,20 +3,19 @@ class Node {
 	Node g;
 	Node() {}
 }
+
 public class Test {
+	public static Node global;
 	public static void main(String[] args) {
-		Node a = new Node();
-		a.f = foo(args);
-		Node b = a.f;
+		foo();
 	}
-	public static Node foo(String [] args){
+	public static Node foo(){
 		Node x = new Node();
 		Node y = new Node();
 		y.f = new Node();
 		y = new Node();
 		bar(x, y);
 		Node z = y.f;
-		bar(y, x);
 		Node a = x.f;
 		return x;
 	}

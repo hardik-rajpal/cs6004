@@ -6,7 +6,6 @@ import java.util.TreeSet;
 
 import soot.Body;
 import soot.Local;
-import soot.PatchingChain;
 import soot.Scene;
 import soot.SceneTransformer;
 import soot.SootClass;
@@ -80,35 +79,37 @@ public class AnalysisTransformer extends SceneTransformer {
         // System.exit(0);
         return ans;
     }
-
-    private TreeSet<String> getObjectsUnusableAfter(List<Local> localsLiveBefore, List<Local> localsLiveAfter,
-            PTA.NodePointsToData info) {
-        TreeSet<String> ans = new TreeSet<>();
-        //TODO:
-        return ans;
-    }
-
-    protected static void processCFG(SootMethod method) {
-        if(method.toString().contains("init")  ) { return; }
-        Body body = method.getActiveBody();
-        // Get the callgraph 
-        UnitGraph cfg = new BriefUnitGraph(body);
-        // Get live local using Soot's exiting analysis
-        LiveLocals liveLocals = new SimpleLiveLocals(cfg);
-        // Units for the body
-        PatchingChain<Unit> units = body.getUnits();
-        System.out.println("\n----- " + body.getMethod().getName() + "-----");
-        for (Unit u : units) {
-            System.out.println("Unit: " + u);
-            List<Local> before = liveLocals.getLiveLocalsBefore(u);
-            List<Local> after = liveLocals.getLiveLocalsAfter(u);
-            System.out.println("Live locals before: " + before);
-            System.out.println("Live locals after: " + after);
-            System.out.println();
-
+    private void fillObjectsReachableFrom(String rv, TreeSet<String> reachableVars, TreeMap<PTA.HeapReference, TreeSet<String>> heapMap) {
+        for (PTA.HeapReference hr : heapMap.keySet()) {
+            if (hr.object.equals(rv)) {
+                TreeSet<String> newRV = heapMap.get(hr);
+                for (String newrv : newRV) {
+                    if (!reachableVars.contains(newrv)) {
+                        reachableVars.add(newrv);
+                        fillObjectsReachableFrom(newrv, reachableVars, heapMap);
+                    }
+                }
+            }
         }
     }
-
+    private TreeSet<String> getReachableObjects(PTA.PointsToGraph in, List<Local> localsLiveBefore) {
+        TreeSet<String> reachable = new TreeSet<>();
+        for(Local local:localsLiveBefore){
+            String stackVar = local.getName();
+            TreeSet<String> pointees = in.stackMap.get(stackVar);
+            for(String pointee:pointees){
+                fillObjectsReachableFrom(pointee, reachable, in.heapMap);
+            }
+        }
+        return reachable;
+    }    
+    private TreeSet<String> getObjectsUnusableAfter(List<Local> localsLiveBefore, List<Local> localsLiveAfter,
+            PTA.NodePointsToData info) {
+        TreeSet<String> liveObjectsBefore = getReachableObjects(info.in,localsLiveBefore);
+        TreeSet<String> liveObjectsAfter = getReachableObjects(info.out,localsLiveAfter);
+        liveObjectsBefore.removeAll(liveObjectsAfter);
+        return liveObjectsBefore;
+    }
     // private static void getlistofMethods(SootMethod method, Set<SootMethod> reachableMethods) {
     //     // Avoid revisiting methods
     //     if (reachableMethods.contains(method)) {
