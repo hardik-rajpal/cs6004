@@ -44,7 +44,7 @@ public class Test extends java.lang.Object
 
     public static Node foo()
     {
-        Node $r0, $r2, $r3, $r4, r5, r6;
+        Node $r0, $r2, r4, r5;
 
         $r0 = new Node;
 
@@ -54,23 +54,13 @@ public class Test extends java.lang.Object
 
         specialinvoke $r2.<Node: void <init>()>();
 
-        $r3 = new Node;
+        staticinvoke <Test: void bar(Node,Node)>($r0, $r2);
 
-        specialinvoke $r3.<Node: void <init>()>();
+        r4 = $r2.<Node: Node f>;
 
-        $r2.<Node: Node f> = $r3;
+        staticinvoke <Test: void bar(Node,Node)>($r2, $r0);
 
-        $r4 = new Node;
-
-        specialinvoke $r4.<Node: void <init>()>();
-
-        staticinvoke <Test: void bar(Node,Node)>($r0, $r4);
-
-        r5 = $r4.<Node: Node f>;
-
-        staticinvoke <Test: void bar(Node,Node)>($r4, $r0);
-
-        r6 = $r0.<Node: Node f>;
+        r5 = $r0.<Node: Node f>;
 
         return $r0;
     }

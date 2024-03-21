@@ -131,17 +131,15 @@ public class AnalysisTransformer extends SceneTransformer {
     }
 
     private String mutateContext(String object, String callsite) {
-        String[] parts = object.split(Pattern.quote(")"));
-        //parts = {"Obj_n(c1,c2,c3",""}
-        String ans = parts[0];
-        int p0len = parts[0].length();
-
-        char openBracket = '(';
-        if(parts[0].charAt(p0len-1)==openBracket){
-            ans = ans + callsite+")";
+        String[] parts = object.split(Pattern.quote("("));
+        //parts = {"Obj_n","c1,c2,c3)"}
+        String ans = "";
+        char closeBracket = ')';
+        if(parts[1].charAt(0)==closeBracket){
+            ans = parts[0] + "(" + callsite + parts[1];
         }
         else{
-            ans = ans + "," + callsite+")";
+            ans = parts[0] + "("+ callsite+","+parts[1];
         }
         return ans;
     }
@@ -150,8 +148,8 @@ public class AnalysisTransformer extends SceneTransformer {
         String ans = "";
         for(String obj:collectionAfter.keySet()){
             String cleanedObject = obj;
-            cleanedObject = cleanedObject.split(Pattern.quote("_"))[1];
-            cleanedObject = cleanedObject.split(Pattern.quote("("))[0];
+            // cleanedObject = cleanedObject.split(Pattern.quote("_"))[1];
+            // cleanedObject = cleanedObject.split(Pattern.quote("("))[0];
             ans += cleanedObject+":"+collectionAfter.get(obj)+" ";
         }
         return ans;

@@ -4,7 +4,6 @@ class Node {
 	int y;
 	Node() {}
 }
-
 public class Test {
 	public static Node global;
 	public static void main(String[] args) {
@@ -17,8 +16,6 @@ public class Test {
 	public static Node foo(){
 		Node x = new Node();
 		Node y = new Node();
-		y.f = new Node();
-		y = new Node();
 		bar(x, y);
 		Node z = y.f;
 		bar(y, x);
