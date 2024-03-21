@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.regex.Pattern;
 
 import soot.Body;
 import soot.Local;
@@ -15,6 +16,7 @@ import soot.SootMethod;
 import soot.Unit;
 import soot.UnitPatchingChain;
 import soot.Value;
+import soot.jimple.InvokeExpr;
 import soot.jimple.internal.JReturnStmt;
 import soot.jimple.toolkits.callgraph.CallGraph;
 import soot.toolkits.graph.BriefUnitGraph;
@@ -27,6 +29,8 @@ import soot.util.Chain;
 public class AnalysisTransformer extends SceneTransformer {
     static CallGraph cg;
     static TreeSet<String> results = new TreeSet<>();
+    //SootMethod.toString()->{Escaping objects o1, o2, o3}
+    static TreeMap<String,Set<String>> collectedObjects = new TreeMap<>();
     @Override
     protected void internalTransform(String arg0, Map<String, String> arg1) {
         cg = Scene.v().getCallGraph();
@@ -56,6 +60,7 @@ public class AnalysisTransformer extends SceneTransformer {
 
     private String getAllObjectsGCLines(SootMethod method) {
         TreeMap<String,String> collectionAfter = new TreeMap<>();
+        TreeSet<String> collectedByCallees = new TreeSet<>();
         Body body = method.getActiveBody();
         UnitPatchingChain units = body.getUnits();
         UnitGraph cfg = new BriefUnitGraph(body);
@@ -64,7 +69,7 @@ public class AnalysisTransformer extends SceneTransformer {
         TreeMap<String,String> paramMap = new TreeMap<>();
         PTA.CallerInfo callerInfo = new PTA.CallerInfo(new ArrayList<String>(), new PTA.PointsToGraph(), paramMap);
         TreeMap<Unit, PTA.NodePointsToData> pointsToInfo = pta.getPointsToInfo(body,callerInfo);
-        pta.printPointsToInfo(pointsToInfo);
+        // pta.printPointsToInfo(pointsToInfo);
         //mark all objects as dead.
         //Get line number after which object can be collected.
         List<Unit> tails = cfg.getTails();
@@ -82,30 +87,64 @@ public class AnalysisTransformer extends SceneTransformer {
                     localsLiveAfterEditable.add(local);
                 }
             }
+            if(PTA.isInvokeStmt(unit)){
+                InvokeExpr expr = PTA.getInvokeExprFromInvokeUnit(unit);
+                SootMethod calleeMethod = expr.getMethod();
+                String calleeMethodKey = calleeMethod.toString();
+                String callsite = Integer.toString(unit.getJavaSourceStartLineNumber());
+                if(!collectedObjects.containsKey(calleeMethodKey)){
+                    //termination guarranteed in the absence of recursion only.
+                    processMethod(calleeMethod);
+                }
+                for(String object:collectedObjects.get(calleeMethodKey)){
+                    String mutatedObject = mutateContext(object,callsite);
+                    collectedByCallees.add(mutatedObject);
+                }
+            }
             //all objects reachable from parameters are live=> set parameters as live, always.
             List<Local> paramLocals = body.getParameterLocals();
             localsLiveAfterEditable.addAll(paramLocals);
 
-            // System.out.println(unit.toString());
             TreeSet<String> objects =  getObjectsUnusableAfter(localsLiveAfterEditable,info,collectionAfter);
             for(String object:objects){
                 //don't collect dummy objects.
-                if(!object.contains("@")){
+                if(!(object.contains("@")||collectedByCallees.contains(object))){
                     collectionAfter.put(object, Integer.toString(unit.getJavaSourceStartLineNumber()));
                 }
             }
         }
 
         String ans = getOutputString(collectionAfter);
-        // System.exit(0);
+        HashSet<String> totalCollection  = new HashSet<>();
+        totalCollection.addAll(collectedByCallees);
+        totalCollection.addAll(collectionAfter.keySet());
+        collectedObjects.put(method.toString(), totalCollection);
+        return ans;
+    }
+
+    private String mutateContext(String object, String callsite) {
+        String[] parts = object.split(Pattern.quote(")"));
+        //parts = {"Obj_n(c1,c2,c3",""}
+        String ans = parts[0];
+        int p0len = parts[0].length();
+
+        char openBracket = '(';
+        if(parts[0].charAt(p0len-1)==openBracket){
+            ans = ans + callsite+")";
+        }
+        else{
+            ans = ans + "," + callsite+")";
+        }
         return ans;
     }
 
     private String getOutputString(TreeMap<String, String> collectionAfter) {
         String ans = "";
-        //TODO: modify to clean object up.
         for(String obj:collectionAfter.keySet()){
-            ans += obj+":"+collectionAfter.get(obj)+" ";
+            String cleanedObject = obj;
+            cleanedObject = cleanedObject.split(Pattern.quote("_"))[1];
+            cleanedObject = cleanedObject.split(Pattern.quote("("))[0];
+            ans += cleanedObject+":"+collectionAfter.get(obj)+" ";
         }
         return ans;
     }

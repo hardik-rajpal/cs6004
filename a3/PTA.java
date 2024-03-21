@@ -296,7 +296,7 @@ public class PTA {
         }
     }
 
-    boolean isInvokeExpression(Value expression) {
+    public static boolean isInvokeExpression(Value expression) {
         return expression instanceof JInterfaceInvokeExpr || expression instanceof JVirtualInvokeExpr
                 || expression instanceof JStaticInvokeExpr || expression instanceof JDynamicInvokeExpr
                 || expression instanceof JSpecialInvokeExpr;
@@ -409,7 +409,7 @@ public class PTA {
         PointsToGraph ans = new PointsToGraph();
         boolean useKgsets = false;
         if(isInvokeStmt(u)){
-            InvokeExpr expr = getMethodFromInvokeStmts(u);
+            InvokeExpr expr = getInvokeExprFromInvokeUnit(u);
             SootMethod method = expr.getMethod();
             if(method.isConstructor()){
                 useKgsets = true;
@@ -515,7 +515,7 @@ public class PTA {
         }
     }
 
-    private InvokeExpr getMethodFromInvokeStmts(Unit u) {
+    public static InvokeExpr getInvokeExprFromInvokeUnit(Unit u) {
         InvokeExpr ans;
         if(u instanceof JAssignStmt){
             Value rhs = ((JAssignStmt)u).getRightOp();
@@ -531,7 +531,7 @@ public class PTA {
         return ans;
     }
 
-    private boolean isInvokeStmt(Unit u) {
+    public static boolean isInvokeStmt(Unit u) {
         boolean ans = false;
         if(u instanceof JAssignStmt){
             Value rhs = ((JAssignStmt)u).getRightOp();
