@@ -31,6 +31,7 @@ public class AnalysisTransformer extends SceneTransformer {
     static TreeSet<String> results = new TreeSet<>();
     //SootMethod.toString()->{Escaping objects o1, o2, o3}
     static TreeMap<String,Set<String>> collectedObjects = new TreeMap<>();
+    static HashSet<SootMethod> userDefinedMethods = new HashSet<>();
     @Override
     protected void internalTransform(String arg0, Map<String, String> arg1) {
         cg = Scene.v().getCallGraph();
@@ -41,21 +42,26 @@ public class AnalysisTransformer extends SceneTransformer {
             if(!classInstance.isApplicationClass()){
                 continue;
             }
+            //TODO: virtual object calls, consider all methods.
             List<SootMethod> methods = classInstance.getMethods();
             for(SootMethod method:methods){
                 if(!method.isConstructor()){
-                    String ans = processMethod(method);
-                    results.add(ans);
+                    userDefinedMethods.add(method);
                 }
             }
         }
+        for(SootMethod method:userDefinedMethods){
+            processMethod(method);
+        }
     }
 
-    private String processMethod(SootMethod method) {
+    private void processMethod(SootMethod method) {
+        if(collectedObjects.containsKey(method.toString())){return;}
         String ans = "";
         ans = method.getDeclaringClass().getName()+":"+method.getName()+" ";
         ans += getAllObjectsGCLines(method);
-        return ans;
+        results.add(ans);
+        return;
     }
 
     private String getAllObjectsGCLines(SootMethod method) {
@@ -68,13 +74,13 @@ public class AnalysisTransformer extends SceneTransformer {
         PTA pta = new PTA();
         TreeMap<String,String> paramMap = new TreeMap<>();
         PTA.CallerInfo callerInfo = new PTA.CallerInfo(new ArrayList<String>(), new PTA.PointsToGraph(), paramMap);
+        callerInfo.userDefinedMethods = userDefinedMethods;
         TreeMap<Unit, PTA.NodePointsToData> pointsToInfo = pta.getPointsToInfo(body,callerInfo);
         // pta.printPointsToInfo(pointsToInfo);
         //mark all objects as dead.
         //Get line number after which object can be collected.
         List<Unit> tails = cfg.getTails();
         for(Unit unit:units){
-            // HashSet<Local> localsLiveBefore = new HashSet<>(liveLocals.getLiveLocalsBefore(unit));
             PTA.NodePointsToData info = pointsToInfo.get(unit);
             List<Local> localsLiveAfter = liveLocals.getLiveLocalsAfter(unit);
             HashSet<Local> localsLiveAfterEditable = new HashSet<>(localsLiveAfter);
@@ -90,15 +96,17 @@ public class AnalysisTransformer extends SceneTransformer {
             if(PTA.isInvokeStmt(unit)){
                 InvokeExpr expr = PTA.getInvokeExprFromInvokeUnit(unit);
                 SootMethod calleeMethod = expr.getMethod();
-                String calleeMethodKey = calleeMethod.toString();
-                String callsite = Integer.toString(unit.getJavaSourceStartLineNumber());
-                if(!collectedObjects.containsKey(calleeMethodKey)){
-                    //termination guarranteed in the absence of recursion only.
-                    processMethod(calleeMethod);
-                }
-                for(String object:collectedObjects.get(calleeMethodKey)){
-                    String mutatedObject = mutateContext(object,callsite);
-                    collectedByCallees.add(mutatedObject);
+                if(userDefinedMethods.contains(calleeMethod)){
+                    String calleeMethodKey = calleeMethod.toString();
+                    String callsite = Integer.toString(unit.getJavaSourceStartLineNumber());
+                    if(!collectedObjects.containsKey(calleeMethodKey)){
+                        //termination guarranteed in the absence of recursion only.
+                        processMethod(calleeMethod);
+                    }
+                    for(String object:collectedObjects.get(calleeMethodKey)){
+                        String mutatedObject = mutateContext(object,callsite);
+                        collectedByCallees.add(mutatedObject);
+                    }
                 }
             }
             //all objects reachable from parameters are live=> set parameters as live, always.

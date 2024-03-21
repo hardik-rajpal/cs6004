@@ -1,6 +1,7 @@
 class Node {
 	Node f;
 	Node g;
+	int y;
 	Node() {}
 }
 
@@ -9,6 +10,10 @@ public class Test {
 	public static void main(String[] args) {
 		foo();
 	}
+	public static int returnsInt(Node p){
+		p.f = new Node();
+		return 1;
+	}
 	public static Node foo(){
 		Node x = new Node();
 		Node y = new Node();
@@ -16,6 +21,7 @@ public class Test {
 		y = new Node();
 		bar(x, y);
 		Node z = y.f;
+		bar(y, x);
 		Node a = x.f;
 		return x;
 	}

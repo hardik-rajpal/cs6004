@@ -24,6 +24,24 @@ public class Test extends java.lang.Object
         return;
     }
 
+    public static int returnsInt(Node)
+    {
+        Node r0, $r1;
+        int $i0;
+
+        r0 := @parameter0: Node;
+
+        $r1 = new Node;
+
+        specialinvoke $r1.<Node: void <init>()>();
+
+        r0.<Node: Node f> = $r1;
+
+        $i0 = r0.<Node: int y>;
+
+        return $i0;
+    }
+
     public static Node foo()
     {
         Node $r0, $r2, $r3, $r4, r5, r6;
@@ -49,6 +67,8 @@ public class Test extends java.lang.Object
         staticinvoke <Test: void bar(Node,Node)>($r0, $r4);
 
         r5 = $r4.<Node: Node f>;
+
+        staticinvoke <Test: void bar(Node,Node)>($r4, $r0);
 
         r6 = $r0.<Node: Node f>;
 

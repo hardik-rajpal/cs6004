@@ -2,6 +2,7 @@
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
@@ -44,6 +45,7 @@ public class PTA {
         ArrayList<String> callSites;
         PointsToGraph ptgIn;
         TreeMap<String,String> paramMap;
+        HashSet<SootMethod> userDefinedMethods;
         CallerInfo(ArrayList<String> _callSites, PointsToGraph _in,TreeMap<String,String> _paramMap){
             callSites = _callSites;
             ptgIn = _in;
@@ -337,6 +339,7 @@ public class PTA {
                         // assume null check analysis has been done.
                         // =>no null objects are used.
                         // =>must be dummy object (params)
+                        //TODO: check if field type is non-primitive.
                         if (baseObject.contains("@")) {
                             // dummy object
                             String objectName = "@Obj_" + Integer.toString(u.getJavaSourceStartLineNumber());
@@ -411,7 +414,8 @@ public class PTA {
         if(isInvokeStmt(u)){
             InvokeExpr expr = getInvokeExprFromInvokeUnit(u);
             SootMethod method = expr.getMethod();
-            if(method.isConstructor()){
+            //for constructors and library methods, use kgsets.
+            if(method.isConstructor()||(!callerInfo.userDefinedMethods.contains(method))){
                 useKgsets = true;
             }
             else{
@@ -422,6 +426,7 @@ public class PTA {
                 newCallsiteList.addAll(callerInfo.callSites);
                 newCallsiteList.add(Integer.toString(u.getJavaSourceStartLineNumber()));
                 CallerInfo newCallerInfo = new CallerInfo(newCallsiteList, in, paramMap);
+                newCallerInfo.userDefinedMethods = callerInfo.userDefinedMethods;
                 PTA calleePTA = new PTA();
                 //isolate unit comparators.
                 TreeMap<Unit, PTA.NodePointsToData> ptaInfo = calleePTA.getPointsToInfo(body,newCallerInfo);
@@ -441,11 +446,10 @@ public class PTA {
                         TreeSet<String> returnedObjects = getReturnObjectSet(body,ptaInfo);
                         ans.stackMap.put(stackVar,returnedObjects);
                     }
-                    else{
-                        //TODO: remove post debugging.
-                        print("Non-local lhs in assignment stmt!");
-                        System.exit(1);
-                    }
+                    // else{
+                    //     print("Non-local lhs in function call assignment stmt!");
+                    //     System.exit(1);
+                    // }
                 }
                 useKgsets = false;
             }   
@@ -482,12 +486,13 @@ public class PTA {
                     Local local = (Local)returnValue;
                     String stackVar = local.getName();
                     NodePointsToData data = ptaInfo.get(u);
-                    returned.addAll(data.in.stackMap.get(stackVar));
+                    if(data.in.stackMap.containsKey(stackVar)){
+                        returned.addAll(data.in.stackMap.get(stackVar));
+                    }
                 }
                 else{
-                    //TODO: test with int return values.
-                    print("Non-local return value");
-                    System.exit(1);
+                    //Possible with non-local return values.
+                    //like: return 1;
                 }
             }
             else{
