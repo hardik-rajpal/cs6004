@@ -1,6 +1,7 @@
-Soot started on Thu Mar 21 13:10:10 IST 2024
-Soot finished on Thu Mar 21 13:10:28 IST 2024
+Soot started on Thu Mar 21 13:21:44 IST 2024
+Soot finished on Thu Mar 21 13:22:03 IST 2024
 Soot has run for 0 min. 18 sec.
 Test:bar 
-Test:foo 14:15 15:15 16:19 24:19 
-Test:main 13:10 24:10 24:10 
+Test:foo 19:20 20:20 21:24 29:24 
+Test:main 18:11 29:11 29:11 
+Test:returnsInt 

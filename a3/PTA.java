@@ -12,8 +12,10 @@ import java.util.TreeSet;
 import soot.Body;
 import soot.Local;
 import soot.PatchingChain;
+import soot.PrimType;
 import soot.SootField;
 import soot.SootMethod;
+import soot.Type;
 import soot.Unit;
 import soot.Value;
 import soot.jimple.InvokeExpr;
@@ -324,9 +326,11 @@ public class PTA {
         } else if (rhs instanceof JInstanceFieldRef) {
             // new pointees only if reftype
             JInstanceFieldRef fieldRef = (JInstanceFieldRef) (rhs);
+            Type targetType = fieldRef.getType();
             String field = fieldRef.getField().getName();
             String base = fieldRef.getBase().toString();
-            if (in.stackMap.containsKey(base)) {
+            //must be non-primitive type.
+            if ((!(targetType instanceof PrimType)) && in.stackMap.containsKey(base)) {
                 TreeSet<String> baseObjects = in.stackMap.get(base);
                 for (String baseObject : baseObjects) {
                     HeapReference hr = new HeapReference();
@@ -339,7 +343,7 @@ public class PTA {
                         // assume null check analysis has been done.
                         // =>no null objects are used.
                         // =>must be dummy object (params)
-                        //TODO: check if field type is non-primitive.
+                        //targetType must be non-primitive and object must be dummy.
                         if (baseObject.contains("@")) {
                             // dummy object
                             String objectName = "@Obj_" + Integer.toString(u.getJavaSourceStartLineNumber());

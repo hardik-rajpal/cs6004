@@ -12,7 +12,7 @@ public class Test {
 	}
 	public static int returnsInt(Node p){
 		p.f = new Node();
-		return 1;
+		return p.y;
 	}
 	public static Node foo(){
 		Node x = new Node();
