@@ -24,44 +24,48 @@ public class Test extends java.lang.Object
         return;
     }
 
-    public static void bar(Base, Node)
-    {
-        Base r0;
-        Node r1;
-
-        r0 := @parameter0: Base;
-
-        r1 := @parameter1: Node;
-
-        virtualinvoke r0.<Base: void foo(Node)>(r1);
-
-        return;
-    }
-
     public static Node foo()
     {
-        Node $r0, $r2, $r3, $r4;
-        Derived $r5;
+        Node $r0, $r1, $r3, $r4, $r5, $r6, $r7, $r8, r9;
 
         $r0 = new Node;
 
         specialinvoke $r0.<Node: void <init>()>();
 
-        $r4 = $r0.<Node: Node f>;
+        r9 = $r0;
 
-        $r2 = $r0.<Node: Node f>;
+        $r1 = new Node;
 
-        $r3 = $r2.<Node: Node f>;
+        specialinvoke $r1.<Node: void <init>()>();
 
-        if $r4 != $r3 goto label1;
+        $r4 = $r1.<Node: Node f>;
 
-        $r5 = new Derived;
+        $r3 = $r1.<Node: Node g>;
 
-        specialinvoke $r5.<Derived: void <init>()>();
+        if $r4 != $r3 goto label2;
 
-        staticinvoke <Test: void bar(Base,Node)>($r5, $r0);
+        $r6 = $r1.<Node: Node f>;
+
+        $r5 = $r1.<Node: Node g>;
+
+        if $r6 != $r5 goto label1;
+
+        $r8 = new Node;
+
+        specialinvoke $r8.<Node: void <init>()>();
+
+        r9 = $r8;
+
+        goto label2;
 
      label1:
-        return $r0;
+        $r7 = new Node;
+
+        specialinvoke $r7.<Node: void <init>()>();
+
+        r9 = $r7;
+
+     label2:
+        return r9;
     }
 }

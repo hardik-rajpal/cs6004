@@ -1,16 +1,669 @@
-Soot started on Fri Mar 22 10:48:55 IST 2024
-10 calls: <Node: void <init>()>
-22 calls: <Test: Node foo()>
-29 calls: <Node: void <init>()>
-31 calls: <Derived: void <init>()>
-32 calls: <Test: void bar(Base,Node)>
-25 calls: <Base: void foo(Node)>
-25 calls: <Derived: void foo(Node)>
-16 calls: <Node: void <init>()>
-Soot finished on Fri Mar 22 10:49:11 IST 2024
+Soot started on Sat Mar 23 18:50:41 IST 2024
+Unit: "r1 := @parameter0: java.lang.String[]"{
+	In: 
+	{
+		stack{
+			global->[ @field_global, ]
+			r1->[ @param0, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			global->[ ]
+			r1->[ ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "staticinvoke <Test: Node foo()>()"{
+	In: 
+	{
+		stack{
+			global->[ ]
+			r1->[ ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			global->[ ]
+			r1->[ ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "return"{
+	In: 
+	{
+		stack{
+			global->[ ]
+			r1->[ ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			global->[ ]
+			r1->[ ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "$r0 = new Node"{
+	In: 
+	{
+		stack{
+			global->[ @field_global, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_25(), ]
+			global->[ ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "specialinvoke $r0.<Node: void <init>()>()"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_25(), ]
+			global->[ ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_25(), ]
+			global->[ ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "r9 = $r0"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_25(), ]
+			global->[ ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_25(), ]
+			global->[ ]
+			r9->[ Obj_25(), ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "$r1 = new Node"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_25(), ]
+			global->[ ]
+			r9->[ Obj_25(), ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_25(), ]
+			$r1->[ Obj_26(), ]
+			global->[ ]
+			r9->[ Obj_25(), ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "specialinvoke $r1.<Node: void <init>()>()"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_25(), ]
+			$r1->[ Obj_26(), ]
+			global->[ ]
+			r9->[ Obj_25(), ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_25(), ]
+			$r1->[ Obj_26(), ]
+			global->[ ]
+			r9->[ Obj_25(), ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "r2 = $r1"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_25(), ]
+			$r1->[ Obj_26(), ]
+			global->[ ]
+			r9->[ Obj_25(), ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_25(), ]
+			$r1->[ Obj_26(), ]
+			global->[ ]
+			r2->[ Obj_26(), ]
+			r9->[ Obj_25(), ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "$r4 = r2.<Node: Node f>"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_25(), ]
+			$r1->[ Obj_26(), ]
+			global->[ ]
+			r2->[ Obj_26(), ]
+			r9->[ Obj_25(), ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_25(), ]
+			$r1->[ Obj_26(), ]
+			$r4->[ ]
+			global->[ ]
+			r2->[ Obj_26(), ]
+			r9->[ Obj_25(), ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "$r3 = r2.<Node: Node g>"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_25(), ]
+			$r1->[ Obj_26(), ]
+			$r4->[ ]
+			global->[ ]
+			r2->[ Obj_26(), ]
+			r9->[ Obj_25(), ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_25(), ]
+			$r1->[ Obj_26(), ]
+			$r3->[ ]
+			$r4->[ ]
+			global->[ ]
+			r2->[ Obj_26(), ]
+			r9->[ Obj_25(), ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "if $r4 != $r3 goto return r9"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_25(), ]
+			$r1->[ Obj_26(), ]
+			$r3->[ ]
+			$r4->[ ]
+			global->[ ]
+			r2->[ Obj_26(), ]
+			r9->[ Obj_25(), ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_25(), ]
+			$r1->[ Obj_26(), ]
+			$r3->[ ]
+			$r4->[ ]
+			global->[ ]
+			r2->[ Obj_26(), ]
+			r9->[ Obj_25(), ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "$r6 = r2.<Node: Node f>"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_25(), ]
+			$r1->[ Obj_26(), ]
+			$r3->[ ]
+			$r4->[ ]
+			global->[ ]
+			r2->[ Obj_26(), ]
+			r9->[ Obj_25(), ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ ]
+			$r1->[ Obj_26(), ]
+			$r3->[ ]
+			$r4->[ ]
+			$r6->[ ]
+			global->[ ]
+			r2->[ Obj_26(), ]
+			r9->[ ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "$r5 = r2.<Node: Node g>"{
+	In: 
+	{
+		stack{
+			$r0->[ ]
+			$r1->[ Obj_26(), ]
+			$r3->[ ]
+			$r4->[ ]
+			$r6->[ ]
+			global->[ ]
+			r2->[ Obj_26(), ]
+			r9->[ ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ ]
+			$r1->[ ]
+			$r3->[ ]
+			$r4->[ ]
+			$r5->[ ]
+			$r6->[ ]
+			global->[ ]
+			r2->[ ]
+			r9->[ ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "if $r6 != $r5 goto $r7 = new Node"{
+	In: 
+	{
+		stack{
+			$r0->[ ]
+			$r1->[ ]
+			$r3->[ ]
+			$r4->[ ]
+			$r5->[ ]
+			$r6->[ ]
+			global->[ ]
+			r2->[ ]
+			r9->[ ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ ]
+			$r1->[ ]
+			$r3->[ ]
+			$r4->[ ]
+			$r5->[ ]
+			$r6->[ ]
+			global->[ ]
+			r2->[ ]
+			r9->[ ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "$r8 = new Node"{
+	In: 
+	{
+		stack{
+			$r0->[ ]
+			$r1->[ ]
+			$r3->[ ]
+			$r4->[ ]
+			$r5->[ ]
+			$r6->[ ]
+			global->[ ]
+			r2->[ ]
+			r9->[ ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ ]
+			$r1->[ ]
+			$r3->[ ]
+			$r4->[ ]
+			$r5->[ ]
+			$r6->[ ]
+			$r8->[ Obj_29(), ]
+			global->[ ]
+			r2->[ ]
+			r9->[ ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "specialinvoke $r8.<Node: void <init>()>()"{
+	In: 
+	{
+		stack{
+			$r0->[ ]
+			$r1->[ ]
+			$r3->[ ]
+			$r4->[ ]
+			$r5->[ ]
+			$r6->[ ]
+			$r8->[ Obj_29(), ]
+			global->[ ]
+			r2->[ ]
+			r9->[ ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ ]
+			$r1->[ ]
+			$r3->[ ]
+			$r4->[ ]
+			$r5->[ ]
+			$r6->[ ]
+			$r8->[ Obj_29(), ]
+			global->[ ]
+			r2->[ ]
+			r9->[ ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "r9 = $r8"{
+	In: 
+	{
+		stack{
+			$r0->[ ]
+			$r1->[ ]
+			$r3->[ ]
+			$r4->[ ]
+			$r5->[ ]
+			$r6->[ ]
+			$r8->[ Obj_29(), ]
+			global->[ ]
+			r2->[ ]
+			r9->[ ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ ]
+			$r1->[ ]
+			$r3->[ ]
+			$r4->[ ]
+			$r5->[ ]
+			$r6->[ ]
+			$r8->[ Obj_29(), ]
+			global->[ ]
+			r2->[ ]
+			r9->[ Obj_29(), ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "goto [?= return r9]"{
+	In: 
+	{
+		stack{
+			$r0->[ ]
+			$r1->[ ]
+			$r3->[ ]
+			$r4->[ ]
+			$r5->[ ]
+			$r6->[ ]
+			$r8->[ Obj_29(), ]
+			global->[ ]
+			r2->[ ]
+			r9->[ Obj_29(), ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ ]
+			$r1->[ ]
+			$r3->[ ]
+			$r4->[ ]
+			$r5->[ ]
+			$r6->[ ]
+			$r8->[ Obj_29(), ]
+			global->[ ]
+			r2->[ ]
+			r9->[ Obj_29(), ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "$r7 = new Node"{
+	In: 
+	{
+		stack{
+			$r0->[ ]
+			$r1->[ ]
+			$r3->[ ]
+			$r4->[ ]
+			$r5->[ ]
+			$r6->[ ]
+			global->[ ]
+			r2->[ ]
+			r9->[ ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ ]
+			$r1->[ ]
+			$r3->[ ]
+			$r4->[ ]
+			$r5->[ ]
+			$r6->[ ]
+			$r7->[ Obj_32(), ]
+			global->[ ]
+			r2->[ ]
+			r9->[ ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "specialinvoke $r7.<Node: void <init>()>()"{
+	In: 
+	{
+		stack{
+			$r0->[ ]
+			$r1->[ ]
+			$r3->[ ]
+			$r4->[ ]
+			$r5->[ ]
+			$r6->[ ]
+			$r7->[ Obj_32(), ]
+			global->[ ]
+			r2->[ ]
+			r9->[ ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ ]
+			$r1->[ ]
+			$r3->[ ]
+			$r4->[ ]
+			$r5->[ ]
+			$r6->[ ]
+			$r7->[ Obj_32(), ]
+			global->[ ]
+			r2->[ ]
+			r9->[ ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "r9 = $r7"{
+	In: 
+	{
+		stack{
+			$r0->[ ]
+			$r1->[ ]
+			$r3->[ ]
+			$r4->[ ]
+			$r5->[ ]
+			$r6->[ ]
+			$r7->[ Obj_32(), ]
+			global->[ ]
+			r2->[ ]
+			r9->[ ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ ]
+			$r1->[ ]
+			$r3->[ ]
+			$r4->[ ]
+			$r5->[ ]
+			$r6->[ ]
+			$r7->[ Obj_32(), ]
+			global->[ ]
+			r2->[ ]
+			r9->[ Obj_32(), ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "return r9"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_25(), ]
+			$r1->[ Obj_26(), ]
+			$r3->[ ]
+			$r4->[ ]
+			$r5->[ ]
+			$r6->[ ]
+			$r7->[ Obj_32(), ]
+			$r8->[ Obj_29(), ]
+			global->[ ]
+			r2->[ Obj_26(), ]
+			r9->[ Obj_25(), Obj_29(), Obj_32(), ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_25(), ]
+			$r1->[ ]
+			$r3->[ ]
+			$r4->[ ]
+			$r5->[ ]
+			$r6->[ ]
+			$r7->[ Obj_32(), ]
+			$r8->[ Obj_29(), ]
+			global->[ ]
+			r2->[ ]
+			r9->[ Obj_25(), Obj_29(), Obj_32(), ]
+		}
+		heap{
+		}
+	}
+}
+Soot finished on Sat Mar 23 18:50:57 IST 2024
 Soot has run for 0 min. 15 sec.
-Base:foo 
-Derived:foo 
-Test:bar 
-Test:foo Obj_31():32 
-Test:main Obj_10(22,32,25):22 Obj_29(22):22 
+Test:foo @field_global:25 Obj_25():28 Obj_26():35 
+Test:main @field_global:-1 

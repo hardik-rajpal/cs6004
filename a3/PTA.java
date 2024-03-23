@@ -421,8 +421,8 @@ public class PTA {
         } else if (rhs instanceof ParameterRef) {
             // Fixed by dummy graph.
             // Just forward the defn.
-            Local lhs = (Local) (((JIdentityStmt) u).getLeftOp());
-            newPointees.add(in.stackMap.get(lhs.getName()).first());
+            // Local lhs = (Local) (((JIdentityStmt) u).getLeftOp());
+            // newPointees.add(in.stackMap.get(lhs.getName()).first());
         }
         return newPointees;
     }
@@ -556,9 +556,14 @@ public class PTA {
         }
         return ans;
     }
-
+    public static class SootMethodComparator implements Comparator<SootMethod>{
+        @Override
+        public int compare(SootMethod m1, SootMethod m2){
+            return m1.toString().compareTo(m2.toString());
+        }
+    }
     public static TreeSet<SootMethod> getSootMethodsFromInvokeUnit(Unit u, CallGraph cg) {
-        TreeSet<SootMethod> ans = new TreeSet<>();
+        TreeSet<SootMethod> ans = new TreeSet<>(new SootMethodComparator());
         for (Iterator<Edge> iter = cg.edgesOutOf(u); iter.hasNext();) {
             Edge edge = iter.next();
             SootMethod tgtMethod = edge.tgt();
@@ -752,6 +757,7 @@ public class PTA {
         SortedSet<Unit> workList = new TreeSet<Unit>(unitcomparator);
         Unit first = units.getFirst();
         workList.add(first);
+        List<Unit> tails = graph.getTails();
         while (workList.size() > 0) {
             Unit u = workList.first();
             workList.remove(u);
@@ -771,6 +777,14 @@ public class PTA {
             }
             newOut = ptgFlow(newIn, u, callerInfo);
             HashSet<Local> liveLocalsAfter = new HashSet<>(liveLocals.getLiveLocalsAfter(u));
+            if(tails.contains(u) && (u instanceof JReturnStmt)){
+                JReturnStmt stmt = (JReturnStmt)u;
+                Value returnValue = stmt.getOp();
+                if(returnValue instanceof Local){
+                    Local local = (Local)returnValue;
+                    liveLocalsAfter.add(local);
+                }
+            }
             PointsToGraph cleanedOut = gcFlow(newIn,newOut,u,callerInfo,liveLocalsAfter);
             // assign new in.
             NodePointsToData nodeData = pointsToInfo.get(u);
@@ -781,6 +795,7 @@ public class PTA {
                 workList.addAll(graph.getSuccsOf(u));
             }
         }
+        printPointsToInfo(pointsToInfo);
     }
     private TreeSet<String> getAllObjects(PointsToGraph in) {
         TreeSet<String> ans = new TreeSet<>();
@@ -832,6 +847,8 @@ public class PTA {
         allObjects.addAll(getAllObjects(newOut));
         TreeSet<String> liveObjectsAfter = getReachableObjects(newOut,getLocalNames(liveLocalsAfter));
         //remove liveobjects from allobjects:
+        
+
         allObjects.removeAll(liveObjectsAfter);
         PointsToGraph ans = prunePTG(newOut,allObjects, u);
         return ans;
