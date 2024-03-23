@@ -1,0 +1,33 @@
+class Derived extends Base
+{
+    Derived y;
+
+    void <init>()
+    {
+        Derived r0;
+
+        r0 := @this: Derived;
+
+        specialinvoke r0.<Base: void <init>()>();
+
+        return;
+    }
+
+    void foo(Node)
+    {
+        Node r0, $r1;
+        Derived r2;
+
+        r2 := @this: Derived;
+
+        r0 := @parameter0: Node;
+
+        $r1 = new Node;
+
+        specialinvoke $r1.<Node: void <init>()>();
+
+        r0.<Node: Node g> = $r1;
+
+        return;
+    }
+}

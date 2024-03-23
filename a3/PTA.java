@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
@@ -38,25 +39,31 @@ import soot.jimple.internal.JReturnStmt;
 import soot.jimple.internal.JSpecialInvokeExpr;
 import soot.jimple.internal.JStaticInvokeExpr;
 import soot.jimple.internal.JVirtualInvokeExpr;
+import soot.jimple.toolkits.callgraph.CallGraph;
+import soot.jimple.toolkits.callgraph.Edge;
 import soot.toolkits.graph.BriefUnitGraph;
 import soot.toolkits.graph.ExceptionalUnitGraph;
 import soot.util.Chain;
 
 public class PTA {
-    public static class CallerInfo{
+    public static class CallerInfo {
         ArrayList<String> callSites;
         PointsToGraph ptgIn;
-        TreeMap<String,String> paramMap;
+        TreeMap<String, String> paramMap;
+        CallGraph cg;
         HashSet<SootMethod> userDefinedMethods;
-        CallerInfo(ArrayList<String> _callSites, PointsToGraph _in,TreeMap<String,String> _paramMap){
+
+        CallerInfo(ArrayList<String> _callSites, PointsToGraph _in, TreeMap<String, String> _paramMap) {
             callSites = _callSites;
             ptgIn = _in;
             paramMap = _paramMap;
         }
-        String getContext(){
-            return String.join(",",callSites);
+
+        String getContext() {
+            return String.join(",", callSites);
         }
     }
+
     public static class HeapReference {
         String object;
         String field;
@@ -201,6 +208,11 @@ public class PTA {
     }
 
     private static void mergePointsToGraphs(PointsToGraph merged, PointsToGraph pOut) {
+        mergeStackGraphs(merged, pOut);
+        mergeHeapGraphs(merged, pOut);
+    }
+
+    private static void mergeStackGraphs(PointsToGraph merged, PointsToGraph pOut) {
         for (String stackVarName : pOut.stackMap.keySet()) {
             if (merged.stackMap.containsKey(stackVarName)) {
                 merged.stackMap.get(stackVarName).addAll(pOut.stackMap.get(stackVarName));
@@ -210,7 +222,9 @@ public class PTA {
                 merged.stackMap.put(stackVarName, pointees);
             }
         }
-        // combine all heapMap entries
+    }
+
+    private static void mergeHeapGraphs(PointsToGraph merged, PointsToGraph pOut) {
         for (HeapReference heapRef : pOut.heapMap.keySet()) {
             if (merged.heapMap.containsKey(heapRef)) {
                 merged.heapMap.get(heapRef).addAll(pOut.heapMap.get(heapRef));
@@ -247,7 +261,7 @@ public class PTA {
             JInstanceFieldRef fieldRef = (JInstanceFieldRef) (lhs);
             String field = fieldRef.getField().getName();
             String base = fieldRef.getBase().toString();
-            //base==stackvar pointing to param0
+            // base==stackvar pointing to param0
             if (in.stackMap.containsKey(base)) {
                 TreeSet<String> heapObjs = in.stackMap.get(base);
                 if (heapObjs.size() == 1) {
@@ -291,8 +305,8 @@ public class PTA {
             // unconditional kill:
             kgset.killStack.add(stackVarName);
             kgset.gen.stackMap.put(stackVarName, newPointees);
-        } else if(lhs instanceof Local) {
-            Local local = (Local)lhs;
+        } else if (lhs instanceof Local) {
+            Local local = (Local) lhs;
             String stackVarName = local.getName();
             // unconditional kill:
             kgset.killStack.add(stackVarName);
@@ -311,17 +325,17 @@ public class PTA {
         String ctxStr = callerInfo.getContext();
         if (rhs instanceof JNewExpr) {
             // allocation site abstraction:
-            String objectName = "Obj_" + Integer.toString(u.getJavaSourceStartLineNumber())+"("+ctxStr+")";
+            String objectName = "Obj_" + Integer.toString(u.getJavaSourceStartLineNumber()) + "(" + ctxStr + ")";
             newPointees.add(objectName);
         } else if (rhs instanceof JNewArrayExpr) {
-            String objectName = "Obj_" + Integer.toString(u.getJavaSourceStartLineNumber())+"("+ctxStr+")";
+            String objectName = "Obj_" + Integer.toString(u.getJavaSourceStartLineNumber()) + "(" + ctxStr + ")";
             newPointees.add(objectName);
         } else if (rhs instanceof JNewMultiArrayExpr) {
-            String objectName = "Obj_" + Integer.toString(u.getJavaSourceStartLineNumber())+"("+ctxStr+")";
+            String objectName = "Obj_" + Integer.toString(u.getJavaSourceStartLineNumber()) + "(" + ctxStr + ")";
             newPointees.add(objectName);
 
         } else if (rhs instanceof InvokeExpr) {
-            String objName = "@Obj_" + Integer.toString(u.getJavaSourceStartLineNumber())+"("+ctxStr+")";
+            String objName = "@Obj_" + Integer.toString(u.getJavaSourceStartLineNumber()) + "(" + ctxStr + ")";
             newPointees.add(objName);
         } else if (rhs instanceof JInstanceFieldRef) {
             // new pointees only if reftype
@@ -329,7 +343,7 @@ public class PTA {
             Type targetType = fieldRef.getType();
             String field = fieldRef.getField().getName();
             String base = fieldRef.getBase().toString();
-            //must be non-primitive type.
+            // must be non-primitive type.
             if ((!(targetType instanceof PrimType)) && in.stackMap.containsKey(base)) {
                 TreeSet<String> baseObjects = in.stackMap.get(base);
                 for (String baseObject : baseObjects) {
@@ -343,7 +357,7 @@ public class PTA {
                         // assume null check analysis has been done.
                         // =>no null objects are used.
                         // =>must be dummy object (params)
-                        //targetType must be non-primitive and object must be dummy.
+                        // targetType must be non-primitive and object must be dummy.
                         if (baseObject.contains("@")) {
                             // dummy object
                             String objectName = "@Obj_" + Integer.toString(u.getJavaSourceStartLineNumber());
@@ -403,10 +417,10 @@ public class PTA {
             }
         } else if (rhs instanceof ThisRef) {
             newPointees.add("@this");
-        } else if (rhs instanceof ParameterRef){
-            //Fixed by dummy graph.
+        } else if (rhs instanceof ParameterRef) {
+            // Fixed by dummy graph.
             // Just forward the defn.
-            Local lhs = (Local)(((JIdentityStmt)u).getLeftOp());
+            Local lhs = (Local) (((JIdentityStmt) u).getLeftOp());
             newPointees.add(in.stackMap.get(lhs.getName()).first());
         }
         return newPointees;
@@ -414,54 +428,58 @@ public class PTA {
 
     PointsToGraph flow(PointsToGraph in, Unit u, CallerInfo callerInfo) {
         PointsToGraph ans = new PointsToGraph();
-        boolean useKgsets = false;
-        if(isInvokeStmt(u)){
+        boolean useKgsets = true;
+        if (isInvokeStmt(u)) {
             InvokeExpr expr = getInvokeExprFromInvokeUnit(u);
-            SootMethod method = expr.getMethod();
-            //for constructors and library methods, use kgsets.
-            if(method.isConstructor()||(!callerInfo.userDefinedMethods.contains(method))){
+            TreeSet<SootMethod> methods = getSootMethodsFromInvokeUnit(u, callerInfo.cg);
+            SootMethod firstMethod = methods.first();
+            if (firstMethod.isConstructor() || (!callerInfo.userDefinedMethods.contains(firstMethod))) {
                 useKgsets = true;
-            }
-            else{
-                Body body = method.getActiveBody();
-                TreeMap<String,String> paramMap = new TreeMap<>();
-                fillParamMap(paramMap,expr);
-                ArrayList<String> newCallsiteList = new ArrayList<>();
-                newCallsiteList.addAll(callerInfo.callSites);
-                newCallsiteList.add(Integer.toString(u.getJavaSourceStartLineNumber()));
-                CallerInfo newCallerInfo = new CallerInfo(newCallsiteList, in, paramMap);
-                newCallerInfo.userDefinedMethods = callerInfo.userDefinedMethods;
-                PTA calleePTA = new PTA();
-                //isolate unit comparators.
-                TreeMap<Unit, PTA.NodePointsToData> ptaInfo = calleePTA.getPointsToInfo(body,newCallerInfo);
-                PointsToGraph atCallEnd = mergePTGAtTails(body, ptaInfo);
-                //forward heapMap from callee::
-                ans.heapMap = atCallEnd.heapMap;
-                //copy stackMap from in:
+            } else {
+                // copy stackMap from in:
                 ans.stackMap.putAll(in.stackMap);
-                //add lhs var if any
-                if(u instanceof JAssignStmt){
-                    JAssignStmt stmt = (JAssignStmt)u;
+                TreeMap<String, String> paramMap = new TreeMap<>();
+                fillParamMap(paramMap, expr);
+                String stackVarName = "";
+                TreeSet<String> newPointees = new TreeSet<>();
+                boolean assignStackVars = false;
+                if (u instanceof JAssignStmt) {
+                    JAssignStmt stmt = (JAssignStmt) u;
                     Value lhs = stmt.getLeftOp();
-                    //lhs will only be a local, because of jimple specs.
-                    if(lhs instanceof Local){
-                        Local local = (Local)lhs;
-                        String stackVar = local.getName();
-                        TreeSet<String> returnedObjects = getReturnObjectSet(body,ptaInfo);
-                        ans.stackMap.put(stackVar,returnedObjects);
+                    // lhs will only be a local, because of jimple specs.
+                    if (lhs instanceof Local) {
+                        Local local = (Local) lhs;
+                        assignStackVars = true;
+                        stackVarName = local.getName();
                     }
-                    // else{
-                    //     print("Non-local lhs in function call assignment stmt!");
-                    //     System.exit(1);
-                    // }
+                }
+                for (SootMethod method : methods) {
+                    Body body = method.getActiveBody();
+                    ArrayList<String> newCallsiteList = new ArrayList<>();
+                    newCallsiteList.addAll(callerInfo.callSites);
+                    newCallsiteList.add(Integer.toString(u.getJavaSourceStartLineNumber()));
+                    CallerInfo newCallerInfo = new CallerInfo(newCallsiteList, in, paramMap);
+                    newCallerInfo.userDefinedMethods = callerInfo.userDefinedMethods;
+                    newCallerInfo.cg = callerInfo.cg;
+                    // isolate unit comparators.
+                    PTA calleePTA = new PTA();
+                    TreeMap<Unit, PTA.NodePointsToData> ptaInfo = calleePTA.getPointsToInfo(body, newCallerInfo);
+                    PointsToGraph atCallEnd = mergePTGAtTails(body, ptaInfo);
+                    // forward only heapMap from callee::
+                    mergeHeapGraphs(ans, atCallEnd);
+                    // add lhs var if any
+                    if (assignStackVars) {
+                        TreeSet<String> returnedObjects = getReturnObjectSet(body, ptaInfo);
+                        newPointees.addAll(returnedObjects);
+                    }
+                }
+                if(assignStackVars){
+                    ans.stackMap.put(stackVarName, newPointees);
                 }
                 useKgsets = false;
-            }   
+            }
         }
-        else{
-            useKgsets = true;
-        }
-        if(useKgsets){
+        if (useKgsets) {
             KillGenSets kgsets = getKillGenSets(in, u);
             for (String stackVarName : in.stackMap.keySet()) {
                 if (!kgsets.killStack.contains(stackVarName)) {
@@ -479,27 +497,26 @@ public class PTA {
         // add gen points-to info
         return ans;
     }
+
     private TreeSet<String> getReturnObjectSet(Body body, TreeMap<Unit, NodePointsToData> ptaInfo) {
         TreeSet<String> returned = new TreeSet<>();
         BriefUnitGraph cfg = new BriefUnitGraph(body);
-        for(Unit u:cfg.getTails()){
-            if(u instanceof JReturnStmt){
-                JReturnStmt stmt = (JReturnStmt)u;
+        for (Unit u : cfg.getTails()) {
+            if (u instanceof JReturnStmt) {
+                JReturnStmt stmt = (JReturnStmt) u;
                 Value returnValue = stmt.getOp();
-                if(returnValue instanceof Local){
-                    Local local = (Local)returnValue;
+                if (returnValue instanceof Local) {
+                    Local local = (Local) returnValue;
                     String stackVar = local.getName();
                     NodePointsToData data = ptaInfo.get(u);
-                    if(data.in.stackMap.containsKey(stackVar)){
+                    if (data.in.stackMap.containsKey(stackVar)) {
                         returned.addAll(data.in.stackMap.get(stackVar));
                     }
+                } else {
+                    // Possible with non-local return values.
+                    // like: return 1;
                 }
-                else{
-                    //Possible with non-local return values.
-                    //like: return 1;
-                }
-            }
-            else{
+            } else {
                 print("Non-return stmt found at tail of function used in assignment stmt!");
                 System.exit(1);
             }
@@ -510,14 +527,14 @@ public class PTA {
     private void fillParamMap(TreeMap<String, String> paramMap, InvokeExpr expr) {
         List<Local> params = expr.getMethod().getActiveBody().getParameterLocals();
         List<Value> args = expr.getArgs();
-        
-        for(int i=0;i<params.size();i++){
+
+        for (int i = 0; i < params.size(); i++) {
             Local param = params.get(i);
             String key = param.getName();
             Value arg = args.get(i);
-            //assume simple args like local1, local2, local3... because of jimple!
-            if(arg instanceof Local){
-                Local obj = (Local)arg;
+            // assume simple args like local1, local2, local3... because of jimple!
+            if (arg instanceof Local) {
+                Local obj = (Local) arg;
                 String value = obj.getName();
                 paramMap.put(key, value);
             }
@@ -526,13 +543,12 @@ public class PTA {
 
     public static InvokeExpr getInvokeExprFromInvokeUnit(Unit u) {
         InvokeExpr ans;
-        if(u instanceof JAssignStmt){
-            Value rhs = ((JAssignStmt)u).getRightOp();
-            InvokeExpr expr = (InvokeExpr)rhs;
+        if (u instanceof JAssignStmt) {
+            Value rhs = ((JAssignStmt) u).getRightOp();
+            InvokeExpr expr = (InvokeExpr) rhs;
             ans = expr;
-        }
-        else{
-            //u instanceof JInvokeStmt
+        } else {
+            // u instanceof JInvokeStmt
             JInvokeStmt stmt = (JInvokeStmt) (u);
             InvokeExpr expr = stmt.getInvokeExpr();
             ans = expr;
@@ -540,18 +556,27 @@ public class PTA {
         return ans;
     }
 
+    public static TreeSet<SootMethod> getSootMethodsFromInvokeUnit(Unit u, CallGraph cg) {
+        TreeSet<SootMethod> ans = new TreeSet<>();
+        for (Iterator<Edge> iter = cg.edgesOutOf(u); iter.hasNext();) {
+            Edge edge = iter.next();
+            SootMethod tgtMethod = edge.tgt();
+            ans.add(tgtMethod);
+        }
+        return ans;
+    }
+
     public static boolean isInvokeStmt(Unit u) {
         boolean ans = false;
-        if(u instanceof JAssignStmt){
-            Value rhs = ((JAssignStmt)u).getRightOp();
-            if(isInvokeExpression(rhs)){
+        if (u instanceof JAssignStmt) {
+            Value rhs = ((JAssignStmt) u).getRightOp();
+            if (isInvokeExpression(rhs)) {
                 ans = true;
             }
-        }
-        else if(u instanceof JInvokeStmt){
+        } else if (u instanceof JInvokeStmt) {
             JInvokeStmt stmt = (JInvokeStmt) (u);
             InvokeExpr expr = stmt.getInvokeExpr();
-            if(isInvokeExpression(expr)){
+            if (isInvokeExpression(expr)) {
                 ans = true;
             }
         }
@@ -563,7 +588,7 @@ public class PTA {
         // heap objects should be identifiable
         PointsToGraph info = callerInfo.ptgIn;
 
-        for(HeapReference hr:info.heapMap.keySet()){
+        for (HeapReference hr : info.heapMap.keySet()) {
             TreeSet<String> heapPointees = new TreeSet<>();
             heapPointees.addAll(info.heapMap.get(hr));
             g.heapMap.put(hr, heapPointees);
@@ -573,7 +598,7 @@ public class PTA {
         for (int i = 0; i < params.size(); i++) {
             Local param = params.get(i);
             String calleeName = param.getName();
-            if(callerInfo.paramMap.containsKey(calleeName)){
+            if (callerInfo.paramMap.containsKey(calleeName)) {
                 String callerName = callerInfo.paramMap.get(calleeName);
                 TreeSet<String> pointees = new TreeSet<>();
                 pointees.addAll(info.stackMap.get(callerName));
@@ -582,6 +607,7 @@ public class PTA {
         }
         return g;
     }
+
     PointsToGraph getDummyPointsToGraph(Body body) {
         PointsToGraph g = new PointsToGraph();
         SootMethod method = body.getMethod();
@@ -606,22 +632,25 @@ public class PTA {
         }
         return g;
     }
+
     void print(String s) {
-        synchronized(System.out){
+        synchronized (System.out) {
             System.out.println(s);
         }
     }
 
     UnitComparator unitcomparator;
     CallerInfo callerInfo;
-    public PointsToGraph mergePTGAtTails(Body body, TreeMap<Unit, NodePointsToData> ptinfo){
+
+    public PointsToGraph mergePTGAtTails(Body body, TreeMap<Unit, NodePointsToData> ptinfo) {
         PointsToGraph ans = new PointsToGraph();
         BriefUnitGraph cfg = new BriefUnitGraph(body);
-        for(Unit unit: cfg.getTails()){
+        for (Unit unit : cfg.getTails()) {
             mergePointsToGraphs(ans, ptinfo.get(unit).out);
         }
         return ans;
     }
+
     public TreeMap<Unit, NodePointsToData> getPointsToInfo(Body body, CallerInfo _callerInfo) {
         PatchingChain<Unit> units = body.getUnits();
         // Construct CFG for the current method's body
@@ -652,10 +681,9 @@ public class PTA {
             if (u == first) {
                 // equality holds because no new unit objects are created.
                 // equality in value must imply equality in reference.
-                if(callerInfo.callSites.size()>0){
+                if (callerInfo.callSites.size() > 0) {
                     newIn = getBoundaryInfoGraph(body, callerInfo);
-                }
-                else{
+                } else {
                     newIn = getDummyPointsToGraph(body);
                 }
             } else {
@@ -675,7 +703,7 @@ public class PTA {
     }
 
     void printPointsToInfo(TreeMap<Unit, NodePointsToData> pointsToInfo) {
-        synchronized(System.out){
+        synchronized (System.out) {
             for (Unit u : pointsToInfo.keySet()) {
                 print("Unit: \"" + u.toString() + "\"{");
                 print("\tIn: ");

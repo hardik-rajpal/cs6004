@@ -1,0 +1,30 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}",
+            "cwd": "${workspaceFolder}/a3"
+        },
+        {
+            "type": "java",
+            "name": "PA3",
+            "request": "launch",
+            "mainClass": "PA3",
+            "projectName": "cs6004_838d9d28",
+            "cwd": "${workspaceFolder}/a3"
+        },
+        {
+            "type": "java",
+            "name": "Test",
+            "request": "launch",
+            "mainClass": "testcase.Test",
+            "projectName": "cs6004_838d9d28"
+        }
+    ]
+}

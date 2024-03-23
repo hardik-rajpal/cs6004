@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -19,6 +20,7 @@ import soot.Value;
 import soot.jimple.InvokeExpr;
 import soot.jimple.internal.JReturnStmt;
 import soot.jimple.toolkits.callgraph.CallGraph;
+import soot.jimple.toolkits.callgraph.Edge;
 import soot.toolkits.graph.BriefUnitGraph;
 import soot.toolkits.graph.UnitGraph;
 import soot.toolkits.scalar.LiveLocals;
@@ -75,6 +77,7 @@ public class AnalysisTransformer extends SceneTransformer {
         TreeMap<String,String> paramMap = new TreeMap<>();
         PTA.CallerInfo callerInfo = new PTA.CallerInfo(new ArrayList<String>(), new PTA.PointsToGraph(), paramMap);
         callerInfo.userDefinedMethods = userDefinedMethods;
+        callerInfo.cg = cg;
         TreeMap<Unit, PTA.NodePointsToData> pointsToInfo = pta.getPointsToInfo(body,callerInfo);
         // pta.printPointsToInfo(pointsToInfo);
         //mark all objects as dead.
@@ -95,6 +98,9 @@ public class AnalysisTransformer extends SceneTransformer {
             }
             if(PTA.isInvokeStmt(unit)){
                 InvokeExpr expr = PTA.getInvokeExprFromInvokeUnit(unit);
+
+                //TODO: rewrite into a data-flow analysis..
+                TreeSet<SootMethod> calleeMethods = PTA.getSootMethodsFromInvokeUnit(unit, cg);
                 SootMethod calleeMethod = expr.getMethod();
                 if(userDefinedMethods.contains(calleeMethod)){
                     String calleeMethodKey = calleeMethod.toString();
@@ -129,7 +135,7 @@ public class AnalysisTransformer extends SceneTransformer {
         collectedObjects.put(method.toString(), totalCollection);
         return ans;
     }
-
+//  TODO: remove heap cloning :(
     private String mutateContext(String object, String callsite) {
         String[] parts = object.split(Pattern.quote("("));
         //parts = {"Obj_n","c1,c2,c3)"}

@@ -1,0 +1,33 @@
+class Base extends java.lang.Object
+{
+    Base x;
+
+    void <init>()
+    {
+        Base r0;
+
+        r0 := @this: Base;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    void foo(Node)
+    {
+        Node r0, $r1;
+        Base r2;
+
+        r2 := @this: Base;
+
+        r0 := @parameter0: Node;
+
+        $r1 = new Node;
+
+        specialinvoke $r1.<Node: void <init>()>();
+
+        r0.<Node: Node f> = $r1;
+
+        return;
+    }
+}
