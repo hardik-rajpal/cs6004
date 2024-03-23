@@ -43,6 +43,7 @@ import soot.jimple.toolkits.callgraph.CallGraph;
 import soot.jimple.toolkits.callgraph.Edge;
 import soot.toolkits.graph.BriefUnitGraph;
 import soot.toolkits.graph.ExceptionalUnitGraph;
+import soot.toolkits.scalar.LiveLocals;
 import soot.util.Chain;
 
 public class PTA {
@@ -426,7 +427,7 @@ public class PTA {
         return newPointees;
     }
 
-    PointsToGraph flow(PointsToGraph in, Unit u, CallerInfo callerInfo) {
+    PointsToGraph ptgFlow(PointsToGraph in, Unit u, CallerInfo callerInfo) {
         PointsToGraph ans = new PointsToGraph();
         boolean useKgsets = true;
         if (isInvokeStmt(u)) {
@@ -473,7 +474,7 @@ public class PTA {
                         newPointees.addAll(returnedObjects);
                     }
                 }
-                if(assignStackVars){
+                if (assignStackVars) {
                     ans.stackMap.put(stackVarName, newPointees);
                 }
                 useKgsets = false;
@@ -641,6 +642,7 @@ public class PTA {
 
     UnitComparator unitcomparator;
     CallerInfo callerInfo;
+    private TreeMap<String, Integer> collectionAfter;
 
     public PointsToGraph mergePTGAtTails(Body body, TreeMap<Unit, NodePointsToData> ptinfo) {
         PointsToGraph ans = new PointsToGraph();
@@ -689,7 +691,7 @@ public class PTA {
             } else {
                 newIn = mergeOutsOf(graph.getPredsOf(u), pointsToInfo);
             }
-            newOut = flow(newIn, u, callerInfo);
+            newOut = ptgFlow(newIn, u, callerInfo);
             // assign new in.
             NodePointsToData nodeData = pointsToInfo.get(u);
             nodeData.in = newIn;
@@ -726,5 +728,149 @@ public class PTA {
         });
         return dummies;
 
+    }
+
+    public void runLiveLocalsGC(Body body, PTA.CallerInfo _callerInfo, TreeMap<String, Integer> _collectionAfter,
+            LiveLocals liveLocals) {
+        PatchingChain<Unit> units = body.getUnits();
+        // Construct CFG for the current method's body
+        callerInfo = _callerInfo;
+        collectionAfter = _collectionAfter;
+        ExceptionalUnitGraph graph = new ExceptionalUnitGraph(body);
+        HashMap<Unit, Integer> unitIndices = new HashMap<Unit, Integer>();
+        unitcomparator = new UnitComparator(unitIndices);
+        TreeMap<Unit, NodePointsToData> pointsToInfo = new TreeMap<Unit, NodePointsToData>(unitcomparator);
+        int index = 0;
+        for (Unit u : units) {
+            unitIndices.put(u, new Integer(index));
+            NodePointsToData ptd = new NodePointsToData();
+            ptd.in = new PointsToGraph();
+            ptd.out = new PointsToGraph();
+            pointsToInfo.put(u, ptd);
+            index++;
+        }
+        SortedSet<Unit> workList = new TreeSet<Unit>(unitcomparator);
+        Unit first = units.getFirst();
+        workList.add(first);
+        while (workList.size() > 0) {
+            Unit u = workList.first();
+            workList.remove(u);
+            PointsToGraph newIn = new PointsToGraph();
+            PointsToGraph newOut = new PointsToGraph();
+            // process u:
+            if (u == first) {
+                // equality holds because no new unit objects are created.
+                // equality in value must imply equality in reference.
+                if (callerInfo.callSites.size() > 0) {
+                    newIn = getBoundaryInfoGraph(body, callerInfo);
+                } else {
+                    newIn = getDummyPointsToGraph(body);
+                }
+            } else {
+                newIn = mergeOutsOf(graph.getPredsOf(u), pointsToInfo);
+            }
+            newOut = ptgFlow(newIn, u, callerInfo);
+            HashSet<Local> liveLocalsAfter = new HashSet<>(liveLocals.getLiveLocalsAfter(u));
+            PointsToGraph cleanedOut = gcFlow(newIn,newOut,u,callerInfo,liveLocalsAfter);
+            // assign new in.
+            NodePointsToData nodeData = pointsToInfo.get(u);
+            nodeData.in = newIn;
+            // compare newOut with old Out
+            if (nodeData.out.hashCode() != cleanedOut.hashCode()) {
+                nodeData.out = cleanedOut;
+                workList.addAll(graph.getSuccsOf(u));
+            }
+        }
+    }
+    private TreeSet<String> getAllObjects(PointsToGraph in) {
+        TreeSet<String> ans = new TreeSet<>();
+        for(String stackVar:in.stackMap.keySet()){
+            ans.addAll(in.stackMap.get(stackVar));
+        }
+        for(PTA.HeapReference hr:in.heapMap.keySet()){
+            ans.add(hr.object);
+            ans.addAll(in.heapMap.get(hr));
+        }
+        return ans;
+    }
+    private Set<String> getLocalNames(HashSet<Local> localsLiveAfter) {
+        TreeSet<String> ans = new TreeSet<>();
+        for(Local local:localsLiveAfter){
+            ans.add(local.getName());
+        }
+        return ans;
+    }
+    private void fillObjectsReachableFrom(String rv, TreeSet<String> reachableVars, TreeMap<PTA.HeapReference, TreeSet<String>> heapMap) {
+        for (PTA.HeapReference hr : heapMap.keySet()) {
+            if (hr.object.equals(rv)) {
+                TreeSet<String> newRV = heapMap.get(hr);
+                for (String newrv : newRV) {
+                    if (!reachableVars.contains(newrv)) {
+                        reachableVars.add(newrv);
+                        fillObjectsReachableFrom(newrv, reachableVars, heapMap);
+                    }
+                }
+            }
+        }
+    }
+
+
+    private TreeSet<String> getReachableObjects(PTA.PointsToGraph in, Set<String> localsLiveBefore) {
+        TreeSet<String> reachable = new TreeSet<>();
+        for(String stackVar:localsLiveBefore){
+            TreeSet<String> pointees = in.stackMap.get(stackVar);
+            for(String pointee:pointees){
+                reachable.add(pointee);
+                fillObjectsReachableFrom(pointee, reachable, in.heapMap);
+            }
+        }
+        return reachable;
+    }
+
+    private PointsToGraph gcFlow(PointsToGraph newIn, PointsToGraph newOut, Unit u, CallerInfo callerInfo2, HashSet<Local> liveLocalsAfter) {
+        TreeSet<String> allObjects = getAllObjects(newIn);
+        allObjects.addAll(getAllObjects(newOut));
+        TreeSet<String> liveObjectsAfter = getReachableObjects(newOut,getLocalNames(liveLocalsAfter));
+        //remove liveobjects from allobjects:
+        allObjects.removeAll(liveObjectsAfter);
+        PointsToGraph ans = prunePTG(newOut,allObjects, u);
+        return ans;
+
+    }
+
+    private PointsToGraph prunePTG(PTA.PointsToGraph newOut, TreeSet<String> deadObjects, Unit u) {
+        PointsToGraph ptg = new PointsToGraph();
+        //copy newout into ptg;
+        for (String stackVarName : newOut.stackMap.keySet()) {
+            ptg.stackMap.put(stackVarName, new TreeSet<>());
+            for (String obj:newOut.stackMap.get(stackVarName)) {
+                if(!deadObjects.contains(obj)){
+                    ptg.stackMap.get(stackVarName).add(obj);
+                }
+                else{
+                    recordGarbageCollection(u, obj);
+                }
+            }
+        }
+        for (HeapReference heapRef : newOut.heapMap.keySet()) {
+            for(String obj:newOut.heapMap.get(heapRef)){
+                ptg.heapMap.put(heapRef, new TreeSet<>());
+                if(!deadObjects.contains(obj)){
+                    ptg.heapMap.get(heapRef).add(obj);
+                }
+                else{
+                    recordGarbageCollection(u, obj);
+                }
+            }
+        }
+        return ptg;
+    }
+
+    private void recordGarbageCollection(Unit u, String obj) {
+        int prev = -1;
+        if(collectionAfter.containsKey(obj)){
+            prev = collectionAfter.get(obj);
+        }
+        collectionAfter.put(obj, Integer.max(prev,u.getJavaSourceStartLineNumber()));
     }
 }
