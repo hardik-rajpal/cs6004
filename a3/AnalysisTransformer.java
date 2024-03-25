@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -17,10 +16,8 @@ import soot.SootMethod;
 import soot.Unit;
 import soot.UnitPatchingChain;
 import soot.Value;
-import soot.jimple.InvokeExpr;
 import soot.jimple.internal.JReturnStmt;
 import soot.jimple.toolkits.callgraph.CallGraph;
-import soot.jimple.toolkits.callgraph.Edge;
 import soot.toolkits.graph.BriefUnitGraph;
 import soot.toolkits.graph.UnitGraph;
 import soot.toolkits.scalar.LiveLocals;
@@ -32,7 +29,9 @@ public class AnalysisTransformer extends SceneTransformer {
     static CallGraph cg;
     static TreeSet<String> results = new TreeSet<>();
     //SootMethod.toString()->{Escaping objects o1, o2, o3}
-    static TreeMap<String,Set<String>> collectedObjects = new TreeMap<>();
+    TreeMap<String,Integer> collectionAfter = new TreeMap<>();
+    TreeMap<String,LiveLocals> liveLocalsAnalysis = new TreeMap<>();
+    static TreeSet<String> processedMethods = new TreeSet<>();
     static HashSet<SootMethod> userDefinedMethods = new HashSet<>();
     @Override
     protected void internalTransform(String arg0, Map<String, String> arg1) {
@@ -55,24 +54,62 @@ public class AnalysisTransformer extends SceneTransformer {
         for(SootMethod method:userDefinedMethods){
             processMethod(method);
         }
+        for(SootMethod method:userDefinedMethods){
+            fillResult(method);
+        }
+    }
+    public static class Range{
+        int start;
+        int end;
+        Range(int _start,int _end){
+            start = _start;
+            end = _end;
+        }
+        public boolean contains(int line) {
+            return start<=line && line <= end;
+        }
+    }
+    private void fillResult(SootMethod method) {
+        String ans = "";
+        ans = method.getDeclaringClass().getName()+":"+method.getName()+" ";
+        Range methodRange = getMethodRange(method);
+        TreeSet<String> objectsCollectedHere = new TreeSet<>();
+        for(String object:collectionAfter.keySet()){
+            int line = collectionAfter.get(object);
+            if(methodRange.contains(line)){
+                objectsCollectedHere.add(object);
+            }
+        }
+        ans += getOutputString(objectsCollectedHere);
+        results.add(ans);
+    }
+
+    private Range getMethodRange(SootMethod method) {
+        Body body = method.getActiveBody();
+        BriefUnitGraph cfg = new BriefUnitGraph(body);
+        int start = Integer.MAX_VALUE;
+        int end = -1;
+        for(Unit unit:cfg.getHeads()){
+            start = Integer.min(start,unit.getJavaSourceStartLineNumber());
+        }
+        for(Unit unit:cfg.getTails()){
+            end = Integer.max(end,unit.getJavaSourceStartLineNumber());
+        }
+        return new Range(start, end);
     }
 
     private void processMethod(SootMethod method) {
-        if(collectedObjects.containsKey(method.toString())){return;}
-        String ans = "";
-        ans = method.getDeclaringClass().getName()+":"+method.getName()+" ";
-        ans += getAllObjectsGCLines(method);
-        results.add(ans);
+        if(processedMethods.contains(method.toString())){return;}
+        fillAllObjectsGCLines(method);
         return;
     }
 
-    private String getAllObjectsGCLines(SootMethod method) {
-        TreeMap<String,String> collectionAfter = new TreeMap<>();
-        TreeSet<String> collectedByCallees = new TreeSet<>();
+    private void fillAllObjectsGCLines(SootMethod method) {
         Body body = method.getActiveBody();
         UnitPatchingChain units = body.getUnits();
         UnitGraph cfg = new BriefUnitGraph(body);
         LiveLocals liveLocals = new SimpleLiveLocals(cfg);
+        liveLocalsAnalysis.put(method.toString(), liveLocals);
         PTA pta = new PTA();
         TreeMap<String,String> paramMap = new TreeMap<>();
         PTA.CallerInfo callerInfo = new PTA.CallerInfo(new ArrayList<String>(), new PTA.PointsToGraph(), paramMap);
@@ -85,77 +122,62 @@ public class AnalysisTransformer extends SceneTransformer {
         List<Unit> tails = cfg.getTails();
         for(Unit unit:units){
             PTA.NodePointsToData info = pointsToInfo.get(unit);
-            List<Local> localsLiveAfter = liveLocals.getLiveLocalsAfter(unit);
-            HashSet<Local> localsLiveAfterEditable = new HashSet<>(localsLiveAfter);
+            HashSet<Local> localsLiveBefore = new HashSet<>(liveLocals.getLiveLocalsBefore(unit));
+            HashSet<Local> localsLiveAfter = new HashSet<>(liveLocals.getLiveLocalsAfter(unit));
             //add returned object to live vars after artificially:
             if(tails.contains(unit) && (unit instanceof JReturnStmt)){
                 JReturnStmt stmt = (JReturnStmt)unit;
                 Value returnValue = stmt.getOp();
                 if(returnValue instanceof Local){
                     Local local = (Local)returnValue;
-                    localsLiveAfterEditable.add(local);
+                    localsLiveAfter.add(local);
                 }
             }
+            TreeSet<String> calleeTailObjects = new TreeSet<>();
             if(PTA.isInvokeStmt(unit)){
-                InvokeExpr expr = PTA.getInvokeExprFromInvokeUnit(unit);
-
-                //TODO: rewrite into a data-flow analysis..
                 TreeSet<SootMethod> calleeMethods = PTA.getSootMethodsFromInvokeUnit(unit, cg);
-                SootMethod calleeMethod = expr.getMethod();
-                if(userDefinedMethods.contains(calleeMethod)){
-                    String calleeMethodKey = calleeMethod.toString();
-                    String callsite = Integer.toString(unit.getJavaSourceStartLineNumber());
-                    if(!collectedObjects.containsKey(calleeMethodKey)){
-                        //termination guarranteed in the absence of recursion only.
-                        processMethod(calleeMethod);
-                    }
-                    for(String object:collectedObjects.get(calleeMethodKey)){
-                        String mutatedObject = mutateContext(object,callsite);
-                        collectedByCallees.add(mutatedObject);
+                if(userDefinedMethods.contains(calleeMethods.first())){
+                    for(SootMethod calleeMethod:calleeMethods){
+                        String calleeMethodKey = calleeMethod.toString();
+                        if(!processedMethods.contains(calleeMethodKey)){
+                            //termination guarranteed in the absence of recursion only.
+                            processMethod(calleeMethod);
+                        }
+                        BriefUnitGraph calleeCFG = new BriefUnitGraph(calleeMethod.getActiveBody());
+                        for(Unit tail:calleeCFG.getTails()){
+                            List<Local> tailLocals = liveLocalsAnalysis.get(calleeMethodKey).getLiveLocalsAfter(tail);
+                        };
+                        // calleeTailObjects.addAll();
                     }
                 }
             }
             //all objects reachable from parameters are live=> set parameters as live, always.
             List<Local> paramLocals = body.getParameterLocals();
-            localsLiveAfterEditable.addAll(paramLocals);
-
-            TreeSet<String> objects =  getObjectsUnusableAfter(localsLiveAfterEditable,info,collectionAfter);
+            //TODO: fix: Won't work if params are reassigned to.
+            localsLiveAfter.addAll(paramLocals);
+            TreeSet<String> objects =  getObjectsToCollect(localsLiveBefore,localsLiveAfter,info,calleeTailObjects);
+            int currLineNum = unit.getJavaSourceStartLineNumber();
             for(String object:objects){
                 //don't collect dummy objects.
-                if(!(object.contains("@")||collectedByCallees.contains(object))){
-                    collectionAfter.put(object, Integer.toString(unit.getJavaSourceStartLineNumber()));
+                if(!(object.contains("@"))){
+                    int prev = -1;
+                    if(collectionAfter.containsKey(object)){
+                        prev = collectionAfter.get(object);
+                    }
+                    //max line num policy.
+                    collectionAfter.put(object, Integer.max(prev,currLineNum));
                 }
             }
         }
-
-        String ans = getOutputString(collectionAfter);
-        HashSet<String> totalCollection  = new HashSet<>();
-        totalCollection.addAll(collectedByCallees);
-        totalCollection.addAll(collectionAfter.keySet());
-        collectedObjects.put(method.toString(), totalCollection);
-        return ans;
+        processedMethods.add(method.toString());
+        return;
     }
-//  TODO: remove heap cloning :(
-    private String mutateContext(String object, String callsite) {
-        String[] parts = object.split(Pattern.quote("("));
-        //parts = {"Obj_n","c1,c2,c3)"}
+    private String getOutputString(TreeSet<String> objects) {
         String ans = "";
-        char closeBracket = ')';
-        if(parts[1].charAt(0)==closeBracket){
-            ans = parts[0] + "(" + callsite + parts[1];
-        }
-        else{
-            ans = parts[0] + "("+ callsite+","+parts[1];
-        }
-        return ans;
-    }
-
-    private String getOutputString(TreeMap<String, String> collectionAfter) {
-        String ans = "";
-        for(String obj:collectionAfter.keySet()){
+        for(String obj:objects){
             String cleanedObject = obj;
-            // cleanedObject = cleanedObject.split(Pattern.quote("_"))[1];
-            // cleanedObject = cleanedObject.split(Pattern.quote("("))[0];
+            cleanedObject = cleanedObject.split(Pattern.quote("_"))[1];
+            cleanedObject = cleanedObject.split(Pattern.quote("("))[0];
             ans += cleanedObject+":"+collectionAfter.get(obj)+" ";
         }
         return ans;
@@ -185,19 +207,24 @@ public class AnalysisTransformer extends SceneTransformer {
         return reachable;
     }
 
-    private TreeSet<String> getObjectsUnusableAfter(HashSet<Local> localsLiveAfter,
-            PTA.NodePointsToData info, TreeMap<String, String> collectionAfter) {
-        TreeSet<String> allObjects = getAllObjects(info.in);
-        allObjects.addAll(getAllObjects(info.out));
-        TreeSet<String> liveObjectsAfter = getReachableObjects(info.out,getLocalNames(localsLiveAfter));
-        
-        //remove live objects
-        allObjects.removeAll(liveObjectsAfter);
+    private TreeSet<String> getObjectsToCollect(HashSet<Local> localsLiveBefore,
+            HashSet<Local> localsLiveAfter, PTA.NodePointsToData info, TreeSet<String> calleeTailObjects) {
+        TreeSet<String> reachableBefore = getReachableObjects(info.in,getLocalNames(localsLiveBefore));
+        TreeSet<String> reachableAfter = getReachableObjects(info.out, getLocalNames(localsLiveAfter));
+        TreeSet<String> gcExistingObjects = new TreeSet<>(reachableBefore);
+        gcExistingObjects.removeAll(reachableAfter);
+
+        TreeSet<String> newObjects = new TreeSet<>(getAllObjects(info.out));
+        newObjects.removeAll(getAllObjects(info.in));
+        //now newObjects are all newObjects.
+        TreeSet<String> gcNewObjects = new TreeSet<>(newObjects);
+        gcNewObjects.removeAll(reachableAfter);
         //remove collectedObjects
-        for(String collectedObject:collectionAfter.keySet()){
-            allObjects.remove(collectedObject);
-        }
-        return allObjects;
+
+        TreeSet<String> allGcObjects = new TreeSet<>();
+        allGcObjects.addAll(gcNewObjects);
+        allGcObjects.addAll(gcExistingObjects);
+        return allGcObjects;
     }
     // private void printSet(TreeSet<String> allObjects) {
     //     synchronized(System.out){

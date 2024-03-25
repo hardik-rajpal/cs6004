@@ -1,16 +1,8 @@
-Soot started on Fri Mar 22 10:48:55 IST 2024
-10 calls: <Node: void <init>()>
-22 calls: <Test: Node foo()>
-29 calls: <Node: void <init>()>
-31 calls: <Derived: void <init>()>
-32 calls: <Test: void bar(Base,Node)>
-25 calls: <Base: void foo(Node)>
-25 calls: <Derived: void foo(Node)>
-16 calls: <Node: void <init>()>
-Soot finished on Fri Mar 22 10:49:11 IST 2024
-Soot has run for 0 min. 15 sec.
+Soot started on Mon Mar 25 19:00:52 IST 2024
+Soot finished on Mon Mar 25 19:01:05 IST 2024
+Soot has run for 0 min. 13 sec.
 Base:foo 
 Derived:foo 
-Test:bar 
-Test:foo Obj_31():32 
-Test:main Obj_10(22,32,25):22 Obj_29(22):22 
+Test:bar 10:22 16:22 29:22 
+Test:foo 31:32 
+Test:main 10:22 16:22 29:22 

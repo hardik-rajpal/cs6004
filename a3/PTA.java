@@ -555,9 +555,16 @@ public class PTA {
         }
         return ans;
     }
+    public static class SootMethodComparator implements Comparator<SootMethod>{
 
+        @Override
+        public int compare(SootMethod o1, SootMethod o2) {
+            return o1.toString().compareTo(o2.toString());
+        }
+        
+    }
     public static TreeSet<SootMethod> getSootMethodsFromInvokeUnit(Unit u, CallGraph cg) {
-        TreeSet<SootMethod> ans = new TreeSet<>();
+        TreeSet<SootMethod> ans = new TreeSet<>(new SootMethodComparator());
         for (Iterator<Edge> iter = cg.edgesOutOf(u); iter.hasNext();) {
             Edge edge = iter.next();
             SootMethod tgtMethod = edge.tgt();
