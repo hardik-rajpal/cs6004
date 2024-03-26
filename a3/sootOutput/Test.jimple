@@ -24,48 +24,51 @@ public class Test extends java.lang.Object
         return;
     }
 
-    public static void bar(Base, Node)
-    {
-        Base $r0, r2;
-        Node r1;
-
-        r2 := @parameter0: Base;
-
-        r1 := @parameter1: Node;
-
-        $r0 = new Base;
-
-        specialinvoke $r0.<Base: void <init>()>();
-
-        virtualinvoke $r0.<Base: void foo(Node)>(r1);
-
-        return;
-    }
-
     public static Node foo()
     {
-        Node $r0, $r2, $r3, $r4;
-        Derived $r5;
+        Node $r0, $r2, $r3, $r4, r5, r6;
 
         $r0 = new Node;
 
         specialinvoke $r0.<Node: void <init>()>();
 
-        $r4 = $r0.<Node: Node f>;
+        $r2 = new Node;
 
-        $r2 = $r0.<Node: Node f>;
+        specialinvoke $r2.<Node: void <init>()>();
 
-        $r3 = $r2.<Node: Node f>;
+        $r3 = new Node;
 
-        if $r4 != $r3 goto label1;
+        specialinvoke $r3.<Node: void <init>()>();
 
-        $r5 = new Derived;
+        $r2.<Node: Node f> = $r3;
 
-        specialinvoke $r5.<Derived: void <init>()>();
+        $r4 = new Node;
 
-        staticinvoke <Test: void bar(Base,Node)>($r5, $r0);
+        specialinvoke $r4.<Node: void <init>()>();
 
-     label1:
+        staticinvoke <Test: void bar(Node,Node)>($r0, $r4);
+
+        r5 = $r4.<Node: Node f>;
+
+        r6 = $r0.<Node: Node f>;
+
         return $r0;
+    }
+
+    public static void bar(Node, Node)
+    {
+        Node $r0, r2, r3;
+
+        r2 := @parameter0: Node;
+
+        r3 := @parameter1: Node;
+
+        $r0 = new Node;
+
+        specialinvoke $r0.<Node: void <init>()>();
+
+        r2.<Node: Node f> = $r0;
+
+        return;
     }
 }

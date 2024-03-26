@@ -1,41 +1,26 @@
 class Node {
 	Node f;
 	Node g;
-	int y;
 	Node() {}
 }
-class Base{
-	Base x;
-	void foo(Node x){
-		x.f = new Node();
-	}
-}
-class Derived extends Base{
-	Derived y;
-	void foo(Node x){
-		x.g = new Node();
-	}
-}
+
 public class Test {
 	public static Node global;
 	public static void main(String[] args) {
-		foo();
-	}
-	public static void bar(Base b, Node x){
-		b = new Base();
-		b.foo(x);
+		Node z = foo();
 	}
 	public static Node foo(){
-		Base b;
 		Node x = new Node();
-		if(x.f==x.f.f){
-			b = new Derived();
-			bar(b, x);
-		}
-		// else{
-		// 	b = new Base();
-		// 	bar(b, x);
-		// }
+		Node y = new Node();
+		y.f = new Node();
+		y = new Node();
+		bar(x, y);
+		Node z = y.f;
+		Node a = x.f;
 		return x;
+	}
+	public static void bar(Node p1, Node p2){
+		Node v = new Node();
+		p1.f = v;	
 	}
 }

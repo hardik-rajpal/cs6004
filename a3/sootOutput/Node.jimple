@@ -2,7 +2,6 @@ class Node extends java.lang.Object
 {
     Node f;
     Node g;
-    int y;
 
     void <init>()
     {

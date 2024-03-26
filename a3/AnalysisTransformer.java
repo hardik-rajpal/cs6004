@@ -75,6 +75,7 @@ public class AnalysisTransformer extends SceneTransformer {
         String ans = "";
         ans = method.getDeclaringClass().getName()+":"+method.getName()+" ";
         Range methodRange = getMethodRange(method);
+        System.out.println(method.toString()+" range:"+methodRange.start+","+methodRange.end);
         TreeSet<String> objectsCollectedHere = new TreeSet<>();
         for(String object:collectionAfter.keySet()){
             int line = collectionAfter.get(object);
@@ -88,13 +89,13 @@ public class AnalysisTransformer extends SceneTransformer {
 
     private Range getMethodRange(SootMethod method) {
         Body body = method.getActiveBody();
-        BriefUnitGraph cfg = new BriefUnitGraph(body);
         int start = Integer.MAX_VALUE;
         int end = -1;
-        for(Unit unit:cfg.getHeads()){
+        for(Unit unit:body.getUnits()){
+            if(unit.getJavaSourceStartLineNumber()<0){
+                continue;
+            }
             start = Integer.min(start,unit.getJavaSourceStartLineNumber());
-        }
-        for(Unit unit:cfg.getTails()){
             end = Integer.max(end,unit.getJavaSourceStartLineNumber());
         }
         return new Range(start, end);
@@ -135,7 +136,7 @@ public class AnalysisTransformer extends SceneTransformer {
         callerInfo.userDefinedMethods = userDefinedMethods;
         callerInfo.cg = cg;
         TreeMap<Unit, PTA.NodePointsToData> pointsToInfo = pta.getPointsToInfo(body,callerInfo);
-        // pta.printPointsToInfo(pointsToInfo);
+        pta.printPointsToInfo(pointsToInfo);
         //mark all objects as dead.
         //Get line number after which object can be collected.
         List<Unit> tails = cfg.getTails();
