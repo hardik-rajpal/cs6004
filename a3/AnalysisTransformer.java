@@ -16,6 +16,8 @@ import soot.SootMethod;
 import soot.Unit;
 import soot.UnitPatchingChain;
 import soot.Value;
+import soot.jimple.InvokeExpr;
+import soot.jimple.internal.JAssignStmt;
 import soot.jimple.internal.JReturnStmt;
 import soot.jimple.toolkits.callgraph.CallGraph;
 import soot.toolkits.graph.BriefUnitGraph;
@@ -103,7 +105,24 @@ public class AnalysisTransformer extends SceneTransformer {
         fillAllObjectsGCLines(method);
         return;
     }
-
+    public ArrayList<Local> getLiveLocalsAtTails(Body body){
+        ArrayList<Local> ans = new ArrayList<>();
+        BriefUnitGraph cfg = new BriefUnitGraph(body);
+        //add all param locals.
+        ans.addAll(body.getParameterLocals());
+        //add all returned objects.
+        for(Unit tail:cfg.getTails()){
+            if(tail instanceof JReturnStmt){
+                JReturnStmt stmt = (JReturnStmt)tail;
+                Value returnValue = stmt.getOp();
+                if(returnValue instanceof Local){
+                    Local local = (Local)returnValue;
+                    ans.add(local);
+                }
+            }
+        }
+        return ans;
+    }
     private void fillAllObjectsGCLines(SootMethod method) {
         Body body = method.getActiveBody();
         UnitPatchingChain units = body.getUnits();
@@ -133,8 +152,11 @@ public class AnalysisTransformer extends SceneTransformer {
                     localsLiveAfter.add(local);
                 }
             }
-            TreeSet<String> calleeTailObjects = new TreeSet<>();
+            TreeSet<String> newUncollectedObjects = new TreeSet<>();
+
             if(PTA.isInvokeStmt(unit)){
+                TreeSet<String> liveObjectsAtCalleesTails = new TreeSet<>();
+                InvokeExpr expr = PTA.getInvokeExprFromInvokeUnit(unit);
                 TreeSet<SootMethod> calleeMethods = PTA.getSootMethodsFromInvokeUnit(unit, cg);
                 if(userDefinedMethods.contains(calleeMethods.first())){
                     for(SootMethod calleeMethod:calleeMethods){
@@ -143,20 +165,33 @@ public class AnalysisTransformer extends SceneTransformer {
                             //termination guarranteed in the absence of recursion only.
                             processMethod(calleeMethod);
                         }
-                        //some union over return value reachable objects to be subtracted from.
-                        BriefUnitGraph calleeCFG = new BriefUnitGraph(calleeMethod.getActiveBody());
-                        for(Unit tail:calleeCFG.getTails()){
-                            List<Local> tailLocals = liveLocalsAnalysis.get(calleeMethodKey).getLiveLocalsAfter(tail);
-                        };
-                        // calleeTailObjects.addAll();
                     }
                 }
+                TreeSet<String> calleeEndLiveCallerLocalNames = new TreeSet<>();
+                if(unit instanceof JAssignStmt){
+                    JAssignStmt stmt = (JAssignStmt)unit;
+                    Local lhs = (Local)stmt.getLeftOp();
+                    calleeEndLiveCallerLocalNames.add(lhs.getName());
+                }
+                for(Value arg:expr.getArgs()){
+                    if(arg instanceof Local){
+                        Local local = (Local)arg;
+                        calleeEndLiveCallerLocalNames.add(local.getName());
+                    }
+                }
+                liveObjectsAtCalleesTails.addAll(getReachableObjects(info.out, calleeEndLiveCallerLocalNames));
+                newUncollectedObjects = liveObjectsAtCalleesTails;
+            }
+            else{
+                TreeSet<String> newObjects = new TreeSet<>(getAllObjects(info.out));
+                newObjects.removeAll(getAllObjects(info.in));
+                newUncollectedObjects = newObjects;
             }
             //all objects reachable from parameters are live=> set parameters as live, always.
             List<Local> paramLocals = body.getParameterLocals();
             //works even if params are reassigned to, since jimple creates new locals then.
             localsLiveAfter.addAll(paramLocals);
-            TreeSet<String> objects =  getObjectsToCollect(localsLiveBefore,localsLiveAfter,info,calleeTailObjects);
+            TreeSet<String> objects =  getObjectsToCollect(localsLiveBefore,localsLiveAfter,info,newUncollectedObjects);
             int currLineNum = unit.getJavaSourceStartLineNumber();
             for(String object:objects){
                 //don't collect dummy objects.
@@ -209,16 +244,13 @@ public class AnalysisTransformer extends SceneTransformer {
     }
 
     private TreeSet<String> getObjectsToCollect(HashSet<Local> localsLiveBefore,
-            HashSet<Local> localsLiveAfter, PTA.NodePointsToData info, TreeSet<String> calleeTailObjects) {
+            HashSet<Local> localsLiveAfter, PTA.NodePointsToData info, TreeSet<String> newUncollectedObjects) {
         TreeSet<String> reachableBefore = getReachableObjects(info.in,getLocalNames(localsLiveBefore));
         TreeSet<String> reachableAfter = getReachableObjects(info.out, getLocalNames(localsLiveAfter));
         TreeSet<String> gcExistingObjects = new TreeSet<>(reachableBefore);
         gcExistingObjects.removeAll(reachableAfter);
-
-        TreeSet<String> newObjects = new TreeSet<>(getAllObjects(info.out));
-        newObjects.removeAll(getAllObjects(info.in));
         //now newObjects are all newObjects.
-        TreeSet<String> gcNewObjects = new TreeSet<>(newObjects);
+        TreeSet<String> gcNewObjects = new TreeSet<>(newUncollectedObjects);
         gcNewObjects.removeAll(reachableAfter);
         //remove collectedObjects
 
