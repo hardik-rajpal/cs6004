@@ -22,6 +22,7 @@ public class Test {
 		foo();
 	}
 	public static void bar(Base b, Node x){
+		b = new Base();
 		b.foo(x);
 	}
 	public static Node foo(){

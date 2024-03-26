@@ -26,14 +26,18 @@ public class Test extends java.lang.Object
 
     public static void bar(Base, Node)
     {
-        Base r0;
+        Base $r0, r2;
         Node r1;
 
-        r0 := @parameter0: Base;
+        r2 := @parameter0: Base;
 
         r1 := @parameter1: Node;
 
-        virtualinvoke r0.<Base: void foo(Node)>(r1);
+        $r0 = new Base;
+
+        specialinvoke $r0.<Base: void <init>()>();
+
+        virtualinvoke $r0.<Base: void foo(Node)>(r1);
 
         return;
     }

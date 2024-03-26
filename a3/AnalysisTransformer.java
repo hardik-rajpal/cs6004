@@ -143,6 +143,7 @@ public class AnalysisTransformer extends SceneTransformer {
                             //termination guarranteed in the absence of recursion only.
                             processMethod(calleeMethod);
                         }
+                        //some union over return value reachable objects to be subtracted from.
                         BriefUnitGraph calleeCFG = new BriefUnitGraph(calleeMethod.getActiveBody());
                         for(Unit tail:calleeCFG.getTails()){
                             List<Local> tailLocals = liveLocalsAnalysis.get(calleeMethodKey).getLiveLocalsAfter(tail);
@@ -153,7 +154,7 @@ public class AnalysisTransformer extends SceneTransformer {
             }
             //all objects reachable from parameters are live=> set parameters as live, always.
             List<Local> paramLocals = body.getParameterLocals();
-            //TODO: fix: Won't work if params are reassigned to.
+            //works even if params are reassigned to, since jimple creates new locals then.
             localsLiveAfter.addAll(paramLocals);
             TreeSet<String> objects =  getObjectsToCollect(localsLiveBefore,localsLiveAfter,info,calleeTailObjects);
             int currLineNum = unit.getJavaSourceStartLineNumber();
