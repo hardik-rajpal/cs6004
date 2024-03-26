@@ -161,6 +161,7 @@ public class PTA {
 
     class NodePointsToData {
         PointsToGraph in, out;
+        TreeSet<String> calleeReturnObjects;
     }
 
     class KillGenSets {
@@ -235,6 +236,8 @@ public class PTA {
             }
         }
     }
+
+    private TreeSet<String> calleeReturnObjects;
 
     KillGenSets getKillGenSets(PointsToGraph in, Unit u) {
         KillGenSets kgset = new KillGenSets();
@@ -443,14 +446,18 @@ public class PTA {
                 String stackVarName = "";
                 TreeSet<String> newPointees = new TreeSet<>();
                 boolean assignStackVars = false;
-                if (u instanceof JAssignStmt) {
-                    JAssignStmt stmt = (JAssignStmt) u;
-                    Value lhs = stmt.getLeftOp();
-                    // lhs will only be a local, because of jimple specs.
-                    if (lhs instanceof Local) {
-                        Local local = (Local) lhs;
-                        assignStackVars = true;
-                        stackVarName = local.getName();
+                boolean getReturnVars = false;
+                if (!(firstMethod.getReturnType() instanceof soot.VoidType)) {
+                    getReturnVars = true;
+                    if(u instanceof JAssignStmt){
+                        JAssignStmt stmt = (JAssignStmt) u;
+                        Value lhs = stmt.getLeftOp();
+                        // lhs will only be a local, because of jimple specs.
+                        if (lhs instanceof Local) {
+                            Local local = (Local) lhs;
+                            assignStackVars = true;
+                            stackVarName = local.getName();
+                        }
                     }
                 }
                 for (SootMethod method : methods) {
@@ -468,9 +475,10 @@ public class PTA {
                     // forward only heapMap from callee::
                     mergeHeapGraphs(ans, atCallEnd);
                     // add lhs var if any
-                    if (assignStackVars) {
+                    if (getReturnVars) {
                         TreeSet<String> returnedObjects = getReturnObjectSet(body, ptaInfo);
                         newPointees.addAll(returnedObjects);
+                        calleeReturnObjects = newPointees;
                     }
                 }
                 if(assignStackVars){
@@ -700,6 +708,12 @@ public class PTA {
             // assign new in.
             NodePointsToData nodeData = pointsToInfo.get(u);
             nodeData.in = newIn;
+
+            if(calleeReturnObjects!=null){
+                nodeData.calleeReturnObjects = calleeReturnObjects;
+                calleeReturnObjects = null;
+            }
+
             // compare newOut with old Out
             if (nodeData.out.hashCode() != newOut.hashCode()) {
                 nodeData.out = newOut;
@@ -717,6 +731,14 @@ public class PTA {
                 pointsToInfo.get(u).in.print();
                 print("\tOut: ");
                 pointsToInfo.get(u).out.print();
+                if(pointsToInfo.get(u).calleeReturnObjects!=null){
+                    print("\tcalleeReturnedObjects: [");
+                    String ans = "";
+                    for(String obj:pointsToInfo.get(u).calleeReturnObjects){
+                        ans += (obj+", ");
+                    }
+                    print(ans+"]");
+                }
                 print("}");
             }
         }

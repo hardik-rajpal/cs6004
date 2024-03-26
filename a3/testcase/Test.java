@@ -7,7 +7,7 @@ class Node {
 public class Test {
 	public static Node global;
 	public static void main(String[] args) {
-		Node z = foo();
+		foo();
 	}
 	public static Node foo(){
 		Node x = new Node();

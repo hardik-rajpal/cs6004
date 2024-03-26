@@ -174,6 +174,15 @@ public class AnalysisTransformer extends SceneTransformer {
                     Local lhs = (Local)stmt.getLeftOp();
                     calleeEndLiveCallerLocalNames.add(lhs.getName());
                 }
+                else{
+                    if(info.calleeReturnObjects!=null){
+                        TreeSet<String> baseLiveObjects = info.calleeReturnObjects;
+                        liveObjectsAtCalleesTails.addAll(baseLiveObjects);
+                        for(String pointee:baseLiveObjects){
+                            fillObjectsReachableFrom(pointee, liveObjectsAtCalleesTails, info.out.heapMap);
+                        }
+                    }
+                }
                 for(Value arg:expr.getArgs()){
                     if(arg instanceof Local){
                         Local local = (Local)arg;
