@@ -435,8 +435,7 @@ public class PTA {
         if (isInvokeStmt(u)) {
             InvokeExpr expr = getInvokeExprFromInvokeUnit(u);
             TreeSet<SootMethod> methods = getSootMethodsFromInvokeUnit(u, callerInfo.cg);
-            SootMethod firstMethod = methods.first();
-            if (firstMethod.isConstructor() || (!callerInfo.userDefinedMethods.contains(firstMethod))) {
+            if (expr.getMethod().isConstructor() || (!callerInfo.userDefinedMethods.contains(expr.getMethod()))) {
                 useKgsets = true;
             } else {
                 // copy stackMap from in:
@@ -447,7 +446,7 @@ public class PTA {
                 TreeSet<String> newPointees = new TreeSet<>();
                 boolean assignStackVars = false;
                 boolean getReturnVars = false;
-                if (!(firstMethod.getReturnType() instanceof soot.VoidType)) {
+                if (!(expr.getMethod().getReturnType() instanceof soot.VoidType)) {
                     getReturnVars = true;
                     if(u instanceof JAssignStmt){
                         JAssignStmt stmt = (JAssignStmt) u;

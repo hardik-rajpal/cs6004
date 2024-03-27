@@ -3,11 +3,34 @@ class Node {
 	Node g;
 	Node() {}
 }
+class Base{
+	Node f;
+	public void method1(Node x){
 
+	}
+}
+class Derived extends Base{
+	public void method1(Node x){
+
+	}
+}
 public class Test {
 	public static Node global;
 	public static void main(String[] args) {
 		foo();
+	}
+	public static Node ifElse(){
+		Node x = new Node();
+		if(x.f==x.g){
+			x = new Node();
+		}
+		else{
+			if(x.f!=x.g){
+				x = new Node();
+			}
+		}
+		x.f = new Node();
+		return x.f;
 	}
 	public static Node foo(){
 		Node x = new Node();

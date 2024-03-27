@@ -136,7 +136,7 @@ public class AnalysisTransformer extends SceneTransformer {
         callerInfo.userDefinedMethods = userDefinedMethods;
         callerInfo.cg = cg;
         TreeMap<Unit, PTA.NodePointsToData> pointsToInfo = pta.getPointsToInfo(body,callerInfo);
-        pta.printPointsToInfo(pointsToInfo);
+        // pta.printPointsToInfo(pointsToInfo);
         //mark all objects as dead.
         //Get line number after which object can be collected.
         List<Unit> tails = cfg.getTails();
@@ -159,7 +159,7 @@ public class AnalysisTransformer extends SceneTransformer {
                 TreeSet<String> liveObjectsAtCalleesTails = new TreeSet<>();
                 InvokeExpr expr = PTA.getInvokeExprFromInvokeUnit(unit);
                 TreeSet<SootMethod> calleeMethods = PTA.getSootMethodsFromInvokeUnit(unit, cg);
-                if(userDefinedMethods.contains(calleeMethods.first())){
+                if(userDefinedMethods.contains(expr.getMethod())){
                     for(SootMethod calleeMethod:calleeMethods){
                         String calleeMethodKey = calleeMethod.toString();
                         if(!processedMethods.contains(calleeMethodKey)){
@@ -167,30 +167,30 @@ public class AnalysisTransformer extends SceneTransformer {
                             processMethod(calleeMethod);
                         }
                     }
-                }
-                TreeSet<String> calleeEndLiveCallerLocalNames = new TreeSet<>();
-                if(unit instanceof JAssignStmt){
-                    JAssignStmt stmt = (JAssignStmt)unit;
-                    Local lhs = (Local)stmt.getLeftOp();
-                    calleeEndLiveCallerLocalNames.add(lhs.getName());
-                }
-                else{
-                    if(info.calleeReturnObjects!=null){
-                        TreeSet<String> baseLiveObjects = info.calleeReturnObjects;
-                        liveObjectsAtCalleesTails.addAll(baseLiveObjects);
-                        for(String pointee:baseLiveObjects){
-                            fillObjectsReachableFrom(pointee, liveObjectsAtCalleesTails, info.out.heapMap);
+                    TreeSet<String> calleeEndLiveCallerLocalNames = new TreeSet<>();
+                    if(unit instanceof JAssignStmt){
+                        JAssignStmt stmt = (JAssignStmt)unit;
+                        Local lhs = (Local)stmt.getLeftOp();
+                        calleeEndLiveCallerLocalNames.add(lhs.getName());
+                    }
+                    else{
+                        if(info.calleeReturnObjects!=null){
+                            TreeSet<String> baseLiveObjects = info.calleeReturnObjects;
+                            liveObjectsAtCalleesTails.addAll(baseLiveObjects);
+                            for(String pointee:baseLiveObjects){
+                                fillObjectsReachableFrom(pointee, liveObjectsAtCalleesTails, info.out.heapMap);
+                            }
                         }
                     }
-                }
-                for(Value arg:expr.getArgs()){
-                    if(arg instanceof Local){
-                        Local local = (Local)arg;
-                        calleeEndLiveCallerLocalNames.add(local.getName());
+                    for(Value arg:expr.getArgs()){
+                        if(arg instanceof Local){
+                            Local local = (Local)arg;
+                            calleeEndLiveCallerLocalNames.add(local.getName());
+                        }
                     }
+                    liveObjectsAtCalleesTails.addAll(getReachableObjects(info.out, calleeEndLiveCallerLocalNames));
+                    newUncollectedObjects = liveObjectsAtCalleesTails;
                 }
-                liveObjectsAtCalleesTails.addAll(getReachableObjects(info.out, calleeEndLiveCallerLocalNames));
-                newUncollectedObjects = liveObjectsAtCalleesTails;
             }
             else{
                 TreeSet<String> newObjects = new TreeSet<>(getAllObjects(info.out));
