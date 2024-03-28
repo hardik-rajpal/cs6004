@@ -39,6 +39,7 @@ public class AnalysisTransformer extends SceneTransformer {
     protected void internalTransform(String arg0, Map<String, String> arg1) {
         cg = Scene.v().getCallGraph();
         // Get the main method
+        SootClass mainClass = Scene.v().getMainClass();
         Chain<SootClass> classes = Scene.v().getClasses();
         SootMethod mainMethod = null;
         for(SootClass classInstance:classes){
@@ -46,11 +47,10 @@ public class AnalysisTransformer extends SceneTransformer {
             if(!classInstance.isApplicationClass()){
                 continue;
             }
-            //TODO: virtual object calls, consider all methods.
             List<SootMethod> methods = classInstance.getMethods();
             for(SootMethod method:methods){
                 if(!method.isConstructor()){
-                    if(method.isMain()){
+                    if(method.isMain()&&classInstance.equals(mainClass)){
                         mainMethod = method;
                     }
                     userDefinedMethods.add(method);

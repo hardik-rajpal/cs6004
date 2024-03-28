@@ -1,11 +1,8 @@
-Soot started on Thu Mar 28 23:01:33 IST 2024
-temp$0->Obj_11(7,18)
-temp$0->Obj_11(8,15)
-temp$0->Obj_11(18)
-temp$0->Obj_11(15)
-Soot finished on Thu Mar 28 23:02:46 IST 2024
+Soot started on Thu Mar 28 23:10:51 IST 2024
+Soot finished on Thu Mar 28 23:12:03 IST 2024
 Soot has run for 1 min. 12 sec.
-Test9:bar1 
-Test9:bar2 11:18 
-Test9:foo 
-Test9:main 
+Test:bar 
+Test:foo 34:35 35:35 36:38 
+Test:main 33:20 43:20 
+Test:makeNode 
+Test:multiLineGC 24:28 
