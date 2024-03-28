@@ -33,13 +33,14 @@ public class AnalysisTransformer extends SceneTransformer {
     //SootMethod.toString()->{Escaping objects o1, o2, o3}
     TreeMap<String,Integer> collectionAfter = new TreeMap<>();
     TreeMap<String,LiveLocals> liveLocalsAnalysis = new TreeMap<>();
-    static TreeSet<String> processedMethods = new TreeSet<>();
+    static TreeSet<SootMethod> processedMethods = new TreeSet<>(new PTA.SootMethodComparator());
     static HashSet<SootMethod> userDefinedMethods = new HashSet<>();
     @Override
     protected void internalTransform(String arg0, Map<String, String> arg1) {
         cg = Scene.v().getCallGraph();
         // Get the main method
         Chain<SootClass> classes = Scene.v().getClasses();
+        SootMethod mainMethod = null;
         for(SootClass classInstance:classes){
             //ignore java lang classes
             if(!classInstance.isApplicationClass()){
@@ -49,14 +50,34 @@ public class AnalysisTransformer extends SceneTransformer {
             List<SootMethod> methods = classInstance.getMethods();
             for(SootMethod method:methods){
                 if(!method.isConstructor()){
+                    if(method.isMain()){
+                        mainMethod = method;
+                    }
                     userDefinedMethods.add(method);
                 }
             }
         }
-        for(SootMethod method:userDefinedMethods){
-            processMethod(method);
+        if(mainMethod==null){
+            throw new RuntimeException("No main method in testcase.");
         }
-        for(SootMethod method:userDefinedMethods){
+        // synchronized(System.out){
+        // for(SootMethod method:userDefinedMethods){
+        //     System.out.println("Method: "+method.toString());
+        //     for(Unit unit:method.getActiveBody().getUnits()){
+        //         if(PTA.isInvokeStmt(unit)){
+        //             TreeSet<SootMethod> methods = PTA.getSootMethodsFromInvokeUnit(unit, cg);
+        //             TreeSet<String> methodNames = new TreeSet<>();
+        //             methods.forEach(calleeMethod->{methodNames.add(calleeMethod.toString());});
+        //             System.out.println(unit.toString() + "calls: "+String.join(",", methodNames));
+        //             }
+        //         }
+        //     }
+        // }
+        // for(SootMethod method:userDefinedMethods){
+        //     processMethod(method);
+        // }
+        processMethod(mainMethod);
+        for(SootMethod method:processedMethods){
             fillResult(method);
         }
     }
@@ -75,7 +96,6 @@ public class AnalysisTransformer extends SceneTransformer {
         String ans = "";
         ans = method.getDeclaringClass().getName()+":"+method.getName()+" ";
         Range methodRange = getMethodRange(method);
-        System.out.println(method.toString()+" range:"+methodRange.start+","+methodRange.end);
         TreeSet<String> objectsCollectedHere = new TreeSet<>();
         for(String object:collectionAfter.keySet()){
             int line = collectionAfter.get(object);
@@ -102,7 +122,7 @@ public class AnalysisTransformer extends SceneTransformer {
     }
 
     private void processMethod(SootMethod method) {
-        if(processedMethods.contains(method.toString())){return;}
+        if(processedMethods.contains(method)){return;}
         fillAllObjectsGCLines(method);
         return;
     }
@@ -161,8 +181,7 @@ public class AnalysisTransformer extends SceneTransformer {
                 TreeSet<SootMethod> calleeMethods = PTA.getSootMethodsFromInvokeUnit(unit, cg);
                 if(userDefinedMethods.contains(expr.getMethod())){
                     for(SootMethod calleeMethod:calleeMethods){
-                        String calleeMethodKey = calleeMethod.toString();
-                        if(!processedMethods.contains(calleeMethodKey)){
+                        if(!processedMethods.contains(calleeMethod)){
                             //termination guarranteed in the absence of recursion only.
                             processMethod(calleeMethod);
                         }
@@ -207,26 +226,32 @@ public class AnalysisTransformer extends SceneTransformer {
                 //don't collect dummy objects.
                 if(!(object.contains("@"))){
                     int prev = -1;
-                    if(collectionAfter.containsKey(object)){
-                        prev = collectionAfter.get(object);
+                    String key = getCleanedObject(object);
+                    if(collectionAfter.containsKey(key)){
+                        prev = collectionAfter.get(key);
                     }
                     //max line num policy.
-                    collectionAfter.put(object, Integer.max(prev,currLineNum));
+                    collectionAfter.put(key, Integer.max(prev,currLineNum));
                 }
             }
         }
-        processedMethods.add(method.toString());
+        processedMethods.add(method);
         return;
     }
     private String getOutputString(TreeSet<String> objects) {
         String ans = "";
         for(String obj:objects){
-            String cleanedObject = obj;
-            cleanedObject = cleanedObject.split(Pattern.quote("_"))[1];
-            cleanedObject = cleanedObject.split(Pattern.quote("("))[0];
-            ans += cleanedObject+":"+collectionAfter.get(obj)+" ";
+            // String cleanedObject = getCleanedObject(obj);
+            ans += obj+":"+collectionAfter.get(obj)+" ";
         }
         return ans;
+    }
+
+    private String getCleanedObject(String obj) {
+        String cleanedObject = obj;
+        cleanedObject = cleanedObject.split(Pattern.quote("_"))[1];
+        cleanedObject = cleanedObject.split(Pattern.quote("("))[0];
+        return cleanedObject;
     }
     private void fillObjectsReachableFrom(String rv, TreeSet<String> reachableVars, TreeMap<PTA.HeapReference, TreeSet<String>> heapMap) {
         for (PTA.HeapReference hr : heapMap.keySet()) {

@@ -1,6 +1,6 @@
 class Base extends java.lang.Object
 {
-    Base x;
+    Node f;
 
     void <init>()
     {
@@ -13,7 +13,7 @@ class Base extends java.lang.Object
         return;
     }
 
-    void foo(Node)
+    public void method1(Node)
     {
         Node r0, $r1;
         Base r2;

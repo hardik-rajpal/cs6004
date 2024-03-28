@@ -1,6 +1,5 @@
 public class Test extends java.lang.Object
 {
-    public static Node global;
 
     public void <init>()
     {
@@ -15,62 +14,37 @@ public class Test extends java.lang.Object
 
     public static void main(java.lang.String[])
     {
-        java.lang.String[] r1;
+        java.lang.String[] r2;
 
-        r1 := @parameter0: java.lang.String[];
+        r2 := @parameter0: java.lang.String[];
 
         staticinvoke <Test: Node foo()>();
+
+        staticinvoke <Test: Node multiLineGC()>();
 
         return;
     }
 
-    public static Node ifElse()
+    public static Node makeNode()
     {
-        Node $r0, $r1, $r2, $r3, $r4, $r5, $r6, r7, $r8, $r9;
+        Node $r0;
 
         $r0 = new Node;
 
         specialinvoke $r0.<Node: void <init>()>();
 
-        r7 = $r0;
+        return $r0;
+    }
 
-        $r2 = $r0.<Node: Node f>;
+    public static Node multiLineGC()
+    {
+        Node r1;
 
-        $r1 = $r0.<Node: Node g>;
+        staticinvoke <Test: Node makeNode()>();
 
-        if $r2 != $r1 goto label1;
+        r1 = staticinvoke <Test: Node makeNode()>();
 
-        $r6 = new Node;
-
-        specialinvoke $r6.<Node: void <init>()>();
-
-        r7 = $r6;
-
-        goto label2;
-
-     label1:
-        $r4 = $r0.<Node: Node f>;
-
-        $r3 = $r0.<Node: Node g>;
-
-        if $r4 == $r3 goto label2;
-
-        $r5 = new Node;
-
-        specialinvoke $r5.<Node: void <init>()>();
-
-        r7 = $r5;
-
-     label2:
-        $r8 = new Node;
-
-        specialinvoke $r8.<Node: void <init>()>();
-
-        r7.<Node: Node f> = $r8;
-
-        $r9 = r7.<Node: Node f>;
-
-        return $r9;
+        return r1;
     }
 
     public static Node foo()

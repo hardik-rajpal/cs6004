@@ -445,18 +445,15 @@ public class PTA {
                 String stackVarName = "";
                 TreeSet<String> newPointees = new TreeSet<>();
                 boolean assignStackVars = false;
-                boolean getReturnVars = false;
-                if (!(expr.getMethod().getReturnType() instanceof soot.VoidType)) {
-                    getReturnVars = true;
-                    if(u instanceof JAssignStmt){
-                        JAssignStmt stmt = (JAssignStmt) u;
-                        Value lhs = stmt.getLeftOp();
-                        // lhs will only be a local, because of jimple specs.
-                        if (lhs instanceof Local) {
-                            Local local = (Local) lhs;
-                            assignStackVars = true;
-                            stackVarName = local.getName();
-                        }
+                boolean getReturnVars = !(expr.getMethod().getReturnType() instanceof soot.VoidType);
+                if (getReturnVars && (u instanceof JAssignStmt)) {
+                    JAssignStmt stmt = (JAssignStmt) u;
+                    Value lhs = stmt.getLeftOp();
+                    // lhs will only be a local, because of jimple specs.
+                    if (lhs instanceof Local) {
+                        Local local = (Local) lhs;
+                        assignStackVars = true;
+                        stackVarName = local.getName();
                     }
                 }
                 for (SootMethod method : methods) {
@@ -477,8 +474,10 @@ public class PTA {
                     if (getReturnVars) {
                         TreeSet<String> returnedObjects = getReturnObjectSet(body, ptaInfo);
                         newPointees.addAll(returnedObjects);
-                        calleeReturnObjects = newPointees;
                     }
+                }
+                if(getReturnVars){
+                    calleeReturnObjects = newPointees;
                 }
                 if(assignStackVars){
                     ans.stackMap.put(stackVarName, newPointees);
@@ -683,6 +682,7 @@ public class PTA {
             pointsToInfo.put(u, ptd);
             index++;
         }
+        HashSet<Unit> seenOnce = new HashSet<>();
         SortedSet<Unit> workList = new TreeSet<Unit>(unitcomparator);
         Unit first = units.getFirst();
         workList.add(first);
@@ -714,10 +714,11 @@ public class PTA {
             }
 
             // compare newOut with old Out
-            if (nodeData.out.hashCode() != newOut.hashCode()) {
+            if ((!seenOnce.contains(u))||(nodeData.out.hashCode() != newOut.hashCode())) {
                 nodeData.out = newOut;
                 workList.addAll(graph.getSuccsOf(u));
             }
+            seenOnce.add(u);
         }
         return pointsToInfo;
     }

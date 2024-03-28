@@ -6,31 +6,28 @@ class Node {
 class Base{
 	Node f;
 	public void method1(Node x){
-
+		x.f = new Node();
 	}
 }
 class Derived extends Base{
 	public void method1(Node x){
-
+		x.g = new Node();
+		x.g.f = new Node();
 	}
 }
 public class Test {
-	public static Node global;
 	public static void main(String[] args) {
 		foo();
+		multiLineGC();
 	}
-	public static Node ifElse(){
-		Node x = new Node();
-		if(x.f==x.g){
-			x = new Node();
-		}
-		else{
-			if(x.f!=x.g){
-				x = new Node();
-			}
-		}
-		x.f = new Node();
-		return x.f;
+	public static Node makeNode(){
+		Node a = new Node(); //O1
+		return a;
+	}
+	public static Node multiLineGC(){
+		makeNode();
+		Node x2 = makeNode();
+		return x2;
 	}
 	public static Node foo(){
 		Node x = new Node();

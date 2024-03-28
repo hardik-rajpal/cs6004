@@ -1,11 +1,11 @@
-Soot started on Wed Mar 27 21:18:37 IST 2024
-<Test: Node foo()> range:26,33
-<Test: void main(java.lang.String[])> range:10,11
-<Test: Node ifElse()> range:13,23
-<Test: void bar(Node,Node)> range:36,38
-Soot finished on Wed Mar 27 21:18:52 IST 2024
-Soot has run for 0 min. 14 sec.
-Test:bar 
-Test:foo 27:28 28:28 29:31 
-Test:ifElse 13:23 15:23 19:23 
-Test:main 26:10 36:10 
+Soot started on Thu Mar 28 23:01:33 IST 2024
+temp$0->Obj_11(7,18)
+temp$0->Obj_11(8,15)
+temp$0->Obj_11(18)
+temp$0->Obj_11(15)
+Soot finished on Thu Mar 28 23:02:46 IST 2024
+Soot has run for 1 min. 12 sec.
+Test9:bar1 
+Test9:bar2 11:18 
+Test9:foo 
+Test9:main 
