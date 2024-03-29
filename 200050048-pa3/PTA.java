@@ -28,7 +28,6 @@ import soot.jimple.internal.JArrayRef;
 // import soot.jimple.AnyNewExpr;
 import soot.jimple.internal.JAssignStmt;
 import soot.jimple.internal.JDynamicInvokeExpr;
-import soot.jimple.internal.JIdentityStmt;
 import soot.jimple.internal.JInstanceFieldRef;
 import soot.jimple.internal.JInterfaceInvokeExpr;
 import soot.jimple.internal.JInvokeStmt;
@@ -248,7 +247,7 @@ public class PTA {
         // accounting for JIdentityStmt
         // as that's used for @this aliasing.
         // That's handled by getDummyPointsToGraph
-        if (u instanceof JAssignStmt || u instanceof JIdentityStmt) {
+        if (u instanceof JAssignStmt) {
             stmt = (AbstractDefinitionStmt) u;
             Value rhs = stmt.getRightOp();
             Value lhs = stmt.getLeftOp();
@@ -423,8 +422,8 @@ public class PTA {
         } else if (rhs instanceof ParameterRef) {
             // Fixed by dummy graph.
             // Just forward the defn.
-            Local lhs = (Local) (((JIdentityStmt) u).getLeftOp());
-            newPointees.add(in.stackMap.get(lhs.getName()).first());
+            // Local lhs = (Local) (((JIdentityStmt) u).getLeftOp());
+            // newPointees.add(in.stackMap.get(lhs.getName()).first());
         }
         return newPointees;
     }
@@ -440,8 +439,6 @@ public class PTA {
             } else {
                 // copy stackMap from in:
                 ans.stackMap.putAll(in.stackMap);
-                TreeMap<String, String> paramMap = new TreeMap<>();
-                fillParamMap(paramMap, expr);
                 String stackVarName = "";
                 TreeSet<String> newPointees = new TreeSet<>();
                 boolean assignStackVars = false;
@@ -457,6 +454,9 @@ public class PTA {
                     }
                 }
                 for (SootMethod method : methods) {
+                    TreeMap<String, String> paramMap = new TreeMap<>();
+                    fillParamMap(paramMap, method,expr.getArgs());
+                    
                     Body body = method.getActiveBody();
                     ArrayList<String> newCallsiteList = new ArrayList<>();
                     newCallsiteList.addAll(callerInfo.callSites);
@@ -530,9 +530,8 @@ public class PTA {
         return returned;
     }
 
-    private void fillParamMap(TreeMap<String, String> paramMap, InvokeExpr expr) {
-        List<Local> params = expr.getMethod().getActiveBody().getParameterLocals();
-        List<Value> args = expr.getArgs();
+    private void fillParamMap(TreeMap<String, String> paramMap, SootMethod method, List<Value> args) {
+        List<Local> params = method.getActiveBody().getParameterLocals();
 
         for (int i = 0; i < params.size(); i++) {
             Local param = params.get(i);
