@@ -156,7 +156,7 @@ public class AnalysisTransformer extends SceneTransformer {
         callerInfo.userDefinedMethods = userDefinedMethods;
         callerInfo.cg = cg;
         TreeMap<Unit, PTA.NodePointsToData> pointsToInfo = pta.getPointsToInfo(body,callerInfo);
-        // pta.printPointsToInfo(pointsToInfo);
+        pta.printPointsToInfo(pointsToInfo);
         //mark all objects as dead.
         //Get line number after which object can be collected.
         List<Unit> tails = cfg.getTails();

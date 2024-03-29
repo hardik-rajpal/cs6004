@@ -248,7 +248,7 @@ public class PTA {
         // accounting for JIdentityStmt
         // as that's used for @this aliasing.
         // That's handled by getDummyPointsToGraph
-        if (u instanceof JAssignStmt || u instanceof JIdentityStmt) {
+        if (u instanceof JAssignStmt) {
             stmt = (AbstractDefinitionStmt) u;
             Value rhs = stmt.getRightOp();
             Value lhs = stmt.getLeftOp();
@@ -423,8 +423,8 @@ public class PTA {
         } else if (rhs instanceof ParameterRef) {
             // Fixed by dummy graph.
             // Just forward the defn.
-            Local lhs = (Local) (((JIdentityStmt) u).getLeftOp());
-            newPointees.add(in.stackMap.get(lhs.getName()).first());
+            // Local lhs = (Local) (((JIdentityStmt) u).getLeftOp());
+            // newPointees.add(in.stackMap.get(lhs.getName()).first());
         }
         return newPointees;
     }

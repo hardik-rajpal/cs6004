@@ -4,14 +4,14 @@ import soot.Transform;
 public class PA3 {
     public static void main(String[] args) {
         String classPath = "."; // change to appropriate path to the test class
-        String dir = "./testcase";
+        String dir = "./CS6004-A3-testcases/testcase";
 
         // Set up arguments for Soot
         String[] sootArgs = { "-cp", classPath, "-pp", // sets the class path for Soot
                 "-w", // whole program analysis
                 "-f", "J", // jimple file
                 "-keep-line-number", // preserves line numbers in input Java files
-                "-main-class", "Test", // specify the main class
+                "-main-class", "Test2", // specify the main class
                 "-process-dir", dir, // directory of classes to analyze
         };
 
