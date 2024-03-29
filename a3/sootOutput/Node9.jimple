@@ -4,11 +4,11 @@ class Node9 extends java.lang.Object
 
     void <init>()
     {
-        Node9 this;
+        Node9 r0;
 
-        this := @this: Node9;
+        r0 := @this: Node9;
 
-        specialinvoke this.<java.lang.Object: void <init>()>();
+        specialinvoke r0.<java.lang.Object: void <init>()>();
 
         return;
     }
