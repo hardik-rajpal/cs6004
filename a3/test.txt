@@ -1,8 +1,11 @@
-Soot started on Fri Mar 29 23:54:35 IST 2024
-Soot finished on Fri Mar 29 23:54:51 IST 2024
-Soot has run for 0 min. 15 sec.
-Test:bar 
-Test:foo 34:35 35:35 36:38 
-Test:main 33:20 43:20 
-Test:makeNode 
-Test:multiLineGC 24:28 
+Soot started on Sun Mar 31 18:38:55 IST 2024
+Soot finished on Sun Mar 31 18:39:12 IST 2024
+Soot has run for 0 min. 17 sec.
+Node:goo 
+Test:bar 40:40 49:41 50:41 63:43 
+Test:baz 51:52 53:53 58:53 
+Test:f1 
+Test:f2 70:64 
+Test:f3 69:70 
+Test:foo 17:31 18:19 19:19 23:28 26:32 29:32 37:31 
+Test:main 20:13 

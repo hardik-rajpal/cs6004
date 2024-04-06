@@ -19,6 +19,29 @@ public class Test {
 	public static void main(String[] args) {
 		foo();
 		multiLineGC();
+		ifelse();
+		Node z = foo2();
+		poly(new Base(),z);
+	}
+	public static void poly(Base b,Node z) {
+		b.method1(z);
+	}
+	public static Node foo2(){
+		Node x = new Node();
+		return x;
+	}
+	public static Node ifelse(){
+		Node x = new Node();
+		x.f = new Node();
+		Node y = new Node();
+		Node z;
+		if(x==null){
+			z = y;
+		}
+		else{
+			z = x;
+		}
+		return x;
 	}
 	public static Node makeNode(){
 		Node a = new Node(); //O1
@@ -44,3 +67,16 @@ public class Test {
 		p1.f = v;	
 	}
 }
+/*
+My output:
+Base:method1 
+Derived:method1 
+Test:bar 
+Test:foo 57:58 58:58 59:61 
+Test:foo2 
+Test:ifelse 36:39 
+Test:main 14:24 15:24 24:24 30:24 34:22 35:22 56:20 66:20 9:24 
+Test:makeNode 
+Test:multiLineGC 47:51 
+Test:poly 
+*/
