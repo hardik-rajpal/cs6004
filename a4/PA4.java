@@ -14,7 +14,6 @@ public class PA4 {
 
         // Add transformer to appropriate pack in PackManager; PackManager will run all packs when soot.Main.main is called
         PackManager.v().getPack("jtp").add(new Transform("jtp.dfa", analysisTransformer));
-
         // Call Soot's main method with arguments
         soot.Main.main(sootArgs);
 
