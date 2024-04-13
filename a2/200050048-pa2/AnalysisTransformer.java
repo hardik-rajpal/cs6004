@@ -18,15 +18,19 @@ public class AnalysisTransformer extends BodyTransformer {
         String methodName = body.getMethod().getName();
         String enclosingClass = body.getMethod().getDeclaringClass().getName();
         String ans = "";
-        ans += (enclosingClass+":"+methodName+" ");
+        boolean notEmpty = false;
+        ans += (enclosingClass+":"+methodName);
         for(String fugitive:fugitives){
-            ans += (fugitive.replace("Obj_", "")+" ");
+            ans += (" "+fugitive.replace("Obj_", ""));
+            notEmpty = true;
         }
         // synchronized(System.out){
         //     pta.printPointsToInfo(pointsToInfo);
         // }
-        synchronized(results){
-            results.add(ans);
+        if(notEmpty){
+            synchronized(results){
+                results.add(ans);
+            }
         }
     }
 }
