@@ -2,7 +2,6 @@ class Node extends java.lang.Object
 {
     Node f;
     Node g;
-    int y;
 
     void <init>()
     {
@@ -11,6 +10,30 @@ class Node extends java.lang.Object
         r0 := @this: Node;
 
         specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    void <init>(Node, Node)
+    {
+        Node r0, r1, r2;
+
+        r0 := @this: Node;
+
+        r1 := @parameter0: Node;
+
+        r2 := @parameter1: Node;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    void goo()
+    {
+        Node r0;
+
+        r0 := @this: Node;
 
         return;
     }

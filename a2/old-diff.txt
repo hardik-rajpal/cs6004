@@ -1,0 +1,242 @@
+**********************
+PowerShell transcript start
+Start time: 20240407130917
+Username: DESKTOP-LPRHNB6\Hardik
+RunAs User: DESKTOP-LPRHNB6\Hardik
+Configuration Name: 
+Machine: DESKTOP-LPRHNB6 (Microsoft Windows NT 10.0.22631.0)
+Host Application: C:\Program Files\PowerShell\7\pwsh.dll -noexit -command try { . "c:\Program Files\Microsoft VS Code\resources\app\out\vs\workbench\contrib\terminal\browser\media\shellIntegration.ps1" } catch {}
+Process ID: 23128
+PSVersion: 7.4.1
+PSEdition: Core
+GitCommitId: 7.4.1
+OS: Microsoft Windows 10.0.22631
+Platform: Win32NT
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1, 6.0, 7.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+WSManStackVersion: 3.0
+**********************
+Transcript started, output file is diff.txt
+Confirm
+The item at C:\CODE\atgit\cs6004\a2\200050048-pa2\sootOutput has children and the Recurse parameter was not specified. If you continue, all children will be removed with the item. Are you sure you want to continue?
+&Yes  Yes to &All  &No  No to A&ll  &Suspend
+Y
+
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test1
+Your Output:
+Test1:<init>  Test1:main 10 11 9
+Expected Output:
+Test1:main 10 11 9
+############################################################# FAILED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test10
+Your Output:
+Test10:<init>  Test10:foo  Test10:main 15 17 18 19 20 21
+Expected Output:
+Test10:foo 26 28 Test10:main 15 17 18 19 20 21
+############################################################# FAILED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test11
+Your Output:
+Test11:<init>  Test11:bar 25  Test11:foo 15 16 17 18  Test11:main  Test11Node:<init>
+Expected Output:
+Test11:bar 25 Test11:foo 15 16 17 18
+############################################################# FAILED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test12
+Your Output:
+Test12:<init>
+Expected Output:
+
+############################################################# FAILED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test13
+Your Output:
+Test13:<init>  Test13:foo 19  Test13:main 8 9
+Expected Output:
+Test13:foo 19 Test13:main 8 9
+############################################################# FAILED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test14
+Your Output:
+Test14:<init>  Test14:foo 13 14 15  Test14:main 7 8
+Expected Output:
+Test14:foo 13 14 15 Test14:main 7 8
+############################################################# FAILED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test15
+Your Output:
+Test15:<init>  Test15:foo 12 15  Test15:main
+Expected Output:
+Test15:foo 12 15
+############################################################# FAILED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test16
+Your Output:
+Test16$Element:<init>  Test16:<init>  Test16:bar 16  Test16:foo 21 22 23  Test16:main
+Expected Output:
+Test16:bar 16 Test16:foo 21 22 23
+############################################################# FAILED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test17
+Your Output:
+Test17$ArrayObject:<init>  Test17:<init>  Test17:main 17  Test17:testMethod 29
+Expected Output:
+Test17:main 17 Test17:testMethod 29
+############################################################# FAILED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test18
+Your Output:
+Test18$Element:<init>  Test18:<init>  Test18:L 20 24  Test18:main 31
+Expected Output:
+Test18:L 20 24 Test18:main 31
+############################################################# FAILED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test19
+Your Output:
+Test19$Element:<init>  Test19:<init>  Test19:L 21  Test19:main 35
+Expected Output:
+Test19:L 21 Test19:main 35
+############################################################# FAILED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test2
+Your Output:
+Test2:<init>  Test2:bar 17  Test2:main 10 14 8 9
+Expected Output:
+Test2:bar 17 Test2:main 10 14 8 9
+############################################################# FAILED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test20
+Your Output:
+Test20$Element:<init>  Test20:<init>  Test20:L 23  Test20:main
+Expected Output:
+Test20:L 23
+############################################################# FAILED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test21
+Your Output:
+Test21$Element:<init>  Test21:<init>  Test21:L 21 22  Test21:main 28
+Expected Output:
+Test21:L 21 22 Test21:main 28
+############################################################# FAILED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test22
+Your Output:
+Test22$Element:<init>  Test22:<init>  Test22:main  Test22:recursiveCall 20
+Expected Output:
+Test22:recursiveCall 20
+############################################################# FAILED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test23
+Your Output:
+Test23$Element:<init>  Test23$Node:<init>  Test23:<init>  Test23:main  Test23:test 46 51 55
+Expected Output:
+Test23:test 46 51 55
+############################################################# FAILED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test24
+Your Output:
+Test24$Element:<init>  Test24:<init>  Test24:main  Test24:test 15 16 19
+Expected Output:
+Test24:test 15 16 19
+############################################################# FAILED
+Copied 1 of 2 files [33 Bytes of 66 Bytes (0.0 MB/s)                                                                 ]
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test25
+Your Output:
+Test25$Element:<init>  Test25:<init>  Test25:main 32  Test25:test 20 23
+Expected Output:
+Test25:main 32 Test25:test 20 23
+############################################################# FAILED
+Copied 2 of 3 files [453 Bytes of 486 Bytes (0.0 MB/s)                                                               ]
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test26
+Your Output:
+Test26$Element:<init>  Test26$Node:<init>  Test26:<init>  Test26:main 69  Test26:test 50 53 56 62
+Expected Output:
+Test26:main 69 Test26:test 50 53 56 62
+############################################################# FAILED
+Copied 2 of 3 files [453 Bytes of 486 Bytes (0.0 MB/s)                                                               ]
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test27
+Your Output:
+Test27$Element:<init>  Test27$Node:<init>  Test27:<init>  Test27:main  Test27:test 56 58  Test27:test1 50
+Expected Output:
+Test27:test 56 58 Test27:test1 50
+############################################################# FAILED
+Copied 2 of 3 files [453 Bytes of 486 Bytes (0.0 MB/s)                                                               ]
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test28
+Your Output:
+Test28$Course:<init>  Test28$Professor:<init>  Test28$Student:<init>  Test28$Student:printCourses 12  Test28:<init>  Test28:main 44 47 49 53 55 56
+Expected Output:
+Test28$Student:printCourses 12 Test28:main 44 47 49 53 55 56
+############################################################# FAILED
+Copied 2 of 3 files [453 Bytes of 486 Bytes (0.0 MB/s)                                                               ]
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test29
+Your Output:
+Test29$Course:<init>  Test29$Course:printStudents 18  Test29$Student:<init>  Test29:<init>  Test29:BusyCourse  Test29:main 31 32 33 35 42 43
+Expected Output:
+Test29$Course:printStudents 18 Test29:main 31 32 33 35 42 43
+############################################################# FAILED
+Copied 2 of 3 files [453 Bytes of 486 Bytes (0.0 MB/s)                                                               ]
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test3
+Your Output:
+Test3:<init>  Test3:foo 14 15  Test3:main 10 8 9
+Expected Output:
+Test3:foo 14 15 Test3:main 10 8 9
+############################################################# FAILED
+Copied 2 of 3 files [453 Bytes of 486 Bytes (0.0 MB/s)                                                               ]
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test30
+Your Output:
+Test30$Course:<init>  Test30$Professor:<init>  Test30$Student:<init>  Test30:<init>  Test30:main  Test30:test 48 52
+Expected Output:
+Test30:test 48 52
+############################################################# FAILED
+Copied 2 of 3 files [453 Bytes of 486 Bytes (0.0 MB/s)                                                               ]
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test4
+Your Output:
+Test4:<init>  Test4:bar 24 25  Test4:foo 17 18 19  Test4:main 10 11 9
+Expected Output:
+Test4:bar 24 25 Test4:foo 17 18 19 Test4:main 10 11 9
+############################################################# FAILED
+Copied 2 of 3 files [453 Bytes of 486 Bytes (0.0 MB/s)                                                               ]
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test5
+Your Output:
+Test5:<init>  Test5:foo 20 23 25 26  Test5:main 10 11 15 9
+Expected Output:
+Test5:foo 20 23 25 26 Test5:main 10 11 15 9
+############################################################# FAILED
+Copied 2 of 3 files [453 Bytes of 486 Bytes (0.0 MB/s)                                                               ]
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test6
+Your Output:
+Child:<init>  Child:bar 27  Test6:<init>  Test6:bar 22  Test6:foo 14 16 18  Test6:main 9
+Expected Output:
+Child:bar 27 Test6:bar 22 Test6:foo 14 16 18 Test6:main 9
+############################################################# FAILED
+Copied 2 of 3 files [453 Bytes of 486 Bytes (0.0 MB/s)                                                               ]
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test7
+Your Output:
+Child2:<init>  Child2:foo 45  Child:<init>  Child:foo 39  Test7:<init>  Test7:foo 22 24 27 30 32  Test7:main 10 11 12 16
+Expected Output:
+Child2:foo 45 Child:foo 39 Test7:foo 22 24 27 30 32 Test7:main 10 11 12 16
+############################################################# FAILED
+Copied 2 of 3 files [453 Bytes of 486 Bytes (0.0 MB/s)                                                               ]
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test8
+Your Output:
+Test8:<init>  Test8:bar  Test8:foo 21 23  Test8:main 10 15 9
+Expected Output:
+Test8:foo 21 23 Test8:main 10 15 9
+############################################################# FAILED
+Copied 2 of 3 files [453 Bytes of 486 Bytes (0.0 MB/s)                                                               ]
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test9
+Your Output:
+Test9:<init>  Test9:foo 22 23 25  Test9:main 12 13 14 16
+Expected Output:
+Test9:foo 22 23 25 Test9:main 12 13 14 16
+############################################################# FAILED
+########################################################################### RESULTS
+Total: 30
+Passed: 0
+**********************
+PowerShell transcript end
+End time: 20240407131005
+**********************

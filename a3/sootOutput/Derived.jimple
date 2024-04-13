@@ -1,6 +1,5 @@
 class Derived extends Base
 {
-    Derived y;
 
     void <init>()
     {
@@ -13,12 +12,12 @@ class Derived extends Base
         return;
     }
 
-    void foo(Node)
+    public void method1(Node)
     {
-        Node r0, $r1;
-        Derived r2;
+        Node r0, $r1, $r2, $r3;
+        Derived r4;
 
-        r2 := @this: Derived;
+        r4 := @this: Derived;
 
         r0 := @parameter0: Node;
 
@@ -27,6 +26,14 @@ class Derived extends Base
         specialinvoke $r1.<Node: void <init>()>();
 
         r0.<Node: Node g> = $r1;
+
+        $r3 = r0.<Node: Node g>;
+
+        $r2 = new Node;
+
+        specialinvoke $r2.<Node: void <init>()>();
+
+        $r3.<Node: Node f> = $r2;
 
         return;
     }

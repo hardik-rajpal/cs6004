@@ -1,28 +1,1471 @@
-Soot started on Tue Mar 05 20:18:56 IST 2024
-Soot finished on Tue Mar 05 20:18:58 IST 2024
-Soot has run for 0 min. 1 sec.
-Node:<init> 
-Node:m1 
-Node:m2 
-TestManish:<init> 
-TestManish:arrParam 146 147 
-TestManish:arrTestManish 137 138 139 
-TestManish:bar 40 
-TestManish:f1 47 49 
-TestManish:f10 196 
-TestManish:f11 201 202 
-TestManish:f12 209 210 211 219 
-TestManish:f13 225 233 
-TestManish:f14 245 
-TestManish:f15 252 254 256 
-TestManish:f2 57 
-TestManish:f3 64 
-TestManish:f4 
-TestManish:f5 93 96 
-TestManish:f6 107 108 112 113 114 115 121 122 126 129 
-TestManish:f7 155 156 
-TestManish:f8 172 
-TestManish:f9 180 181 183 
-TestManish:foo 29 30 31 32 
-TestManish:main 
-TestManish:methodCallTestManish 260 261 263 264 267 
+Soot started on Sun Apr 07 14:02:36 IST 2024
+Unit: "r0 := @this: Test10"{
+	In: 
+	{
+		stack{
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			r0->[ @this, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "specialinvoke r0.<java.lang.Object: void <init>()>()"{
+	In: 
+	{
+		stack{
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			r0->[ @this, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			r0->[ @this, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "return"{
+	In: 
+	{
+		stack{
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			r0->[ @this, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			r0->[ @this, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "r10 := @parameter0: java.lang.String[]"{
+	In: 
+	{
+		stack{
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			r10->[ @param0, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			r10->[ @param0, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "r0 = newarray (Test10)[10]"{
+	In: 
+	{
+		stack{
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			r10->[ @param0, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			r0->[ Obj_12, ]
+			r10->[ @param0, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "r1 = newarray (Test10)[5]"{
+	In: 
+	{
+		stack{
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			r0->[ Obj_12, ]
+			r10->[ @param0, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			r0->[ Obj_12, ]
+			r1->[ Obj_13, ]
+			r10->[ @param0, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "i0 = 0"{
+	In: 
+	{
+		stack{
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			r0->[ Obj_12, ]
+			r1->[ Obj_13, ]
+			r10->[ @param0, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r0->[ Obj_12, ]
+			r1->[ Obj_13, ]
+			r10->[ @param0, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "if i0 >= 10 goto $r2 = new Test10"{
+	In: 
+	{
+		stack{
+			$r9->[ Obj_15, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r0->[ Obj_12, ]
+			r1->[ Obj_13, ]
+			r10->[ @param0, ]
+		}
+		heap{
+			Obj_12.[]->[ Obj_15, ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r9->[ Obj_15, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r0->[ Obj_12, ]
+			r1->[ Obj_13, ]
+			r10->[ @param0, ]
+		}
+		heap{
+			Obj_12.[]->[ Obj_15, ]
+		}
+	}
+}
+Unit: "$r9 = new Test10"{
+	In: 
+	{
+		stack{
+			$r9->[ Obj_15, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r0->[ Obj_12, ]
+			r1->[ Obj_13, ]
+			r10->[ @param0, ]
+		}
+		heap{
+			Obj_12.[]->[ Obj_15, ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r9->[ Obj_15, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r0->[ Obj_12, ]
+			r1->[ Obj_13, ]
+			r10->[ @param0, ]
+		}
+		heap{
+			Obj_12.[]->[ Obj_15, ]
+		}
+	}
+}
+Unit: "specialinvoke $r9.<Test10: void <init>()>()"{
+	In: 
+	{
+		stack{
+			$r9->[ Obj_15, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r0->[ Obj_12, ]
+			r1->[ Obj_13, ]
+			r10->[ @param0, ]
+		}
+		heap{
+			Obj_12.[]->[ Obj_15, ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r9->[ Obj_15, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r0->[ Obj_12, ]
+			r1->[ Obj_13, ]
+			r10->[ @param0, ]
+		}
+		heap{
+			Obj_12.[]->[ Obj_15, ]
+		}
+	}
+}
+Unit: "r0[i0] = $r9"{
+	In: 
+	{
+		stack{
+			$r9->[ Obj_15, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r0->[ Obj_12, ]
+			r1->[ Obj_13, ]
+			r10->[ @param0, ]
+		}
+		heap{
+			Obj_12.[]->[ Obj_15, ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r9->[ Obj_15, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r0->[ Obj_12, ]
+			r1->[ Obj_13, ]
+			r10->[ @param0, ]
+		}
+		heap{
+			Obj_12.[]->[ Obj_15, ]
+		}
+	}
+}
+Unit: "i0 = i0 + 1"{
+	In: 
+	{
+		stack{
+			$r9->[ Obj_15, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r0->[ Obj_12, ]
+			r1->[ Obj_13, ]
+			r10->[ @param0, ]
+		}
+		heap{
+			Obj_12.[]->[ Obj_15, ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r9->[ Obj_15, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r0->[ Obj_12, ]
+			r1->[ Obj_13, ]
+			r10->[ @param0, ]
+		}
+		heap{
+			Obj_12.[]->[ Obj_15, ]
+		}
+	}
+}
+Unit: "goto [?= (branch)]"{
+	In: 
+	{
+		stack{
+			$r9->[ Obj_15, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r0->[ Obj_12, ]
+			r1->[ Obj_13, ]
+			r10->[ @param0, ]
+		}
+		heap{
+			Obj_12.[]->[ Obj_15, ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r9->[ Obj_15, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r0->[ Obj_12, ]
+			r1->[ Obj_13, ]
+			r10->[ @param0, ]
+		}
+		heap{
+			Obj_12.[]->[ Obj_15, ]
+		}
+	}
+}
+Unit: "$r2 = new Test10"{
+	In: 
+	{
+		stack{
+			$r9->[ Obj_15, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r0->[ Obj_12, ]
+			r1->[ Obj_13, ]
+			r10->[ @param0, ]
+		}
+		heap{
+			Obj_12.[]->[ Obj_15, ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r2->[ Obj_17, ]
+			$r9->[ Obj_15, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r0->[ Obj_12, ]
+			r1->[ Obj_13, ]
+			r10->[ @param0, ]
+		}
+		heap{
+			Obj_12.[]->[ Obj_15, ]
+		}
+	}
+}
+Unit: "specialinvoke $r2.<Test10: void <init>()>()"{
+	In: 
+	{
+		stack{
+			$r2->[ Obj_17, ]
+			$r9->[ Obj_15, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r0->[ Obj_12, ]
+			r1->[ Obj_13, ]
+			r10->[ @param0, ]
+		}
+		heap{
+			Obj_12.[]->[ Obj_15, ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r2->[ Obj_17, ]
+			$r9->[ Obj_15, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r0->[ Obj_12, ]
+			r1->[ Obj_13, ]
+			r10->[ @param0, ]
+		}
+		heap{
+			Obj_12.[]->[ Obj_15, ]
+		}
+	}
+}
+Unit: "r1[0] = $r2"{
+	In: 
+	{
+		stack{
+			$r2->[ Obj_17, ]
+			$r9->[ Obj_15, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r0->[ Obj_12, ]
+			r1->[ Obj_13, ]
+			r10->[ @param0, ]
+		}
+		heap{
+			Obj_12.[]->[ Obj_15, ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r2->[ Obj_17, ]
+			$r9->[ Obj_15, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r0->[ Obj_12, ]
+			r1->[ Obj_13, ]
+			r10->[ @param0, ]
+		}
+		heap{
+			Obj_12.[]->[ Obj_15, ]
+			Obj_13.[]->[ Obj_17, ]
+		}
+	}
+}
+Unit: "$r3 = new Test10"{
+	In: 
+	{
+		stack{
+			$r2->[ Obj_17, ]
+			$r9->[ Obj_15, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r0->[ Obj_12, ]
+			r1->[ Obj_13, ]
+			r10->[ @param0, ]
+		}
+		heap{
+			Obj_12.[]->[ Obj_15, ]
+			Obj_13.[]->[ Obj_17, ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r2->[ Obj_17, ]
+			$r3->[ Obj_18, ]
+			$r9->[ Obj_15, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r0->[ Obj_12, ]
+			r1->[ Obj_13, ]
+			r10->[ @param0, ]
+		}
+		heap{
+			Obj_12.[]->[ Obj_15, ]
+			Obj_13.[]->[ Obj_17, ]
+		}
+	}
+}
+Unit: "specialinvoke $r3.<Test10: void <init>()>()"{
+	In: 
+	{
+		stack{
+			$r2->[ Obj_17, ]
+			$r3->[ Obj_18, ]
+			$r9->[ Obj_15, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r0->[ Obj_12, ]
+			r1->[ Obj_13, ]
+			r10->[ @param0, ]
+		}
+		heap{
+			Obj_12.[]->[ Obj_15, ]
+			Obj_13.[]->[ Obj_17, ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r2->[ Obj_17, ]
+			$r3->[ Obj_18, ]
+			$r9->[ Obj_15, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r0->[ Obj_12, ]
+			r1->[ Obj_13, ]
+			r10->[ @param0, ]
+		}
+		heap{
+			Obj_12.[]->[ Obj_15, ]
+			Obj_13.[]->[ Obj_17, ]
+		}
+	}
+}
+Unit: "r1[1] = $r3"{
+	In: 
+	{
+		stack{
+			$r2->[ Obj_17, ]
+			$r3->[ Obj_18, ]
+			$r9->[ Obj_15, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r0->[ Obj_12, ]
+			r1->[ Obj_13, ]
+			r10->[ @param0, ]
+		}
+		heap{
+			Obj_12.[]->[ Obj_15, ]
+			Obj_13.[]->[ Obj_17, ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r2->[ Obj_17, ]
+			$r3->[ Obj_18, ]
+			$r9->[ Obj_15, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r0->[ Obj_12, ]
+			r1->[ Obj_13, ]
+			r10->[ @param0, ]
+		}
+		heap{
+			Obj_12.[]->[ Obj_15, ]
+			Obj_13.[]->[ Obj_17, Obj_18, ]
+		}
+	}
+}
+Unit: "$r4 = new Test10"{
+	In: 
+	{
+		stack{
+			$r2->[ Obj_17, ]
+			$r3->[ Obj_18, ]
+			$r9->[ Obj_15, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r0->[ Obj_12, ]
+			r1->[ Obj_13, ]
+			r10->[ @param0, ]
+		}
+		heap{
+			Obj_12.[]->[ Obj_15, ]
+			Obj_13.[]->[ Obj_17, Obj_18, ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r2->[ Obj_17, ]
+			$r3->[ Obj_18, ]
+			$r4->[ Obj_19, ]
+			$r9->[ Obj_15, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r0->[ Obj_12, ]
+			r1->[ Obj_13, ]
+			r10->[ @param0, ]
+		}
+		heap{
+			Obj_12.[]->[ Obj_15, ]
+			Obj_13.[]->[ Obj_17, Obj_18, ]
+		}
+	}
+}
+Unit: "specialinvoke $r4.<Test10: void <init>()>()"{
+	In: 
+	{
+		stack{
+			$r2->[ Obj_17, ]
+			$r3->[ Obj_18, ]
+			$r4->[ Obj_19, ]
+			$r9->[ Obj_15, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r0->[ Obj_12, ]
+			r1->[ Obj_13, ]
+			r10->[ @param0, ]
+		}
+		heap{
+			Obj_12.[]->[ Obj_15, ]
+			Obj_13.[]->[ Obj_17, Obj_18, ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r2->[ Obj_17, ]
+			$r3->[ Obj_18, ]
+			$r4->[ Obj_19, ]
+			$r9->[ Obj_15, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r0->[ Obj_12, ]
+			r1->[ Obj_13, ]
+			r10->[ @param0, ]
+		}
+		heap{
+			Obj_12.[]->[ Obj_15, ]
+			Obj_13.[]->[ Obj_17, Obj_18, ]
+		}
+	}
+}
+Unit: "r1[2] = $r4"{
+	In: 
+	{
+		stack{
+			$r2->[ Obj_17, ]
+			$r3->[ Obj_18, ]
+			$r4->[ Obj_19, ]
+			$r9->[ Obj_15, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r0->[ Obj_12, ]
+			r1->[ Obj_13, ]
+			r10->[ @param0, ]
+		}
+		heap{
+			Obj_12.[]->[ Obj_15, ]
+			Obj_13.[]->[ Obj_17, Obj_18, ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r2->[ Obj_17, ]
+			$r3->[ Obj_18, ]
+			$r4->[ Obj_19, ]
+			$r9->[ Obj_15, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r0->[ Obj_12, ]
+			r1->[ Obj_13, ]
+			r10->[ @param0, ]
+		}
+		heap{
+			Obj_12.[]->[ Obj_15, ]
+			Obj_13.[]->[ Obj_17, Obj_18, Obj_19, ]
+		}
+	}
+}
+Unit: "$r5 = new Test10"{
+	In: 
+	{
+		stack{
+			$r2->[ Obj_17, ]
+			$r3->[ Obj_18, ]
+			$r4->[ Obj_19, ]
+			$r9->[ Obj_15, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r0->[ Obj_12, ]
+			r1->[ Obj_13, ]
+			r10->[ @param0, ]
+		}
+		heap{
+			Obj_12.[]->[ Obj_15, ]
+			Obj_13.[]->[ Obj_17, Obj_18, Obj_19, ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r2->[ Obj_17, ]
+			$r3->[ Obj_18, ]
+			$r4->[ Obj_19, ]
+			$r5->[ Obj_20, ]
+			$r9->[ Obj_15, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r0->[ Obj_12, ]
+			r1->[ Obj_13, ]
+			r10->[ @param0, ]
+		}
+		heap{
+			Obj_12.[]->[ Obj_15, ]
+			Obj_13.[]->[ Obj_17, Obj_18, Obj_19, ]
+		}
+	}
+}
+Unit: "specialinvoke $r5.<Test10: void <init>()>()"{
+	In: 
+	{
+		stack{
+			$r2->[ Obj_17, ]
+			$r3->[ Obj_18, ]
+			$r4->[ Obj_19, ]
+			$r5->[ Obj_20, ]
+			$r9->[ Obj_15, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r0->[ Obj_12, ]
+			r1->[ Obj_13, ]
+			r10->[ @param0, ]
+		}
+		heap{
+			Obj_12.[]->[ Obj_15, ]
+			Obj_13.[]->[ Obj_17, Obj_18, Obj_19, ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r2->[ Obj_17, ]
+			$r3->[ Obj_18, ]
+			$r4->[ Obj_19, ]
+			$r5->[ Obj_20, ]
+			$r9->[ Obj_15, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r0->[ Obj_12, ]
+			r1->[ Obj_13, ]
+			r10->[ @param0, ]
+		}
+		heap{
+			Obj_12.[]->[ Obj_15, ]
+			Obj_13.[]->[ Obj_17, Obj_18, Obj_19, ]
+		}
+	}
+}
+Unit: "r1[3] = $r5"{
+	In: 
+	{
+		stack{
+			$r2->[ Obj_17, ]
+			$r3->[ Obj_18, ]
+			$r4->[ Obj_19, ]
+			$r5->[ Obj_20, ]
+			$r9->[ Obj_15, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r0->[ Obj_12, ]
+			r1->[ Obj_13, ]
+			r10->[ @param0, ]
+		}
+		heap{
+			Obj_12.[]->[ Obj_15, ]
+			Obj_13.[]->[ Obj_17, Obj_18, Obj_19, ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r2->[ Obj_17, ]
+			$r3->[ Obj_18, ]
+			$r4->[ Obj_19, ]
+			$r5->[ Obj_20, ]
+			$r9->[ Obj_15, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r0->[ Obj_12, ]
+			r1->[ Obj_13, ]
+			r10->[ @param0, ]
+		}
+		heap{
+			Obj_12.[]->[ Obj_15, ]
+			Obj_13.[]->[ Obj_17, Obj_18, Obj_19, Obj_20, ]
+		}
+	}
+}
+Unit: "$r6 = new Test10"{
+	In: 
+	{
+		stack{
+			$r2->[ Obj_17, ]
+			$r3->[ Obj_18, ]
+			$r4->[ Obj_19, ]
+			$r5->[ Obj_20, ]
+			$r9->[ Obj_15, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r0->[ Obj_12, ]
+			r1->[ Obj_13, ]
+			r10->[ @param0, ]
+		}
+		heap{
+			Obj_12.[]->[ Obj_15, ]
+			Obj_13.[]->[ Obj_17, Obj_18, Obj_19, Obj_20, ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r2->[ Obj_17, ]
+			$r3->[ Obj_18, ]
+			$r4->[ Obj_19, ]
+			$r5->[ Obj_20, ]
+			$r6->[ Obj_21, ]
+			$r9->[ Obj_15, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r0->[ Obj_12, ]
+			r1->[ Obj_13, ]
+			r10->[ @param0, ]
+		}
+		heap{
+			Obj_12.[]->[ Obj_15, ]
+			Obj_13.[]->[ Obj_17, Obj_18, Obj_19, Obj_20, ]
+		}
+	}
+}
+Unit: "specialinvoke $r6.<Test10: void <init>()>()"{
+	In: 
+	{
+		stack{
+			$r2->[ Obj_17, ]
+			$r3->[ Obj_18, ]
+			$r4->[ Obj_19, ]
+			$r5->[ Obj_20, ]
+			$r6->[ Obj_21, ]
+			$r9->[ Obj_15, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r0->[ Obj_12, ]
+			r1->[ Obj_13, ]
+			r10->[ @param0, ]
+		}
+		heap{
+			Obj_12.[]->[ Obj_15, ]
+			Obj_13.[]->[ Obj_17, Obj_18, Obj_19, Obj_20, ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r2->[ Obj_17, ]
+			$r3->[ Obj_18, ]
+			$r4->[ Obj_19, ]
+			$r5->[ Obj_20, ]
+			$r6->[ Obj_21, ]
+			$r9->[ Obj_15, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r0->[ Obj_12, ]
+			r1->[ Obj_13, ]
+			r10->[ @param0, ]
+		}
+		heap{
+			Obj_12.[]->[ Obj_15, ]
+			Obj_13.[]->[ Obj_17, Obj_18, Obj_19, Obj_20, ]
+		}
+	}
+}
+Unit: "r1[4] = $r6"{
+	In: 
+	{
+		stack{
+			$r2->[ Obj_17, ]
+			$r3->[ Obj_18, ]
+			$r4->[ Obj_19, ]
+			$r5->[ Obj_20, ]
+			$r6->[ Obj_21, ]
+			$r9->[ Obj_15, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r0->[ Obj_12, ]
+			r1->[ Obj_13, ]
+			r10->[ @param0, ]
+		}
+		heap{
+			Obj_12.[]->[ Obj_15, ]
+			Obj_13.[]->[ Obj_17, Obj_18, Obj_19, Obj_20, ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r2->[ Obj_17, ]
+			$r3->[ Obj_18, ]
+			$r4->[ Obj_19, ]
+			$r5->[ Obj_20, ]
+			$r6->[ Obj_21, ]
+			$r9->[ Obj_15, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r0->[ Obj_12, ]
+			r1->[ Obj_13, ]
+			r10->[ @param0, ]
+		}
+		heap{
+			Obj_12.[]->[ Obj_15, ]
+			Obj_13.[]->[ Obj_17, Obj_18, Obj_19, Obj_20, Obj_21, ]
+		}
+	}
+}
+Unit: "$r8 = r0[0]"{
+	In: 
+	{
+		stack{
+			$r2->[ Obj_17, ]
+			$r3->[ Obj_18, ]
+			$r4->[ Obj_19, ]
+			$r5->[ Obj_20, ]
+			$r6->[ Obj_21, ]
+			$r9->[ Obj_15, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r0->[ Obj_12, ]
+			r1->[ Obj_13, ]
+			r10->[ @param0, ]
+		}
+		heap{
+			Obj_12.[]->[ Obj_15, ]
+			Obj_13.[]->[ Obj_17, Obj_18, Obj_19, Obj_20, Obj_21, ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r2->[ Obj_17, ]
+			$r3->[ Obj_18, ]
+			$r4->[ Obj_19, ]
+			$r5->[ Obj_20, ]
+			$r6->[ Obj_21, ]
+			$r8->[ Obj_15, ]
+			$r9->[ Obj_15, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r0->[ Obj_12, ]
+			r1->[ Obj_13, ]
+			r10->[ @param0, ]
+		}
+		heap{
+			Obj_12.[]->[ Obj_15, ]
+			Obj_13.[]->[ Obj_17, Obj_18, Obj_19, Obj_20, Obj_21, ]
+		}
+	}
+}
+Unit: "$r7 = r1[0]"{
+	In: 
+	{
+		stack{
+			$r2->[ Obj_17, ]
+			$r3->[ Obj_18, ]
+			$r4->[ Obj_19, ]
+			$r5->[ Obj_20, ]
+			$r6->[ Obj_21, ]
+			$r8->[ Obj_15, ]
+			$r9->[ Obj_15, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r0->[ Obj_12, ]
+			r1->[ Obj_13, ]
+			r10->[ @param0, ]
+		}
+		heap{
+			Obj_12.[]->[ Obj_15, ]
+			Obj_13.[]->[ Obj_17, Obj_18, Obj_19, Obj_20, Obj_21, ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r2->[ Obj_17, ]
+			$r3->[ Obj_18, ]
+			$r4->[ Obj_19, ]
+			$r5->[ Obj_20, ]
+			$r6->[ Obj_21, ]
+			$r7->[ Obj_17, Obj_18, Obj_19, Obj_20, Obj_21, ]
+			$r8->[ Obj_15, ]
+			$r9->[ Obj_15, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r0->[ Obj_12, ]
+			r1->[ Obj_13, ]
+			r10->[ @param0, ]
+		}
+		heap{
+			Obj_12.[]->[ Obj_15, ]
+			Obj_13.[]->[ Obj_17, Obj_18, Obj_19, Obj_20, Obj_21, ]
+		}
+	}
+}
+Unit: "virtualinvoke $r8.<Test10: void foo(Test10)>($r7)"{
+	In: 
+	{
+		stack{
+			$r2->[ Obj_17, ]
+			$r3->[ Obj_18, ]
+			$r4->[ Obj_19, ]
+			$r5->[ Obj_20, ]
+			$r6->[ Obj_21, ]
+			$r7->[ Obj_17, Obj_18, Obj_19, Obj_20, Obj_21, ]
+			$r8->[ Obj_15, ]
+			$r9->[ Obj_15, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r0->[ Obj_12, ]
+			r1->[ Obj_13, ]
+			r10->[ @param0, ]
+		}
+		heap{
+			Obj_12.[]->[ Obj_15, ]
+			Obj_13.[]->[ Obj_17, Obj_18, Obj_19, Obj_20, Obj_21, ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r2->[ Obj_17, ]
+			$r3->[ Obj_18, ]
+			$r4->[ Obj_19, ]
+			$r5->[ Obj_20, ]
+			$r6->[ Obj_21, ]
+			$r7->[ Obj_17, Obj_18, Obj_19, Obj_20, Obj_21, ]
+			$r8->[ Obj_15, ]
+			$r9->[ Obj_15, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r0->[ Obj_12, ]
+			r1->[ Obj_13, ]
+			r10->[ @param0, ]
+		}
+		heap{
+			Obj_12.[]->[ Obj_15, ]
+			Obj_13.[]->[ Obj_17, Obj_18, Obj_19, Obj_20, Obj_21, ]
+		}
+	}
+}
+Unit: "return"{
+	In: 
+	{
+		stack{
+			$r2->[ Obj_17, ]
+			$r3->[ Obj_18, ]
+			$r4->[ Obj_19, ]
+			$r5->[ Obj_20, ]
+			$r6->[ Obj_21, ]
+			$r7->[ Obj_17, Obj_18, Obj_19, Obj_20, Obj_21, ]
+			$r8->[ Obj_15, ]
+			$r9->[ Obj_15, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r0->[ Obj_12, ]
+			r1->[ Obj_13, ]
+			r10->[ @param0, ]
+		}
+		heap{
+			Obj_12.[]->[ Obj_15, ]
+			Obj_13.[]->[ Obj_17, Obj_18, Obj_19, Obj_20, Obj_21, ]
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r2->[ Obj_17, ]
+			$r3->[ Obj_18, ]
+			$r4->[ Obj_19, ]
+			$r5->[ Obj_20, ]
+			$r6->[ Obj_21, ]
+			$r7->[ Obj_17, Obj_18, Obj_19, Obj_20, Obj_21, ]
+			$r8->[ Obj_15, ]
+			$r9->[ Obj_15, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r0->[ Obj_12, ]
+			r1->[ Obj_13, ]
+			r10->[ @param0, ]
+		}
+		heap{
+			Obj_12.[]->[ Obj_15, ]
+			Obj_13.[]->[ Obj_17, Obj_18, Obj_19, Obj_20, Obj_21, ]
+		}
+	}
+}
+Unit: "r3 := @this: Test10"{
+	In: 
+	{
+		stack{
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			r4->[ @param0, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			r3->[ @this, ]
+			r4->[ @param0, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "r4 := @parameter0: Test10"{
+	In: 
+	{
+		stack{
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			r3->[ @this, ]
+			r4->[ @param0, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			r3->[ @this, ]
+			r4->[ @param0, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "$r0 = new java.util.ArrayList"{
+	In: 
+	{
+		stack{
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			r3->[ @this, ]
+			r4->[ @param0, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_25, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			r3->[ @this, ]
+			r4->[ @param0, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "specialinvoke $r0.<java.util.ArrayList: void <init>()>()"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_25, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			r3->[ @this, ]
+			r4->[ @param0, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_25, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			r3->[ @this, ]
+			r4->[ @param0, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "i0 = 0"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_25, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			r3->[ @this, ]
+			r4->[ @param0, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_25, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r3->[ @this, ]
+			r4->[ @param0, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "if i0 >= 10 goto return"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_25, ]
+			$r2->[ Obj_27, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r3->[ @this, ]
+			r4->[ @param0, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_25, ]
+			$r2->[ Obj_27, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r3->[ @this, ]
+			r4->[ @param0, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "$r2 = new Test10"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_25, ]
+			$r2->[ Obj_27, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r3->[ @this, ]
+			r4->[ @param0, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_25, ]
+			$r2->[ Obj_27, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r3->[ @this, ]
+			r4->[ @param0, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "specialinvoke $r2.<Test10: void <init>()>()"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_25, ]
+			$r2->[ Obj_27, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r3->[ @this, ]
+			r4->[ @param0, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_25, ]
+			$r2->[ Obj_27, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r3->[ @this, ]
+			r4->[ @param0, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "interfaceinvoke $r0.<java.util.List: boolean add(java.lang.Object)>($r2)"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_25, ]
+			$r2->[ Obj_27, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r3->[ @this, ]
+			r4->[ @param0, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_25, ]
+			$r2->[ Obj_27, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r3->[ @this, ]
+			r4->[ @param0, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "i0 = i0 + 1"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_25, ]
+			$r2->[ Obj_27, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r3->[ @this, ]
+			r4->[ @param0, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_25, ]
+			$r2->[ Obj_27, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r3->[ @this, ]
+			r4->[ @param0, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "goto [?= (branch)]"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_25, ]
+			$r2->[ Obj_27, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r3->[ @this, ]
+			r4->[ @param0, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_25, ]
+			$r2->[ Obj_27, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r3->[ @this, ]
+			r4->[ @param0, ]
+		}
+		heap{
+		}
+	}
+}
+Unit: "return"{
+	In: 
+	{
+		stack{
+			$r0->[ Obj_25, ]
+			$r2->[ Obj_27, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r3->[ @this, ]
+			r4->[ @param0, ]
+		}
+		heap{
+		}
+	}
+	Out: 
+	{
+		stack{
+			$r0->[ Obj_25, ]
+			$r2->[ Obj_27, ]
+			f1->[ @field_f1, ]
+			f2->[ @field_f2, ]
+			i0->[ ]
+			r3->[ @this, ]
+			r4->[ @param0, ]
+		}
+		heap{
+		}
+	}
+}
+Soot finished on Sun Apr 07 14:02:37 IST 2024
+Soot has run for 0 min. 0 sec.
+Test10:main 15 17 18 19 20 21 

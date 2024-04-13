@@ -1,0 +1,637 @@
+**********************
+PowerShell transcript start
+Start time: 20240407132429
+Username: DESKTOP-LPRHNB6\Hardik
+RunAs User: DESKTOP-LPRHNB6\Hardik
+Configuration Name: 
+Machine: DESKTOP-LPRHNB6 (Microsoft Windows NT 10.0.22631.0)
+Host Application: C:\Program Files\PowerShell\7\pwsh.dll -noexit -command try { . "c:\Program Files\Microsoft VS Code\resources\app\out\vs\workbench\contrib\terminal\browser\media\shellIntegration.ps1" } catch {}
+Process ID: 23128
+PSVersion: 7.4.1
+PSEdition: Core
+GitCommitId: 7.4.1
+OS: Microsoft Windows 10.0.22631
+Platform: Win32NT
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1, 6.0, 7.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+WSManStackVersion: 3.0
+**********************
+Transcript started, output file is diff.txt
+Confirm
+The item at C:\CODE\atgit\cs6004\a2\200050048-pa2\sootOutput has children and the Recurse parameter was not specified. If you continue, all children will be removed with the item. Are you sure you want to continue?
+&Yes  Yes to &All  &No  No to A&ll  &Suspend
+Y
+
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test1
+Your Output:
+Test1:main 10 11 9
+Expected Output:
+Test1:main 10 11 9
+############################################################# FAILED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test10
+Your Output:
+Test10:main 15 17 18 19 20 21
+Expected Output:
+Test10:foo 26 28 Test10:main 15 17 18 19 20 21
+############################################################# FAILED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test11
+Your Output:
+Test11:bar 25  Test11:foo 15 16 17 18
+Expected Output:
+Test11:bar 25 Test11:foo 15 16 17 18
+############################################################# FAILED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test12
+Your Output:
+
+Expected Output:
+
+############################################################# PASSED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test13
+Your Output:
+Test13:foo 19  Test13:main 8 9
+Expected Output:
+Test13:foo 19 Test13:main 8 9
+############################################################# FAILED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test14
+Your Output:
+Test14:foo 13 14 15  Test14:main 7 8
+Expected Output:
+Test14:foo 13 14 15 Test14:main 7 8
+############################################################# FAILED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test15
+Your Output:
+Test15:foo 12 15
+Expected Output:
+Test15:foo 12 15
+############################################################# FAILED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test16
+Your Output:
+Test16:bar 16  Test16:foo 21 22 23
+Expected Output:
+Test16:bar 16 Test16:foo 21 22 23
+############################################################# FAILED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test17
+Your Output:
+Test17:main 17  Test17:testMethod 29
+Expected Output:
+Test17:main 17 Test17:testMethod 29
+############################################################# FAILED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test18
+Your Output:
+Test18:L 20 24  Test18:main 31
+Expected Output:
+Test18:L 20 24 Test18:main 31
+############################################################# FAILED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test19
+Your Output:
+Test19:L 21  Test19:main 35
+Expected Output:
+Test19:L 21 Test19:main 35
+############################################################# FAILED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test2
+Your Output:
+Test2:bar 17  Test2:main 10 14 8 9
+Expected Output:
+Test2:bar 17 Test2:main 10 14 8 9
+############################################################# FAILED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test20
+Your Output:
+Test20:L 23
+Expected Output:
+Test20:L 23
+############################################################# FAILED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test21
+Your Output:
+Test21:L 21 22  Test21:main 28
+Expected Output:
+Test21:L 21 22 Test21:main 28
+############################################################# FAILED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test22
+Your Output:
+Test22:recursiveCall 20
+Expected Output:
+Test22:recursiveCall 20
+############################################################# FAILED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test23
+Your Output:
+Test23:test 46 51 55
+Expected Output:
+Test23:test 46 51 55
+############################################################# FAILED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test24
+Your Output:
+Test24:test 15 16 19
+Expected Output:
+Test24:test 15 16 19
+############################################################# FAILED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test25
+Your Output:
+Test25:main 32  Test25:test 20 23
+Expected Output:
+Test25:main 32 Test25:test 20 23
+############################################################# FAILED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test26
+Your Output:
+Test26:main 69  Test26:test 50 53 56 62
+Expected Output:
+Test26:main 69 Test26:test 50 53 56 62
+############################################################# FAILED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test27
+Your Output:
+Test27:test 56 58  Test27:test1 50
+Expected Output:
+Test27:test 56 58 Test27:test1 50
+############################################################# FAILED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test28
+Your Output:
+Test28$Student:printCourses 12  Test28:main 44 47 49 53 55 56
+Expected Output:
+Test28$Student:printCourses 12 Test28:main 44 47 49 53 55 56
+############################################################# FAILED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test29
+Your Output:
+Test29$Course:printStudents 18  Test29:main 31 32 33 35 42 43
+Expected Output:
+Test29$Course:printStudents 18 Test29:main 31 32 33 35 42 43
+############################################################# FAILED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test3
+Your Output:
+Test3:foo 14 15  Test3:main 10 8 9
+Expected Output:
+Test3:foo 14 15 Test3:main 10 8 9
+############################################################# FAILED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test30
+Your Output:
+Test30:test 48 52
+Expected Output:
+Test30:test 48 52
+############################################################# FAILED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test4
+Your Output:
+Test4:bar 24 25  Test4:foo 17 18 19  Test4:main 10 11 9
+Expected Output:
+Test4:bar 24 25 Test4:foo 17 18 19 Test4:main 10 11 9
+############################################################# FAILED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test5
+Your Output:
+Test5:foo 20 23 25 26  Test5:main 10 11 15 9
+Expected Output:
+Test5:foo 20 23 25 26 Test5:main 10 11 15 9
+############################################################# FAILED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test6
+Your Output:
+Child:bar 27  Test6:bar 22  Test6:foo 14 16 18  Test6:main 9
+Expected Output:
+Child:bar 27 Test6:bar 22 Test6:foo 14 16 18 Test6:main 9
+############################################################# FAILED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test7
+Your Output:
+Child2:foo 45  Child:foo 39  Test7:foo 22 24 27 30 32  Test7:main 10 11 12 16
+Expected Output:
+Child2:foo 45 Child:foo 39 Test7:foo 22 24 27 30 32 Test7:main 10 11 12 16
+############################################################# FAILED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test8
+Your Output:
+Test8:foo 21 23  Test8:main 10 15 9
+Expected Output:
+Test8:foo 21 23 Test8:main 10 15 9
+############################################################# FAILED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test9
+Your Output:
+Test9:foo 22 23 25  Test9:main 12 13 14 16
+Expected Output:
+Test9:foo 22 23 25 Test9:main 12 13 14 16
+############################################################# FAILED
+########################################################################### RESULTS
+Total: 30
+Passed: 1
+**********************
+PowerShell transcript end
+End time: 20240407132516
+**********************
+**********************
+PowerShell transcript start
+Start time: 20240407132640
+Username: DESKTOP-LPRHNB6\Hardik
+RunAs User: DESKTOP-LPRHNB6\Hardik
+Configuration Name: 
+Machine: DESKTOP-LPRHNB6 (Microsoft Windows NT 10.0.22631.0)
+Host Application: C:\Program Files\PowerShell\7\pwsh.dll -noexit -command try { . "c:\Program Files\Microsoft VS Code\resources\app\out\vs\workbench\contrib\terminal\browser\media\shellIntegration.ps1" } catch {}
+Process ID: 23128
+PSVersion: 7.4.1
+PSEdition: Core
+GitCommitId: 7.4.1
+OS: Microsoft Windows 10.0.22631
+Platform: Win32NT
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1, 6.0, 7.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+WSManStackVersion: 3.0
+**********************
+Transcript started, output file is diff.txt
+Confirm
+The item at C:\CODE\atgit\cs6004\a2\200050048-pa2\sootOutput has children and the Recurse parameter was not specified. If you continue, all children will be removed with the item. Are you sure you want to continue?
+&Yes  Yes to &All  &No  No to A&ll  &Suspend
+A
+
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test1
+Your Output:
+Test1:main 10 11 9
+Expected Output:
+Test1:main 10 11 9
+############################################################# FAILED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test10
+Your Output:
+Test10:main 15 17 18 19 20 21
+Expected Output:
+Test10:foo 26 28 Test10:main 15 17 18 19 20 21
+############################################################# FAILED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test11
+PS>TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+]633;E;.\x5cscript.ps1 ;c4994c12-9678-483a-87d7-1c10cc83b92a]633;D;1]633;A]633;P;Cwd=C:\x5cCODE\x5catgit\x5ccs6004\x5ca2\x5c200050048-pa2PS C:\CODE\atgit\cs6004\a2\200050048-pa2> ]633;B
+PS>cd ..
+]633;E;cd ..;c4994c12-9678-483a-87d7-1c10cc83b92a]633;D;0]633;A]633;P;Cwd=C:\x5cCODE\x5catgit\x5ccs6004\x5ca2PS C:\CODE\atgit\cs6004\a2> ]633;B
+PS>clear
+]633;E;clear;c4994c12-9678-483a-87d7-1c10cc83b92a]633;D;0]633;A]633;P;Cwd=C:\x5cCODE\x5catgit\x5ccs6004\x5ca2PS C:\CODE\atgit\cs6004\a2> ]633;B
+PS>clear
+]633;E;clear;c4994c12-9678-483a-87d7-1c10cc83b92a]633;D;0]633;A]633;P;Cwd=C:\x5cCODE\x5catgit\x5ccs6004\x5ca2PS C:\CODE\atgit\cs6004\a2> ]633;B
+PS>.\script.ps1 
+Transcript started, output file is diff.txt
+Confirm
+The item at C:\CODE\atgit\cs6004\a2\200050048-pa2\sootOutput has children and the Recurse parameter was not specified. If you continue, all children will be removed with the item. Are you sure you want to continue?
+&Yes  Yes to &All  &No  No to A&ll  &Suspend
+A
+
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test1
+Your Output:
+<<Test1:main 10 11 9>>
+Expected Output:
+<<Test1:main 10 11 9>>
+############################################################# FAILED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test10
+Your Output:
+<<Test10:main 15 17 18 19 20 21>>
+Expected Output:
+<<Test10:foo 26 28 Test10:main 15 17 18 19 20 21>>
+############################################################# FAILED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test11
+PS>TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+]633;E;.\x5cscript.ps1 ;c4994c12-9678-483a-87d7-1c10cc83b92a]633;D;1]633;A]633;P;Cwd=C:\x5cCODE\x5catgit\x5ccs6004\x5ca2\x5c200050048-pa2PS C:\CODE\atgit\cs6004\a2\200050048-pa2> ]633;B
+PS>cd ..
+]633;E;cd ..;c4994c12-9678-483a-87d7-1c10cc83b92a]633;D;0]633;A]633;P;Cwd=C:\x5cCODE\x5catgit\x5ccs6004\x5ca2PS C:\CODE\atgit\cs6004\a2> ]633;B
+PS>cd ..
+]633;E;cd ..;c4994c12-9678-483a-87d7-1c10cc83b92a]633;D;0]633;A]633;P;Cwd=C:\x5cCODE\x5catgit\x5ccs6004PS C:\CODE\atgit\cs6004> ]633;B
+PS>cd a2
+]633;E;cd a2;c4994c12-9678-483a-87d7-1c10cc83b92a]633;D;0]633;A]633;P;Cwd=C:\x5cCODE\x5catgit\x5ccs6004\x5ca2PS C:\CODE\atgit\cs6004\a2> ]633;B
+PS>.\script.ps1 
+Transcript started, output file is diff.txt
+Confirm
+The item at C:\CODE\atgit\cs6004\a2\200050048-pa2\sootOutput has children and the Recurse parameter was not specified. If you continue, all children will be removed with the item. Are you sure you want to continue?
+&Yes  Yes to &All  &No  No to A&ll  &Suspend
+A
+
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test1
+Your Output:
+Test1:main 10 11 9
+Expected Output:
+Test1:main 10 11 9
+############################################################# PASSED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test10
+Your Output:
+Test10:main 15 17 18 19 20 21
+Expected Output:
+Test10:foo 26 28 Test10:main 15 17 18 19 20 21
+############################################################# FAILED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test11
+Your Output:
+Test11:bar 25 Test11:foo 15 16 17 18
+Expected Output:
+Test11:bar 25 Test11:foo 15 16 17 18
+############################################################# PASSED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test12
+Your Output:
+
+Expected Output:
+
+############################################################# PASSED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test13
+Your Output:
+Test13:foo 19 Test13:main 8 9
+Expected Output:
+Test13:foo 19 Test13:main 8 9
+############################################################# PASSED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test14
+Your Output:
+Test14:foo 13 14 15 Test14:main 7 8
+Expected Output:
+Test14:foo 13 14 15 Test14:main 7 8
+############################################################# PASSED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test15
+Your Output:
+Test15:foo 12 15
+Expected Output:
+Test15:foo 12 15
+############################################################# PASSED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test16
+Your Output:
+Test16:bar 16 Test16:foo 21 22 23
+Expected Output:
+Test16:bar 16 Test16:foo 21 22 23
+############################################################# PASSED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test17
+Your Output:
+Test17:main 17 Test17:testMethod 29
+Expected Output:
+Test17:main 17 Test17:testMethod 29
+############################################################# PASSED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test18
+Your Output:
+Test18:L 20 24 Test18:main 31
+Expected Output:
+Test18:L 20 24 Test18:main 31
+############################################################# PASSED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test19
+Your Output:
+Test19:L 21 Test19:main 35
+Expected Output:
+Test19:L 21 Test19:main 35
+############################################################# PASSED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test2
+Your Output:
+Test2:bar 17 Test2:main 10 14 8 9
+Expected Output:
+Test2:bar 17 Test2:main 10 14 8 9
+############################################################# PASSED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test20
+Your Output:
+Test20:L 23
+Expected Output:
+Test20:L 23
+############################################################# PASSED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test21
+Your Output:
+Test21:L 21 22 Test21:main 28
+Expected Output:
+Test21:L 21 22 Test21:main 28
+############################################################# PASSED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test22
+Your Output:
+Test22:recursiveCall 20
+Expected Output:
+Test22:recursiveCall 20
+############################################################# PASSED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test23
+Your Output:
+Test23:test 46 51 55
+Expected Output:
+Test23:test 46 51 55
+############################################################# PASSED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test24
+Your Output:
+Test24:test 15 16 19
+Expected Output:
+Test24:test 15 16 19
+############################################################# PASSED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test25
+Your Output:
+Test25:main 32 Test25:test 20 23
+Expected Output:
+Test25:main 32 Test25:test 20 23
+############################################################# PASSED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test26
+Your Output:
+Test26:main 69 Test26:test 50 53 56 62
+Expected Output:
+Test26:main 69 Test26:test 50 53 56 62
+############################################################# PASSED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test27
+Your Output:
+Test27:test 56 58 Test27:test1 50
+Expected Output:
+Test27:test 56 58 Test27:test1 50
+############################################################# PASSED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test28
+Your Output:
+Test28$Student:printCourses 12 Test28:main 44 47 49 53 55 56
+Expected Output:
+Test28$Student:printCourses 12 Test28:main 44 47 49 53 55 56
+############################################################# PASSED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test29
+Your Output:
+Test29$Course:printStudents 18 Test29:main 31 32 33 35 42 43
+Expected Output:
+Test29$Course:printStudents 18 Test29:main 31 32 33 35 42 43
+############################################################# PASSED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test3
+Your Output:
+Test3:foo 14 15 Test3:main 10 8 9
+Expected Output:
+Test3:foo 14 15 Test3:main 10 8 9
+############################################################# PASSED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test30
+Your Output:
+Test30:test 48 52
+Expected Output:
+Test30:test 48 52
+############################################################# PASSED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test4
+Your Output:
+Test4:bar 24 25 Test4:foo 17 18 19 Test4:main 10 11 9
+Expected Output:
+Test4:bar 24 25 Test4:foo 17 18 19 Test4:main 10 11 9
+############################################################# PASSED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test5
+Your Output:
+Test5:foo 20 23 25 26 Test5:main 10 11 15 9
+Expected Output:
+Test5:foo 20 23 25 26 Test5:main 10 11 15 9
+############################################################# PASSED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test6
+Your Output:
+Child:bar 27 Test6:bar 22 Test6:foo 14 16 18 Test6:main 9
+Expected Output:
+Child:bar 27 Test6:bar 22 Test6:foo 14 16 18 Test6:main 9
+############################################################# PASSED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test7
+Your Output:
+Child2:foo 45 Child:foo 39 Test7:foo 22 24 27 30 32 Test7:main 10 11 12 16
+Expected Output:
+Child2:foo 45 Child:foo 39 Test7:foo 22 24 27 30 32 Test7:main 10 11 12 16
+############################################################# PASSED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test8
+Your Output:
+Test8:foo 21 23 Test8:main 10 15 9
+Expected Output:
+Test8:foo 21 23 Test8:main 10 15 9
+############################################################# PASSED
+
+####################################################################### C:\CODE\atgit\cs6004\a2\testcases\Test9
+Your Output:
+Test9:foo 22 23 25 Test9:main 12 13 14 16
+Expected Output:
+Test9:foo 22 23 25 Test9:main 12 13 14 16
+############################################################# PASSED
+########################################################################### RESULTS
+Total: 30
+Passed: 29
+Transcript stopped, output file is C:\CODE\atgit\cs6004\a2\diff.txt
+]633;E;.\x5cscript.ps1 ;c4994c12-9678-483a-87d7-1c10cc83b92a]633;D;0]633;A]633;P;Cwd=C:\x5cCODE\x5catgit\x5ccs6004\x5ca2PS C:\CODE\atgit\cs6004\a2> ]633;B
+PS>clear
+]633;E;clear;c4994c12-9678-483a-87d7-1c10cc83b92a]633;D;0]633;A]633;P;Cwd=C:\x5cCODE\x5catgit\x5ccs6004\x5ca2PS C:\CODE\atgit\cs6004\a2> ]633;B
+PS>clear
+]633;E;clear;c4994c12-9678-483a-87d7-1c10cc83b92a]633;D;0]633;A]633;P;Cwd=C:\x5cCODE\x5catgit\x5ccs6004\x5ca2PS C:\CODE\atgit\cs6004\a2> ]633;B
+PS>javac *.java -cp '.;../soot.jar'
+
+]633;E;javac *.java -cp '.\x3b../soot.jar';c4994c12-9678-483a-87d7-1c10cc83b92a]633;D;0]633;A]633;P;Cwd=C:\x5cCODE\x5catgit\x5ccs6004\x5ca2PS C:\CODE\atgit\cs6004\a2> ]633;B
+PS>java -cp '.;../soot.jar' PA2 > test.txt
+]633;E;java -cp '.\x3b../soot.jar' PA2 > test.txt;c4994c12-9678-483a-87d7-1c10cc83b92a]633;D;1]633;A]633;P;Cwd=C:\x5cCODE\x5catgit\x5ccs6004\x5ca2PS C:\CODE\atgit\cs6004\a2> ]633;B
+PS>clear
+]633;E;clear;c4994c12-9678-483a-87d7-1c10cc83b92a]633;D;0]633;A]633;P;Cwd=C:\x5cCODE\x5catgit\x5ccs6004\x5ca2PS C:\CODE\atgit\cs6004\a2> ]633;B
+PS>java -cp '.;../soot.jar' PA2 > test.txt
+]633;E;java -cp '.\x3b../soot.jar' PA2 > test.txt;c4994c12-9678-483a-87d7-1c10cc83b92a]633;D;0]633;A]633;P;Cwd=C:\x5cCODE\x5catgit\x5ccs6004\x5ca2PS C:\CODE\atgit\cs6004\a2> ]633;B
+PS>java -cp '.;../soot.jar' PA2 > test.txt
+]633;E;java -cp '.\x3b../soot.jar' PA2 > test.txt;c4994c12-9678-483a-87d7-1c10cc83b92a]633;D;1]633;A]633;P;Cwd=C:\x5cCODE\x5catgit\x5ccs6004\x5ca2PS C:\CODE\atgit\cs6004\a2> ]633;B
+PS>java -version
+
+]633;E;java -version;c4994c12-9678-483a-87d7-1c10cc83b92a]633;D;0]633;A]633;P;Cwd=C:\x5cCODE\x5catgit\x5ccs6004\x5ca2PS C:\CODE\atgit\cs6004\a2> ]633;B
+PS>java -cp '.;../soot.jar' PA2 > test.txt
+]633;E;java -cp '.\x3b../soot.jar' PA2 > test.txt;c4994c12-9678-483a-87d7-1c10cc83b92a]633;D;1]633;A]633;P;Cwd=C:\x5cCODE\x5catgit\x5ccs6004\x5ca2PS C:\CODE\atgit\cs6004\a2> ]633;B
+PS>java -cp '.;../soot.jar' PA2 > test.txt
+]633;E;java -cp '.\x3b../soot.jar' PA2 > test.txt;c4994c12-9678-483a-87d7-1c10cc83b92a]633;D;0]633;A]633;P;Cwd=C:\x5cCODE\x5catgit\x5ccs6004\x5ca2PS C:\CODE\atgit\cs6004\a2> ]633;B
+PS>java -cp '.;../soot.jar' PA2 > test.txt
+]633;E;java -cp '.\x3b../soot.jar' PA2 > test.txt;c4994c12-9678-483a-87d7-1c10cc83b92a]633;D;0]633;A]633;P;Cwd=C:\x5cCODE\x5catgit\x5ccs6004\x5ca2PS C:\CODE\atgit\cs6004\a2> ]633;B
+PS>java -cp '.;../soot.jar' PA2 > test.txt
+]633;E;java -cp '.\x3b../soot.jar' PA2 > test.txt;c4994c12-9678-483a-87d7-1c10cc83b92a]633;D;1]633;A]633;P;Cwd=C:\x5cCODE\x5catgit\x5ccs6004\x5ca2PS C:\CODE\atgit\cs6004\a2> ]633;B
+]633;E]633;D]633;A]633;P;Cwd=C:\x5cCODE\x5catgit\x5ccs6004\x5ca2PS C:\CODE\atgit\cs6004\a2> ]633;B
+PS>clear
+]633;E;clear;c4994c12-9678-483a-87d7-1c10cc83b92a]633;D;0]633;A]633;P;Cwd=C:\x5cCODE\x5catgit\x5ccs6004\x5ca2PS C:\CODE\atgit\cs6004\a2> ]633;B
+PS>java -cp '.;../soot.jar' PA2 > test.txt
+]633;E;java -cp '.\x3b../soot.jar' PA2 > test.txt;c4994c12-9678-483a-87d7-1c10cc83b92a]633;D;1]633;A]633;P;Cwd=C:\x5cCODE\x5catgit\x5ccs6004\x5ca2PS C:\CODE\atgit\cs6004\a2> ]633;B
+PS>clear
+]633;E;clear;c4994c12-9678-483a-87d7-1c10cc83b92a]633;D;0]633;A]633;P;Cwd=C:\x5cCODE\x5catgit\x5ccs6004\x5ca2PS C:\CODE\atgit\cs6004\a2> ]633;B
+PS>javac *.java -cp '.;../soot.jar'
+
+]633;E;javac *.java -cp '.\x3b../soot.jar';c4994c12-9678-483a-87d7-1c10cc83b92a]633;D;0]633;A]633;P;Cwd=C:\x5cCODE\x5catgit\x5ccs6004\x5ca2PS C:\CODE\atgit\cs6004\a2> ]633;B
+PS>javac .\testcase\Test10.java
+
+]633;E;javac .\x5ctestcase\x5cTest10.java;c4994c12-9678-483a-87d7-1c10cc83b92a]633;D;0]633;A]633;P;Cwd=C:\x5cCODE\x5catgit\x5ccs6004\x5ca2PS C:\CODE\atgit\cs6004\a2> ]633;B
+PS>clear
+]633;E;clear;c4994c12-9678-483a-87d7-1c10cc83b92a]633;D;0]633;A]633;P;Cwd=C:\x5cCODE\x5catgit\x5ccs6004\x5ca2PS C:\CODE\atgit\cs6004\a2> ]633;B
+PS>java -cp '.;../soot.jar' PA2 > test.txt
+]633;E;java -cp '.\x3b../soot.jar' PA2 > test.txt;c4994c12-9678-483a-87d7-1c10cc83b92a]633;D;0]633;A]633;P;Cwd=C:\x5cCODE\x5catgit\x5ccs6004\x5ca2PS C:\CODE\atgit\cs6004\a2> ]633;B
+PS>java -cp '.;../soot.jar' PA2 > test.txt
+]633;E;java -cp '.\x3b../soot.jar' PA2 > test.txt;c4994c12-9678-483a-87d7-1c10cc83b92a]633;D;0]633;A]633;P;Cwd=C:\x5cCODE\x5catgit\x5ccs6004\x5ca2PS C:\CODE\atgit\cs6004\a2> ]633;B
+]633;E]633;D]633;A]633;P;Cwd=C:\x5cCODE\x5catgit\x5ccs6004\x5ca2PS C:\CODE\atgit\cs6004\a2> ]633;B
+PS>javac .\testcase\Test10.java
+
+]633;E;javac .\x5ctestcase\x5cTest10.java;c4994c12-9678-483a-87d7-1c10cc83b92a]633;D;0]633;A]633;P;Cwd=C:\x5cCODE\x5catgit\x5ccs6004\x5ca2PS C:\CODE\atgit\cs6004\a2> ]633;B
+PS>java -cp '.;../soot.jar' PA2 > test.txt
+]633;E;java -cp '.\x3b../soot.jar' PA2 > test.txt;c4994c12-9678-483a-87d7-1c10cc83b92a]633;D;0]633;A]633;P;Cwd=C:\x5cCODE\x5catgit\x5ccs6004\x5ca2PS C:\CODE\atgit\cs6004\a2> ]633;B
+PS>clear
+]633;E;clear;c4994c12-9678-483a-87d7-1c10cc83b92a]633;D;0]633;A]633;P;Cwd=C:\x5cCODE\x5catgit\x5ccs6004\x5ca2PS C:\CODE\atgit\cs6004\a2> ]633;B
+PS>git diff
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in a2/AnalysisTransformer.java.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in a2/test.txt.
+The file will have its original line endings in your working directory
+diff --git a/a2/200050048-pa2/AnalysisTransformer.java b/a2/200050048-pa2/AnalysisTransformer.java
+index ed1082a..0f7d452 100644
+--- a/a2/200050048-pa2/AnalysisTransformer.java
++++ b/a2/200050048-pa2/AnalysisTransformer.java
+@@ -18,15 +18,19 @@ public class AnalysisTransformer extends BodyTransformer {
+         String methodName = body.getMethod().getName();
+         String enclosingClass = body.getMethod().getDeclaringClass().getName();
+         String ans = "";
+-        ans += (enclosingClass+":"+methodName+" ");
++        boolean notEmpty = false;
++        ans += (enclosingClass+":"+methodName);
+         for(String fugitive:fugitives){
+-            ans += (fugitive.replace("Obj_", "")+" ");
+]633;E;git diff;c4994c12-9678-483a-87d7-1c10cc83b92a]633;D;0]633;A]633;P;Cwd=C:\x5cCODE\x5catgit\x5ccs6004\x5ca2PS C:\CODE\atgit\cs6004\a2> ]633;B
+PS>git diff 16eeacc6 .\200050048-pa2\PA2.java
+
+]633;E;git diff 16eeacc6 .\x5c200050048-pa2\x5cPA2.java;c4994c12-9678-483a-87d7-1c10cc83b92a]633;D;0]633;A]633;P;Cwd=C:\x5cCODE\x5catgit\x5ccs6004\x5ca2PS C:\CODE\atgit\cs6004\a2> ]633;B
+PS>git diff 16eeacc6 .\200050048-pa2\PA2.java >> filesdiff.txt
+]633;E;git diff 16eeacc6 .\x5c200050048-pa2\x5cPA2.java >> filesdiff.txt;c4994c12-9678-483a-87d7-1c10cc83b92a]633;D;0]633;A]633;P;Cwd=C:\x5cCODE\x5catgit\x5ccs6004\x5ca2PS C:\CODE\atgit\cs6004\a2> ]633;B
+PS>git diff 16eeacc6 .\200050048-pa2\AnalysisTransformer.java >> filesdiff.txt
+]633;E;git diff 16eeacc6 .\x5c200050048-pa2\x5cAnalysisTransformer.java >> filesdiff.txt;c4994c12-9678-483a-87d7-1c10cc83b92a]633;D;0]633;A]633;P;Cwd=C:\x5cCODE\x5catgit\x5ccs6004\x5ca2PS C:\CODE\atgit\cs6004\a2> ]633;B
+PS>git diff 16eeacc6 .\200050048-pa2\PTA.java >> filesdiff.txt
+]633;E;git diff 16eeacc6 .\x5c200050048-pa2\x5cPTA.java >> filesdiff.txt;c4994c12-9678-483a-87d7-1c10cc83b92a]633;D;0]633;A]633;P;Cwd=C:\x5cCODE\x5catgit\x5ccs6004\x5ca2PS C:\CODE\atgit\cs6004\a2> ]633;B
+PS>git diff 16eeacc6 .\200050048-pa2\MyVeryOwnEscapeAnalysis.java >> filesdiff.txt
+]633;E;git diff 16eeacc6 .\x5c200050048-pa2\x5cMyVeryOwnEscapeAnalysis.java >> filesdiff.txt;c4994c12-9678-483a-87d7-1c10cc83b92a]633;D;0]633;A]633;P;Cwd=C:\x5cCODE\x5catgit\x5ccs6004\x5ca2PS C:\CODE\atgit\cs6004\a2> ]633;B
+PS>python
+
+]633;E;python;c4994c12-9678-483a-87d7-1c10cc83b92a]633;D;0]633;A]633;P;Cwd=C:\x5cCODE\x5catgit\x5ccs6004\x5ca2PS C:\CODE\atgit\cs6004\a2> ]633;B
+PS>clear
+]633;E;clear;c4994c12-9678-483a-87d7-1c10cc83b92a]633;D;0]633;A]633;P;Cwd=C:\x5cCODE\x5catgit\x5ccs6004\x5ca2PS C:\CODE\atgit\cs6004\a2> ]633;B

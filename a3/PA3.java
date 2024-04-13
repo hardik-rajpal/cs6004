@@ -4,7 +4,7 @@ import soot.Transform;
 public class PA3 {
     public static void main(String[] args) {
         String classPath = "."; // change to appropriate path to the test class
-        String dir = "./testcase";
+        String dir = "./testmanish";
 
         // Set up arguments for Soot
         String[] sootArgs = { "-cp", classPath, "-pp", // sets the class path for Soot

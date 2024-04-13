@@ -1,0 +1,60 @@
+I modified AnalysisTransformer.java to exclude functions
+that don't have any escaping objects. Additionally, I modified
+PA2.java to use the process-dir tags. I hope these changes will
+be minimally penalized as both these requirements were mentioned somewhere
+in the thick of the discussion forum, and not in the problem statement.
+
+The diff computed use git diff is given below:
+
+diff --git a/a2/200050048-pa2/PA2.java b/a2/200050048-pa2/PA2.java
+index 7d52575..0199b53 100644
+--- a/a2/200050048-pa2/PA2.java
++++ b/a2/200050048-pa2/PA2.java
+@@ -14,14 +14,14 @@ import soot.*;
+ // import soot.jimple.internal.*;
+
+ public class PA2 {
++    
+     public static void main(String[] args) {
+         String classPath = "."; 	// change to appropriate path to the test class
+         //Set up arguments for Soot
+         String[] sootArgs = {
+             "-cp", classPath, "-pp", // sets the class path for Soot
+             "-keep-line-number", // preserves line numbers in input Java files  
+-            "-main-class", "Test",
+-            "Test","Node"	// specify the main class
++            "-process-dir","./testcase",
+         };
+ 
+         // Create transformer for analysis
+
+
+
+diff --git a/a2/200050048-pa2/AnalysisTransformer.java b/a2/200050048-pa2/AnalysisTransformer.java
+index ed1082a..0f7d452 100644
+--- a/a2/200050048-pa2/AnalysisTransformer.java
++++ b/a2/200050048-pa2/AnalysisTransformer.java
+@@ -18,15 +18,19 @@ public class AnalysisTransformer extends BodyTransformer {
+         String methodName = body.getMethod().getName();
+         String enclosingClass = body.getMethod().getDeclaringClass().getName();
+         String ans = "";
+-        ans += (enclosingClass+":"+methodName+" ");
++        boolean notEmpty = false;
++        ans += (enclosingClass+":"+methodName);
+         for(String fugitive:fugitives){
+-            ans += (fugitive.replace("Obj_", "")+" ");
++            ans += (" "+fugitive.replace("Obj_", ""));
++            notEmpty = true;
+         }
+         // synchronized(System.out){
+         //     pta.printPointsToInfo(pointsToInfo);
+         // }
+-        synchronized(results){
+-            results.add(ans);
++        if(notEmpty){
++            synchronized(results){
++                results.add(ans);
++            }
+         }
+     }
+ }

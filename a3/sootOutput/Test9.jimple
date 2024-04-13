@@ -1,0 +1,52 @@
+public class Test9 extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        Test9 r0;
+
+        r0 := @this: Test9;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static void main(java.lang.String[])
+    {
+        java.lang.String[] r0;
+
+        r0 := @parameter0: java.lang.String[];
+
+        staticinvoke <Test9: void bar2()>();
+
+        staticinvoke <Test9: void bar1()>();
+
+        return;
+    }
+
+    static Node9 foo()
+    {
+        Node9 $r0;
+
+        $r0 = new Node9;
+
+        specialinvoke $r0.<Node9: void <init>()>();
+
+        return $r0;
+    }
+
+    static void bar1()
+    {
+        staticinvoke <Test9: Node9 foo()>();
+
+        return;
+    }
+
+    static void bar2()
+    {
+        staticinvoke <Test9: Node9 foo()>();
+
+        return;
+    }
+}

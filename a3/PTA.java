@@ -28,7 +28,6 @@ import soot.jimple.internal.JArrayRef;
 // import soot.jimple.AnyNewExpr;
 import soot.jimple.internal.JAssignStmt;
 import soot.jimple.internal.JDynamicInvokeExpr;
-import soot.jimple.internal.JIdentityStmt;
 import soot.jimple.internal.JInstanceFieldRef;
 import soot.jimple.internal.JInterfaceInvokeExpr;
 import soot.jimple.internal.JInvokeStmt;
@@ -162,6 +161,7 @@ public class PTA {
 
     class NodePointsToData {
         PointsToGraph in, out;
+        TreeSet<String> calleeReturnObjects;
     }
 
     class KillGenSets {
@@ -237,6 +237,8 @@ public class PTA {
         }
     }
 
+    private TreeSet<String> calleeReturnObjects;
+
     KillGenSets getKillGenSets(PointsToGraph in, Unit u) {
         KillGenSets kgset = new KillGenSets();
         kgset.gen = new PointsToGraph();
@@ -246,7 +248,7 @@ public class PTA {
         // accounting for JIdentityStmt
         // as that's used for @this aliasing.
         // That's handled by getDummyPointsToGraph
-        if (u instanceof JAssignStmt || u instanceof JIdentityStmt) {
+        if (u instanceof JAssignStmt) {
             stmt = (AbstractDefinitionStmt) u;
             Value rhs = stmt.getRightOp();
             Value lhs = stmt.getLeftOp();
@@ -433,18 +435,16 @@ public class PTA {
         if (isInvokeStmt(u)) {
             InvokeExpr expr = getInvokeExprFromInvokeUnit(u);
             TreeSet<SootMethod> methods = getSootMethodsFromInvokeUnit(u, callerInfo.cg);
-            SootMethod firstMethod = methods.first();
-            if (firstMethod.isConstructor() || (!callerInfo.userDefinedMethods.contains(firstMethod))) {
+            if (expr.getMethod().isConstructor() || (!callerInfo.userDefinedMethods.contains(expr.getMethod()))) {
                 useKgsets = true;
             } else {
                 // copy stackMap from in:
                 ans.stackMap.putAll(in.stackMap);
-                TreeMap<String, String> paramMap = new TreeMap<>();
-                fillParamMap(paramMap, expr);
                 String stackVarName = "";
                 TreeSet<String> newPointees = new TreeSet<>();
                 boolean assignStackVars = false;
-                if (u instanceof JAssignStmt) {
+                boolean getReturnVars = !(expr.getMethod().getReturnType() instanceof soot.VoidType);
+                if (getReturnVars && (u instanceof JAssignStmt)) {
                     JAssignStmt stmt = (JAssignStmt) u;
                     Value lhs = stmt.getLeftOp();
                     // lhs will only be a local, because of jimple specs.
@@ -455,6 +455,9 @@ public class PTA {
                     }
                 }
                 for (SootMethod method : methods) {
+                    TreeMap<String, String> paramMap = new TreeMap<>();
+                    fillParamMap(paramMap, method,expr.getArgs());
+                    
                     Body body = method.getActiveBody();
                     ArrayList<String> newCallsiteList = new ArrayList<>();
                     newCallsiteList.addAll(callerInfo.callSites);
@@ -469,12 +472,15 @@ public class PTA {
                     // forward only heapMap from callee::
                     mergeHeapGraphs(ans, atCallEnd);
                     // add lhs var if any
-                    if (assignStackVars) {
+                    if (getReturnVars) {
                         TreeSet<String> returnedObjects = getReturnObjectSet(body, ptaInfo);
                         newPointees.addAll(returnedObjects);
                     }
                 }
-                if (assignStackVars) {
+                if(getReturnVars){
+                    calleeReturnObjects = newPointees;
+                }
+                if(assignStackVars){
                     ans.stackMap.put(stackVarName, newPointees);
                 }
                 useKgsets = false;
@@ -518,16 +524,15 @@ public class PTA {
                     // like: return 1;
                 }
             } else {
-                print("Non-return stmt found at tail of function used in assignment stmt!");
-                System.exit(1);
+                // print("Non-return stmt found at tail of function used in assignment stmt!");
+                // System.exit(1);
             }
         }
         return returned;
     }
 
-    private void fillParamMap(TreeMap<String, String> paramMap, InvokeExpr expr) {
-        List<Local> params = expr.getMethod().getActiveBody().getParameterLocals();
-        List<Value> args = expr.getArgs();
+    private void fillParamMap(TreeMap<String, String> paramMap, SootMethod method, List<Value> args) {
+        List<Local> params = method.getActiveBody().getParameterLocals();
 
         for (int i = 0; i < params.size(); i++) {
             Local param = params.get(i);
@@ -557,10 +562,12 @@ public class PTA {
         return ans;
     }
     public static class SootMethodComparator implements Comparator<SootMethod>{
+
         @Override
-        public int compare(SootMethod m1, SootMethod m2){
-            return m1.toString().compareTo(m2.toString());
+        public int compare(SootMethod o1, SootMethod o2) {
+            return o1.toString().compareTo(o2.toString());
         }
+        
     }
     public static TreeSet<SootMethod> getSootMethodsFromInvokeUnit(Unit u, CallGraph cg) {
         TreeSet<SootMethod> ans = new TreeSet<>(new SootMethodComparator());
@@ -676,6 +683,7 @@ public class PTA {
             pointsToInfo.put(u, ptd);
             index++;
         }
+        HashSet<Unit> seenOnce = new HashSet<>();
         SortedSet<Unit> workList = new TreeSet<Unit>(unitcomparator);
         Unit first = units.getFirst();
         workList.add(first);
@@ -700,11 +708,18 @@ public class PTA {
             // assign new in.
             NodePointsToData nodeData = pointsToInfo.get(u);
             nodeData.in = newIn;
+
+            if(calleeReturnObjects!=null){
+                nodeData.calleeReturnObjects = calleeReturnObjects;
+                calleeReturnObjects = null;
+            }
+
             // compare newOut with old Out
-            if (nodeData.out.hashCode() != newOut.hashCode()) {
+            if ((!seenOnce.contains(u))||(nodeData.out.hashCode() != newOut.hashCode())) {
                 nodeData.out = newOut;
                 workList.addAll(graph.getSuccsOf(u));
             }
+            seenOnce.add(u);
         }
         return pointsToInfo;
     }
@@ -717,6 +732,14 @@ public class PTA {
                 pointsToInfo.get(u).in.print();
                 print("\tOut: ");
                 pointsToInfo.get(u).out.print();
+                if(pointsToInfo.get(u).calleeReturnObjects!=null){
+                    print("\tcalleeReturnedObjects: [");
+                    String ans = "";
+                    for(String obj:pointsToInfo.get(u).calleeReturnObjects){
+                        ans += (obj+", ");
+                    }
+                    print(ans+"]");
+                }
                 print("}");
             }
         }
