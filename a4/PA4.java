@@ -1,4 +1,3 @@
-import soot.*;
 public class PA4 {
     public static void main(String[] args) {
         String classPath = "./testcases"; 	// change to appropriate path to the test class
