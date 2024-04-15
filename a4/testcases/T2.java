@@ -1,6 +1,6 @@
 package testcases;
 
-public class T1 {
+public class T2 {
     // [[pure]]
     static int foo(int a, int b){
         int c = a;
