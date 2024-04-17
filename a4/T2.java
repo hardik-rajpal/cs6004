@@ -1,4 +1,3 @@
-package testcases;
 
 public class T2 {
     // [[pure]]

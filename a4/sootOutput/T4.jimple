@@ -1,0 +1,46 @@
+public class T4 extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        T4 r0;
+
+        r0 := @this: T4;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    static int foo(int, int)
+    {
+        int i0, i1, $i2, i4;
+
+        i0 := @parameter0: int;
+
+        i1 := @parameter1: int;
+
+        i4 = i0 + 1;
+
+        if i4 != i1 goto label1;
+
+     label1:
+        $i2 = i0 + i1;
+
+        return $i2;
+    }
+
+    public static void main(java.lang.String[])
+    {
+        java.io.PrintStream $r0;
+        java.lang.String[] r1;
+
+        r1 := @parameter0: java.lang.String[];
+
+        $r0 = <java.lang.System: java.io.PrintStream out>;
+
+        virtualinvoke $r0.<java.io.PrintStream: void println(int)>(24);
+
+        return;
+    }
+}
