@@ -20,7 +20,7 @@ public class T1 {
         if(b==3){
             c = 3;
         }
-        c = T1.foo(a,c);
+        c = foo(a,c);
         System.out.println(c);
     }
 }

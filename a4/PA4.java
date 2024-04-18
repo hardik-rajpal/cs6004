@@ -5,6 +5,7 @@ public class PA4 {
         //Set up arguments for Soot
         String[] sootArgs = {
             "-cp", classPath, "-pp", // sets the class path for Soot
+            "-w","-f","J",
             "-keep-line-number", // preserves line numbers in input Java files  
             "-process-dir","./testcases",
         };
@@ -13,7 +14,7 @@ public class PA4 {
         AnalysisTransformer analysisTransformer = new AnalysisTransformer();
 
         // Add transformer to appropriate pack in PackManager; PackManager will run all packs when soot.Main.main is called
-        PackManager.v().getPack("jtp").add(new Transform("jtp.dfa", analysisTransformer));
+        PackManager.v().getPack("wjtp").add(new Transform("wjtp.pfcp", analysisTransformer));
         // Call Soot's main method with arguments
         soot.Main.main(sootArgs);
 
