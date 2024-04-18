@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import soot.*;
+import soot.jimple.internal.JAssignStmt;
 import soot.toolkits.graph.BriefUnitGraph;
 import soot.toolkits.scalar.ForwardFlowAnalysis;
 
@@ -18,6 +19,39 @@ public class ConstantPropagation extends ForwardFlowAnalysis<Unit,HashMap<Local,
             // valueType=int.class;
         }
         ConstantValue(){}
+        public ConstantValue(ConstantPropagation.ConstantValue constantValue) {
+            isTop = constantValue.isTop;
+            isBot = constantValue.isBot;
+            intValue = constantValue.intValue;
+        }
+        ConstantValue meet(ConstantValue cv2){
+            ConstantValue ans = new ConstantValue();
+            if(this.isBot || cv2.isBot){
+                ans.isTop = false;
+                ans.isBot = true;
+            }
+            else if(this.isTop && cv2.isTop){
+                ans.isTop = true;//true by default
+            }
+            else if(this.isTop||cv2.isTop){
+                if(this.isTop){
+                    ans = new ConstantValue(cv2.intValue);
+                }
+                else{
+                    ans = new ConstantValue(this.intValue);
+                }
+            }
+            else{
+                if(this.intValue == cv2.intValue){
+                    ans = new ConstantValue(this.intValue);
+                }
+                else{
+                    ans.isTop = false;
+                    ans.isBot = true;
+                }
+            }
+            return ans;
+        }
         // ConstantValue(String v){
         //     strValue = v;
         //     isTop = false;
@@ -31,15 +65,26 @@ public class ConstantPropagation extends ForwardFlowAnalysis<Unit,HashMap<Local,
         this.locals = _locals;
     }
     @Override
-    protected void flowThrough(HashMap<Local, ConstantPropagation.ConstantValue> arg0, Unit arg1, HashMap<Local, ConstantPropagation.ConstantValue> arg2) {
-        // TODO Auto-generated method stub
-        
+    protected void flowThrough(HashMap<Local, ConstantPropagation.ConstantValue> in, Unit unit, HashMap<Local, ConstantPropagation.ConstantValue> out) {
+        copy(in,out);
+        if(unit instanceof JAssignStmt){
+            Value lhs, rhs;
+            JAssignStmt stmt = (JAssignStmt) unit;
+            lhs = stmt.getLeftOp();
+            rhs = stmt.getRightOp();
+            
+        }
+        else{
+            //ignoring all other types of statements
+        }
     }
 
     @Override
-    protected void copy(HashMap<Local, ConstantPropagation.ConstantValue> arg0, HashMap<Local, ConstantPropagation.ConstantValue> arg1) {
-        // TODO Auto-generated method stub
-        
+    protected void copy(HashMap<Local, ConstantPropagation.ConstantValue> src, HashMap<Local, ConstantPropagation.ConstantValue> dst) {
+        dst.clear();
+        for(Local local :src.keySet()){
+            dst.put(local,new ConstantValue(src.get(local)));
+        }
     }
 
     @Override
@@ -47,7 +92,7 @@ public class ConstantPropagation extends ForwardFlowAnalysis<Unit,HashMap<Local,
         for(Local local:in1.keySet()){
             ConstantPropagation.ConstantValue cv1 = in1.get(local);
             ConstantPropagation.ConstantValue cv2 = in2.get(local);
-            
+            out.put(local, cv2.meet(cv1));
         }
         
     }
