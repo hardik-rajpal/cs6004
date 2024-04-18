@@ -40,7 +40,6 @@ public class AnalysisTransformer extends SceneTransformer{
 
     @Override
     protected void internalTransform(String arg0, Map<String, String> arg1) {
-        print("here1");
         cg = Scene.v().getCallGraph();
         // Get the main method
         SootClass mainClass = Scene.v().getMainClass();
@@ -83,6 +82,13 @@ public class AnalysisTransformer extends SceneTransformer{
         }
 
         // Find and return the corresponding Method using reflection
+        // for(Method method: declaringClass.getDeclaredMethods()){
+        //     System.out.print(method.getName()+": ");
+        //     for(Class type:method.getParameterTypes()){
+        //         System.out.print(type.toString()+",");
+        //     }
+        //     System.out.print("\n");
+        // }
         return declaringClass.getDeclaredMethod(methodName, parameterTypes);
     }
     public static Class<?> getClassForType(Type sootType) throws ClassNotFoundException {
@@ -161,7 +167,6 @@ public class AnalysisTransformer extends SceneTransformer{
     
     protected void methodTransform(Body body) {
         BriefUnitGraph cfg = new BriefUnitGraph(body);
-        print("here");
         for(Unit u:body.getUnits()){
             if(isInvokeStmt(u)){
                 CallGraph cg = Scene.v().getCallGraph();
@@ -171,7 +176,10 @@ public class AnalysisTransformer extends SceneTransformer{
                     // if(m is pure)
                     try{
                         Method javaMethod = convertSootToJavaMethod(m);
-                        System.out.println(javaMethod.getName());
+                        if(javaMethod.getName().startsWith("foo")){
+                            Object result = javaMethod.invoke(null,1,2);
+                            print(result.toString());
+                        }
                     }
                     catch (Exception e){
                         System.out.println("Didn't work: ");
