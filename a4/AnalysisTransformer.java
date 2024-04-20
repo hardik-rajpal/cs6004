@@ -70,6 +70,7 @@ public class AnalysisTransformer extends SceneTransformer{
         ConstantPropagation cp = new ConstantPropagation(new BriefUnitGraph(body), locals, pureUserDefinedMethods,cg);
         cp.printAnalysis();
         ConstantTransformer.transformProgram(body.getMethod(), cp);
+        //TODO: transform, cp in while loop while body changes?
     }
     void printSet(Set<?> set){
         for(Object obj:set){
