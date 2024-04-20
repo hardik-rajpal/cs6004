@@ -1,7 +1,9 @@
 import java.lang.reflect.Array;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -13,6 +15,7 @@ import java.util.regex.Pattern;
 import soot.ArrayType;
 import soot.Body;
 import soot.BodyTransformer;
+import soot.Local;
 import soot.PrimType;
 import soot.RefType;
 import soot.Scene;
@@ -37,9 +40,23 @@ import soot.util.Chain;
 public class AnalysisTransformer extends SceneTransformer{
     static CallGraph cg;
     static HashSet<SootMethod> userDefinedMethods = new HashSet<>();
-
     @Override
     protected void internalTransform(String arg0, Map<String, String> arg1) {
+        SootMethod mainMethod = fillUserDefMethodsAndGetMainMethod();
+        HashSet<SootMethod> impureMethods = PureMethodClassifier.pureMethodClassification(mainMethod, cg);
+        // System.out.println("Impure methods: ");
+        // for(SootMethod method:impureMethods){
+        //     System.out.println(method.toString()+", ");
+        // }
+        HashSet<SootMethod> pureUserDefinedMethods = new HashSet<>(userDefinedMethods);
+        for(SootMethod method:impureMethods){
+            pureUserDefinedMethods.remove(method);
+        }
+        methodTransform(mainMethod.getActiveBody(),pureUserDefinedMethods);
+        
+    }
+
+    private SootMethod fillUserDefMethodsAndGetMainMethod() {
         cg = Scene.v().getCallGraph();
         // Get the main method
         SootClass mainClass = Scene.v().getMainClass();
@@ -60,8 +77,7 @@ public class AnalysisTransformer extends SceneTransformer{
                 }
             }
         }
-        methodTransform(mainMethod.getActiveBody());
-        
+        return mainMethod;
     }
 
     public static Method convertSootToJavaMethod(SootMethod sootMethod) throws ClassNotFoundException, NoSuchMethodException {
@@ -164,9 +180,14 @@ public class AnalysisTransformer extends SceneTransformer{
         }
         return ans;
     }
-    
-    protected void methodTransform(Body body) {
-        BriefUnitGraph cfg = new BriefUnitGraph(body);
+    protected void methodTransform(Body body, HashSet<SootMethod> pureUserDefinedMethods) {
+        ArrayList<Local> locals = new ArrayList<Local>(body.getLocals());
+        ConstantPropagation cp = new ConstantPropagation(new BriefUnitGraph(body), locals, pureUserDefinedMethods,cg);
+        // cp.printAnalysis();
+    }
+    /*
+        //reflection code:
+     BriefUnitGraph cfg = new BriefUnitGraph(body);
         for(Unit u:body.getUnits()){
             if(isInvokeStmt(u)){
                 CallGraph cg = Scene.v().getCallGraph();
@@ -188,7 +209,7 @@ public class AnalysisTransformer extends SceneTransformer{
                 }
             }
         }
-    }
+    */
     void printSet(Set<?> set){
         for(Object obj:set){
             print(obj.toString()+", ");
