@@ -1,10 +1,19 @@
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.TreeSet;
 
 import soot.*;
 import soot.JastAddJ.Expr;
+import soot.JastAddJ.NumericLiteral;
+import soot.jimple.Constant;
+import soot.jimple.DoubleConstant;
+import soot.jimple.FloatConstant;
+import soot.jimple.IntConstant;
+import soot.jimple.InvokeExpr;
+import soot.jimple.LongConstant;
 import soot.jimple.NullConstant;
 import soot.jimple.NumericConstant;
 import soot.jimple.StringConstant;
@@ -32,11 +41,16 @@ public class ConstantPropagation extends ForwardFlowAnalysis<Unit,HashMap<Local,
             isBot = constantValue.isBot;
             value = constantValue.value;
         }
+        static ConstantValue makeBot(){
+            ConstantValue ans = new ConstantValue();
+            ans.isTop = false;
+            ans.isBot = true;
+            return ans;
+        }
         ConstantValue meet(ConstantValue cv2){
             ConstantValue ans = new ConstantValue();
             if(this.isBot || cv2.isBot){
-                ans.isTop = false;
-                ans.isBot = true;
+                ans = makeBot();
             }
             else if(this.isTop && cv2.isTop){
                 ans.isTop = true;//true by default
@@ -54,8 +68,7 @@ public class ConstantPropagation extends ForwardFlowAnalysis<Unit,HashMap<Local,
                     ans = new ConstantValue(this.value);
                 }
                 else{
-                    ans.isTop = false;
-                    ans.isBot = true;
+                    ans = makeBot();
                 }
             }
             return ans;
@@ -124,8 +137,7 @@ public class ConstantPropagation extends ForwardFlowAnalysis<Unit,HashMap<Local,
                         cv2 = in.get((Local)cv2.value);
                     }
                     if(cv1.isBot || cv2.isBot){
-                        ans.isTop = false;
-                        ans.isBot = true;
+                        ans = ConstantValue.makeBot();
                     }
                     else if(cv1.isTop || cv2.isTop){
                         //remains top
@@ -135,26 +147,48 @@ public class ConstantPropagation extends ForwardFlowAnalysis<Unit,HashMap<Local,
                         expr = (AbstractJimpleFloatBinopExpr)expr.clone();
                         expr.setOp1(cv1.value);
                         expr.setOp2(cv2.value);
-                        ans.isTop = false;
-                        ans.value = Evaluator.getConstantValueOf(expr);
+                        ans = new ConstantValue(Evaluator.getConstantValueOf(expr));
                     }
                     out.put((Local)lhs, ans);
                 }
                 else if(Utils.isInvokeExpression(rhs)){
+                    InvokeExpr expr = Utils.getInvokeExprFromInvokeUnit(unit);
                     TreeSet<SootMethod> methods = Utils.getSootMethodsFromInvokeUnit(unit, cg);
                     //TODO: merge multiple callees to bot.
-                    for(SootMethod method:methods){
+                    List<Value> args = (expr.getArgs());
+                    System.out.println("invoke: "+unit.toString());
+                    if(!argsAreConstant(args,in)){
+                        out.put((Local)lhs, ConstantValue.makeBot());
+                        System.out.println("non constant args");
+                    }
+                    else if(methods.size()==1){
+                        SootMethod method = methods.first();
                         if(!pureMethods.contains(method)){
-                            ConstantValue bot = new ConstantValue();
-                            bot.isBot = true;
-                            bot.isTop = false;
+                            ConstantValue bot = ConstantValue.makeBot();
                             out.put((Local)lhs, bot);
-                            break;
+                            System.out.println("impure method");
                         }
-                        //pure method => evaluate if contant.
-                        //expr = getInvokeexpr...
-                        //if (for each arg in expr, in.get(arg) is constant)
-                        //run reflectioncode.
+                        else{
+                            System.out.println("evaluating.");
+                            Value value = evaluatePureMethodCall(method,args,in,lhs);
+                            if(value!=null){
+                                out.put((Local)lhs, new ConstantValue(value));
+                            }
+                            else{
+                                //...? TODO:production time?
+                            }
+                        }
+                    }
+                    else{
+                        //merge constant values across calls...
+                        for(SootMethod method:methods){
+                            
+                            
+                            //pure method => evaluate if contant.
+                            //expr = getInvokeexpr...
+                            //if (for each arg in expr, in.get(arg) is constant)
+                            //run reflectioncode.
+                        }
                     }
                 }
             }
@@ -164,6 +198,90 @@ public class ConstantPropagation extends ForwardFlowAnalysis<Unit,HashMap<Local,
         }
     }
 
+    private Value evaluatePureMethodCall(SootMethod method, List<Value> args, HashMap<Local, ConstantPropagation.ConstantValue> in, Value lhs) {
+        try{
+            Value ans;
+            Method javaMethod = Utils.convertSootToJavaMethod(method);
+            List<Object> jargs = getJavaArgs(args, in);
+            Object result = javaMethod.invoke(null,jargs.toArray());
+            ans = getSootValueFromJavaResult(result,lhs);
+            return ans;
+        }
+        catch(Exception e){
+            System.out.println("Exception in evaluation: "+e.toString());
+            e.printStackTrace();
+            return null;
+        }
+    }
+    private List<Object> getJavaArgs(List<Value> args, HashMap<Local, ConstantPropagation.ConstantValue> in)
+            throws Exception {
+        List<Object> jargs = new ArrayList<>();
+        for(Value arg:args){
+            if(arg instanceof Local){
+                Local local = (Local)arg;
+                jargs.add(getJavaValueFromSootValue(in.get(local).value));
+            }
+            else if(valueIsConstant(arg)){
+                jargs.add(getJavaValueFromSootValue(arg));
+            }
+            else{
+                throw new Exception("Non-constant arg passed to evaluatePureMethodCall");
+            }
+        }
+        return jargs;
+    }
+    private Value getSootValueFromJavaResult(Object result, Value lhs) {
+        Value ans = IntConstant.v(0);
+        if (result instanceof Integer) {
+            ans = IntConstant.v((int) result);
+        } else if (result instanceof Long) {
+            ans = LongConstant.v((long) result);
+        } else if (result instanceof Float) {
+            ans = FloatConstant.v((float) result);
+        } else if (result instanceof Double) {
+            ans = DoubleConstant.v((double) result);
+        } else if (result instanceof String){
+            ans = StringConstant.v((String)result);
+        }
+        return ans;
+    }
+    private Object getJavaValueFromSootValue(Value arg) throws Exception{
+        if(arg instanceof Constant){
+            if (arg instanceof IntConstant) {
+                return ((IntConstant) arg).value;
+            } else if (arg instanceof LongConstant) {
+                return ((LongConstant) arg).value;
+            } else if (arg instanceof FloatConstant) {
+                return ((FloatConstant) arg).value;
+            } else if (arg instanceof DoubleConstant) {
+                return ((DoubleConstant) arg).value;
+            } else if (arg instanceof StringConstant) {
+                return ((StringConstant) arg).value;
+            } else if (arg instanceof NullConstant) {
+                return null;
+            } else{
+                throw new Exception("Unhandled constant type arg encountered: "+arg.getClass().toString());
+            }
+        }
+        else{
+            throw new Exception("Man, why you be asking the value of a non-constant?");
+        }
+    }
+    private boolean argsAreConstant(List<Value> args, HashMap<Local, ConstantPropagation.ConstantValue> in) {
+        for(Value arg:args){
+            if(arg instanceof Local){
+                Local local = (Local)arg;
+                ConstantPropagation.ConstantValue dfav = in.get(local);
+                if((dfav.isTop)||(dfav.isBot)){
+                    return false;
+                }
+            }
+            else if(!valueIsConstant(arg)){
+                return false;
+            }
+        }
+        return true;
+    }
     @Override
     protected void copy(HashMap<Local, ConstantPropagation.ConstantValue> src, HashMap<Local, ConstantPropagation.ConstantValue> dst) {
         dst.clear();

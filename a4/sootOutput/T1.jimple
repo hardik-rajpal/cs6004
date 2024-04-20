@@ -33,13 +33,11 @@ public class T1 extends java.lang.Object
 
     public static void main(java.lang.String[])
     {
-        int $i1, $i2, i6, i8, i9, i10;
+        int $i1, $i2, i6, i8, i10;
         java.io.PrintStream $r0;
         java.lang.String[] r1;
 
         r1 := @parameter0: java.lang.String[];
-
-        <T1: int global> = 3;
 
         i6 = 1 + 1;
 
@@ -49,13 +47,6 @@ public class T1 extends java.lang.Object
 
         i8 = $i2 - 2;
 
-        i9 = i6 + i8;
-
-        if i9 != 3 goto label1;
-
-        i8 = 3;
-
-     label1:
         i10 = staticinvoke <T1: int foo(int,int)>(i6, i8);
 
         $r0 = <java.lang.System: java.io.PrintStream out>;
