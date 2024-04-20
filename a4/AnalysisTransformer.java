@@ -1,11 +1,9 @@
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeSet;
 
 import soot.Body;
 import soot.Local;
@@ -13,18 +11,7 @@ import soot.Scene;
 import soot.SceneTransformer;
 import soot.SootClass;
 import soot.SootMethod;
-import soot.Unit;
-import soot.Value;
-import soot.jimple.InvokeExpr;
-import soot.jimple.internal.JAssignStmt;
-import soot.jimple.internal.JDynamicInvokeExpr;
-import soot.jimple.internal.JInterfaceInvokeExpr;
-import soot.jimple.internal.JInvokeStmt;
-import soot.jimple.internal.JSpecialInvokeExpr;
-import soot.jimple.internal.JStaticInvokeExpr;
-import soot.jimple.internal.JVirtualInvokeExpr;
 import soot.jimple.toolkits.callgraph.CallGraph;
-import soot.jimple.toolkits.callgraph.Edge;
 import soot.toolkits.graph.BriefUnitGraph;
 import soot.util.Chain;
 public class AnalysisTransformer extends SceneTransformer{
@@ -69,12 +56,6 @@ public class AnalysisTransformer extends SceneTransformer{
         }
         return mainMethod;
     }
-
-    public static boolean isInvokeExpression(Value expression) {
-        return expression instanceof JInterfaceInvokeExpr || expression instanceof JVirtualInvokeExpr
-                || expression instanceof JStaticInvokeExpr || expression instanceof JDynamicInvokeExpr
-                || expression instanceof JSpecialInvokeExpr;
-    }
     public static class SootMethodComparator implements Comparator<SootMethod>{
 
         @Override
@@ -83,35 +64,12 @@ public class AnalysisTransformer extends SceneTransformer{
         }
         
     }
-    public static boolean isInvokeStmt(Unit u) {
-        boolean ans = false;
-        if (u instanceof JAssignStmt) {
-            Value rhs = ((JAssignStmt) u).getRightOp();
-            if (isInvokeExpression(rhs)) {
-                ans = true;
-            }
-        } else if (u instanceof JInvokeStmt) {
-            JInvokeStmt stmt = (JInvokeStmt) (u);
-            InvokeExpr expr = stmt.getInvokeExpr();
-            if (isInvokeExpression(expr)) {
-                ans = true;
-            }
-        }
-        return ans;
-    }
-    public static TreeSet<SootMethod> getSootMethodsFromInvokeUnit(Unit u, CallGraph cg) {
-        TreeSet<SootMethod> ans = new TreeSet<>(new SootMethodComparator());
-        for (Iterator<Edge> iter = cg.edgesOutOf(u); iter.hasNext();) {
-            Edge edge = iter.next();
-            SootMethod tgtMethod = edge.tgt();
-            ans.add(tgtMethod);
-        }
-        return ans;
-    }
+    
     protected void methodTransform(Body body, HashSet<SootMethod> pureUserDefinedMethods) {
         ArrayList<Local> locals = new ArrayList<Local>(body.getLocals());
         ConstantPropagation cp = new ConstantPropagation(new BriefUnitGraph(body), locals, pureUserDefinedMethods,cg);
         cp.printAnalysis();
+        ConstantTransformer.transformProgram(body.getMethod(), cp);
     }
     void printSet(Set<?> set){
         for(Object obj:set){

@@ -5,7 +5,7 @@ public class PA4 {
         //Set up arguments for Soot
         String[] sootArgs = {
             "-cp", classPath, "-pp", // sets the class path for Soot
-            "-w","-f","J",
+            "-w","-f","J",//TODO: modify to produce bytecode
             "-keep-line-number", // preserves line numbers in input Java files  
             "-process-dir","./testcases",
         };
