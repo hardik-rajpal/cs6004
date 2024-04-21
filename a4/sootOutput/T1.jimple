@@ -33,25 +33,14 @@ public class T1 extends java.lang.Object
 
     public static void main(java.lang.String[])
     {
-        int $i1, $i2, i6, i8, i10;
         java.io.PrintStream $r0;
         java.lang.String[] r1;
 
         r1 := @parameter0: java.lang.String[];
 
-        i6 = 1 + 1;
-
-        $i1 = 1 * 3;
-
-        $i2 = 3 + $i1;
-
-        i8 = $i2 - 2;
-
-        i10 = staticinvoke <T1: int foo(int,int)>(i6, i8);
-
         $r0 = <java.lang.System: java.io.PrintStream out>;
 
-        virtualinvoke $r0.<java.io.PrintStream: void println(int)>(i10);
+        virtualinvoke $r0.<java.io.PrintStream: void println(int)>(6);
 
         return;
     }

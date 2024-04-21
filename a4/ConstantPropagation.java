@@ -5,9 +5,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.TreeSet;
 
-import soot.*;
-import soot.JastAddJ.Expr;
-import soot.JastAddJ.NumericLiteral;
+import soot.Local;
+import soot.SootMethod;
+import soot.Unit;
+import soot.Value;
 import soot.jimple.Constant;
 import soot.jimple.DoubleConstant;
 import soot.jimple.FloatConstant;
@@ -17,8 +18,8 @@ import soot.jimple.LongConstant;
 import soot.jimple.NullConstant;
 import soot.jimple.NumericConstant;
 import soot.jimple.StringConstant;
+import soot.jimple.internal.AbstractBinopExpr;
 import soot.jimple.internal.AbstractJimpleFloatBinopExpr;
-import soot.jimple.internal.JAddExpr;
 import soot.jimple.internal.JAssignStmt;
 import soot.jimple.toolkits.callgraph.CallGraph;
 import soot.jimple.toolkits.scalar.Evaluator;
@@ -78,6 +79,9 @@ public class ConstantPropagation extends ForwardFlowAnalysis<Unit,HashMap<Local,
         //     isTop = false;
         //     valueType = String.class;
         // }
+        boolean isConstant(){
+            return !(isTop||isBot);
+        }
         @Override
         public String toString() {
             String ans = "";
@@ -103,7 +107,7 @@ public class ConstantPropagation extends ForwardFlowAnalysis<Unit,HashMap<Local,
         cg = _cg;
         this.doAnalysis();
     }
-    boolean valueIsConstant(Value v){
+    public static boolean valueIsConstant(Value v){
         if(v instanceof NumericConstant || v instanceof StringConstant || v instanceof NullConstant){
             return true;
         }
@@ -125,8 +129,8 @@ public class ConstantPropagation extends ForwardFlowAnalysis<Unit,HashMap<Local,
                 else if(rhs instanceof Local){
                     out.put((Local)lhs, new ConstantValue(in.get((Local)rhs)));
                 }
-                else if(rhs instanceof AbstractJimpleFloatBinopExpr){
-                    AbstractJimpleFloatBinopExpr expr = ((AbstractJimpleFloatBinopExpr)rhs);
+                else if(rhs instanceof AbstractBinopExpr){
+                    AbstractBinopExpr expr = ((AbstractBinopExpr)rhs);
                     ConstantValue cv1 = new ConstantValue(expr.getOp1());
                     ConstantValue cv2 = new ConstantValue(expr.getOp2());
                     ConstantValue ans = new ConstantValue();
@@ -217,18 +221,23 @@ public class ConstantPropagation extends ForwardFlowAnalysis<Unit,HashMap<Local,
             throws Exception {
         List<Object> jargs = new ArrayList<>();
         for(Value arg:args){
-            if(arg instanceof Local){
-                Local local = (Local)arg;
-                jargs.add(getJavaValueFromSootValue(in.get(local).value));
-            }
-            else if(valueIsConstant(arg)){
-                jargs.add(getJavaValueFromSootValue(arg));
-            }
-            else{
-                throw new Exception("Non-constant arg passed to evaluatePureMethodCall");
-            }
+            Value value = extractConstantFromLiteralOrLocal(in, arg);
+            jargs.add(getJavaValueFromSootValue(value));
         }
         return jargs;
+    }
+    public static Value extractConstantFromLiteralOrLocal(HashMap<Local, ConstantPropagation.ConstantValue> in, Value arg)
+            throws Exception {
+        if(arg instanceof Local){
+            Local local = (Local)arg;
+            return (in.get(local).value);
+        }
+        else if(valueIsConstant(arg)){
+            return arg;
+        }
+        else{
+            throw new Exception("Non-constant arg passed to evaluatePureMethodCall");
+        }
     }
     private Value getSootValueFromJavaResult(Object result, Value lhs) {
         Value ans = IntConstant.v(0);
@@ -269,18 +278,24 @@ public class ConstantPropagation extends ForwardFlowAnalysis<Unit,HashMap<Local,
     }
     private boolean argsAreConstant(List<Value> args, HashMap<Local, ConstantPropagation.ConstantValue> in) {
         for(Value arg:args){
-            if(arg instanceof Local){
-                Local local = (Local)arg;
-                ConstantPropagation.ConstantValue dfav = in.get(local);
-                if((dfav.isTop)||(dfav.isBot)){
-                    return false;
-                }
-            }
-            else if(!valueIsConstant(arg)){
+            if(!localOrLiteralIsConstant(arg,in)){
                 return false;
             }
         }
         return true;
+    }
+    public static boolean localOrLiteralIsConstant(Value arg, HashMap<Local,ConstantPropagation.ConstantValue> in) {
+        if(arg instanceof Local){
+            Local local = (Local)arg;
+            ConstantPropagation.ConstantValue dfav = in.get(local);
+            if(dfav.isConstant()){
+                return true;
+            }
+        }
+        else if(valueIsConstant(arg)){
+            return true;
+        }
+        return false;
     }
     @Override
     protected void copy(HashMap<Local, ConstantPropagation.ConstantValue> src, HashMap<Local, ConstantPropagation.ConstantValue> dst) {

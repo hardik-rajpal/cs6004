@@ -68,8 +68,8 @@ public class AnalysisTransformer extends SceneTransformer{
     protected void methodTransform(Body body, HashSet<SootMethod> pureUserDefinedMethods) {
         ArrayList<Local> locals = new ArrayList<Local>(body.getLocals());
         ConstantPropagation cp = new ConstantPropagation(new BriefUnitGraph(body), locals, pureUserDefinedMethods,cg);
-        cp.printAnalysis();
-        ConstantTransformer.transformProgram(body.getMethod(), cp);
+        // cp.printAnalysis();
+        ConstantTransformer.transformProgram(body.getMethod(), cp,cg,pureUserDefinedMethods);
         //TODO: transform, cp in while loop while body changes?
     }
     void printSet(Set<?> set){
