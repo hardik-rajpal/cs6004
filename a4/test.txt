@@ -1,21 +1,117 @@
-IO Exception
-Soot started on Sun Apr 21 13:27:03 IST 2024
+T1.class
+Soot started on Mon Apr 22 11:44:34 IST 2024
+UDMS: 
+	<T1: int foo(int,int)>
+	<T1: void main(java.lang.String[])>
+<T1: void main(java.lang.String[])>impure because of: virtualinvoke $r0.<java.io.PrintStream: void println(int)>(i12)
+impure methods: 
+<T1: void main(java.lang.String[])>
+impure methods: 
+<T1: void main(java.lang.String[])>
+Processing: <T1: void main(java.lang.String[])>
 invoke: i10 = staticinvoke <T1: int foo(int,int)>(i6, i8)
-evaluating.
-return
-virtualinvoke $r0.<java.io.PrintStream: void println(int)>(i10)
-$r0 = <java.lang.System: java.io.PrintStream out>
-i10 = staticinvoke <T1: int foo(int,int)>(i6, i8)
-i9 = i6 + i8
-i8 = $i2 - 2
-$i2 = b5 + $i1
-$i1 = 1 * b5
-i7 = $i0 * i6
-$i0 = b4 * 2
-i6 = b3 + 1
-b5 = 3
-b4 = 2
-b3 = 1
-r1 := @parameter0: java.lang.String[]
-Soot finished on Sun Apr 21 13:27:21 IST 2024
-Soot has run for 0 min. 18 sec.
+evaluating...
+Soot finished on Mon Apr 22 11:44:48 IST 2024
+Soot has run for 0 min. 13 sec.
+T2.class
+Soot started on Mon Apr 22 11:44:48 IST 2024
+UDMS: 
+	<T2: double foo(double,double)>
+	<T2: void main(java.lang.String[])>
+	<T1: int foo(int,int)>
+	<T1: void main(java.lang.String[])>
+<T2: void main(java.lang.String[])>impure because of: virtualinvoke $r0.<java.io.PrintStream: void println(double)>(d12)
+impure methods: 
+<T2: void main(java.lang.String[])>
+<T1: void main(java.lang.String[])>
+impure methods: 
+<T2: void main(java.lang.String[])>
+<T1: void main(java.lang.String[])>
+Processing: <T2: void main(java.lang.String[])>
+invoke: d10 = staticinvoke <T2: double foo(double,double)>(d6, d8)
+evaluating...
+Soot finished on Mon Apr 22 11:45:01 IST 2024
+Soot has run for 0 min. 13 sec.
+T3.class
+Soot started on Mon Apr 22 11:45:01 IST 2024
+UDMS: 
+	<T2: double foo(double,double)>
+	<T2: void main(java.lang.String[])>
+	<T3: void main(java.lang.String[])>
+	<T3: int factorial(int)>
+	<T1: int foo(int,int)>
+	<T1: void main(java.lang.String[])>
+<T3: void main(java.lang.String[])>impure because of: virtualinvoke $r0.<java.io.PrintStream: void println(int)>($i1)
+impure methods: 
+<T2: void main(java.lang.String[])>
+<T3: void main(java.lang.String[])>
+<T1: void main(java.lang.String[])>
+impure methods: 
+<T2: void main(java.lang.String[])>
+<T3: void main(java.lang.String[])>
+<T1: void main(java.lang.String[])>
+Processing: <T3: void main(java.lang.String[])>
+invoke: $i1 = staticinvoke <T3: int factorial(int)>(b0)
+evaluating...
+Soot finished on Mon Apr 22 11:45:19 IST 2024
+Soot has run for 0 min. 17 sec.
+T4.class
+Soot started on Mon Apr 22 11:45:19 IST 2024
+UDMS: 
+	<T2: double foo(double,double)>
+	<T2: void main(java.lang.String[])>
+	<T4: void main(java.lang.String[])>
+	<T4: int factorial(int)>
+	<T3: void main(java.lang.String[])>
+	<T4: int factorial2(int)>
+	<T3: int factorial(int)>
+	<T1: int foo(int,int)>
+	<T1: void main(java.lang.String[])>
+<T4: void main(java.lang.String[])>impure because of: virtualinvoke $r0.<java.io.PrintStream: void println(int)>($i1)
+impure methods: 
+<T2: void main(java.lang.String[])>
+<T4: void main(java.lang.String[])>
+<T3: void main(java.lang.String[])>
+<T1: void main(java.lang.String[])>
+impure methods: 
+<T2: void main(java.lang.String[])>
+<T4: void main(java.lang.String[])>
+<T3: void main(java.lang.String[])>
+<T1: void main(java.lang.String[])>
+Processing: <T4: void main(java.lang.String[])>
+invoke: $i1 = staticinvoke <T4: int factorial(int)>(b0)
+evaluating...
+Soot finished on Mon Apr 22 11:45:32 IST 2024
+Soot has run for 0 min. 12 sec.
+T5.class
+Soot started on Mon Apr 22 11:45:32 IST 2024
+UDMS: 
+	<T2: double foo(double,double)>
+	<T2: void main(java.lang.String[])>
+	<T4: void main(java.lang.String[])>
+	<T5: void main(java.lang.String[])>
+	<T4: int factorial(int)>
+	<T3: void main(java.lang.String[])>
+	<T4: int factorial2(int)>
+	<T3: int factorial(int)>
+	<T5: int factorial(int)>
+	<T1: int foo(int,int)>
+	<T1: void main(java.lang.String[])>
+<T5: int factorial(int)>impure because of: specialinvoke $r0.<java.lang.StringBuilder: void <init>()>()
+impure methods: 
+<T2: void main(java.lang.String[])>
+<T4: void main(java.lang.String[])>
+<T3: void main(java.lang.String[])>
+<T5: int factorial(int)>
+<T1: void main(java.lang.String[])>
+impure methods: 
+<T2: void main(java.lang.String[])>
+<T4: void main(java.lang.String[])>
+<T5: void main(java.lang.String[])>
+<T3: void main(java.lang.String[])>
+<T5: int factorial(int)>
+<T1: void main(java.lang.String[])>
+Processing: <T5: void main(java.lang.String[])>
+invoke: $i1 = staticinvoke <T5: int factorial(int)>(b0)
+Soot finished on Mon Apr 22 11:45:46 IST 2024
+Soot has run for 0 min. 14 sec.

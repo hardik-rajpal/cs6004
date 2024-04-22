@@ -158,41 +158,20 @@ public class ConstantPropagation extends ForwardFlowAnalysis<Unit,HashMap<Local,
                 else if(Utils.isInvokeExpression(rhs)){
                     InvokeExpr expr = Utils.getInvokeExprFromInvokeUnit(unit);
                     TreeSet<SootMethod> methods = Utils.getSootMethodsFromInvokeUnit(unit, cg);
-                    //TODO: merge multiple callees to bot.
                     List<Value> args = (expr.getArgs());
                     System.out.println("invoke: "+unit.toString());
                     if(!argsAreConstant(args,in)){
                         out.put((Local)lhs, ConstantValue.makeBot());
                         System.out.println("non constant args");
                     }
-                    else if(methods.size()==1){
-                        SootMethod method = methods.first();
-                        if(!pureMethods.contains(method)){
-                            ConstantValue bot = ConstantValue.makeBot();
-                            out.put((Local)lhs, bot);
-                            System.out.println("impure method");
-                        }
-                        else{
-                            System.out.println("evaluating.");
-                            Value value = evaluatePureMethodCall(method,args,in,lhs);
-                            if(value!=null){
-                                out.put((Local)lhs, new ConstantValue(value));
-                            }
-                            else{
-                                //...? TODO:production time?
-                            }
-                        }
-                    }
                     else{
-                        //merge constant values across calls...
+                        //merge constant values across possible callees...
+                        ConstantValue cv = new ConstantValue();
                         for(SootMethod method:methods){
-                            
-                            
-                            //pure method => evaluate if contant.
-                            //expr = getInvokeexpr...
-                            //if (for each arg in expr, in.get(arg) is constant)
-                            //run reflectioncode.
+                            ConstantValue methodCV = getConstantValueFromMethodEval(in, lhs, args, method);
+                            cv = cv.meet(methodCV);                            
                         }
+                        out.put((Local)lhs,cv);
                     }
                 }
             }
@@ -201,11 +180,30 @@ public class ConstantPropagation extends ForwardFlowAnalysis<Unit,HashMap<Local,
             //ignoring all other types of statements
         }
     }
+    private ConstantValue getConstantValueFromMethodEval(HashMap<Local, ConstantPropagation.ConstantValue> in, Value lhs, List<Value> args,
+            SootMethod method) {
+        ConstantValue cv;
+        if(!pureMethods.contains(method)){
+            cv = ConstantValue.makeBot();
+        }
+        else{
+            System.out.println("evaluating...");
+            Value value = evaluatePureMethodCall(method,args,in,lhs);
+            if(value!=null){
+                cv = new ConstantValue(value);
+            }
+            else{
+                cv = ConstantValue.makeBot();
+            }
+        }
+        return cv;
+    }
 
     private Value evaluatePureMethodCall(SootMethod method, List<Value> args, HashMap<Local, ConstantPropagation.ConstantValue> in, Value lhs) {
         try{
             Value ans;
             Method javaMethod = Utils.convertSootToJavaMethod(method);
+            javaMethod.setAccessible(true);
             List<Object> jargs = getJavaArgs(args, in);
             Object result = javaMethod.invoke(null,jargs.toArray());
             ans = getSootValueFromJavaResult(result,lhs);

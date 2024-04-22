@@ -113,7 +113,6 @@ public class ConstantTransformer {
         HashMap<Local, ConstantPropagation.ConstantValue> in = cp.getFlowBefore(unit);
         List<ValueBox> useBoxes = unit.getUseBoxes();
         
-        System.out.println(unit.toString());
         for(ValueBox b:useBoxes){
             Value v = b.getValue();
             if(v instanceof AbstractBinopExpr){

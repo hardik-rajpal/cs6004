@@ -40,7 +40,7 @@ public class T1 extends java.lang.Object
 
         $r0 = <java.lang.System: java.io.PrintStream out>;
 
-        virtualinvoke $r0.<java.io.PrintStream: void println(int)>(6);
+        virtualinvoke $r0.<java.io.PrintStream: void println(int)>(24);
 
         return;
     }

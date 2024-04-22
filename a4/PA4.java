@@ -1,13 +1,20 @@
 import java.io.IOException;
+import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import soot.*;
 public class PA4 {
+    public static void callSoot(String args[],AnalysisTransformer analysisTransformer){
+        PackManager.v().getPack("wjtp").add(new Transform("wjtp.pfcp", analysisTransformer));
+        soot.Main.main(args);
+        soot.G.reset();
+    }
     public static void main(String[] args) {
         String classPath = "."; 	// change to appropriate path to the test class
         //Set up arguments for Soot
@@ -16,24 +23,52 @@ public class PA4 {
             "-cp", classPath, "-pp", // sets the class path for Soot
             "-w","-f","J",//TODO: modify to produce bytecode
             "-keep-line-number", // preserves line numbers in input Java files  
-            "-process-dir",tcdir,
+            "-main-class","testcasePlaceholder",
+            "testcasePlaceholder2"
         };
 
         // Create transformer for analysis
-        AnalysisTransformer analysisTransformer = new AnalysisTransformer();
+        AnalysisTransformer analysisTransformer = new AnalysisTransformer(tcdir);
 
-        // Add transformer to appropriate pack in PackManager; PackManager will run all packs when soot.Main.main is called
-        PackManager.v().getPack("wjtp").add(new Transform("wjtp.pfcp", analysisTransformer));
-        // Call Soot's main method with arguments
-        //compile:
-        runShellCommand("rm "+tcdir+"/*.class");
+        // // Add transformer to appropriate pack in PackManager; PackManager will run all packs when soot.Main.main is called
+        // // Call Soot's main method with arguments
+        // //compile:
+        deleteClassFiles(tcdir);
         runShellCommand("javac "+tcdir+"/*.java");
-        //copy testcases to .
+        // //copy testcases to .
         List<Path> copiedFiles = copyFilesFromTo(tcdir,".");
-        soot.Main.main(sootArgs);
+        for(Path file:copiedFiles){
+            if(file.toString().endsWith(".class")){
+                String parts[] = file.toString().split(Pattern.quote("\\"));
+                String fname = parts[parts.length-1];
+                parts = fname.toString().split(Pattern.quote("/"));
+                fname = parts[parts.length-1];
+                
+                System.out.println(fname);
+                
+                String className = fname.split(Pattern.quote("."))[0];
+                sootArgs[sootArgs.length-1] = className;
+                sootArgs[sootArgs.length-2] = className;
+                // if(className.equals("T5")){
+                    callSoot(sootArgs,analysisTransformer);
+                // }
+            }
+        }
         deleteFiles(copiedFiles);
         //delete testcases from .
 
+    }
+
+    private static void deleteClassFiles(String tcdir) {
+        try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(Paths.get(tcdir))) {
+            for (Path path : directoryStream) {
+                if(path.toString().endsWith(".class")){
+                    Files.delete(path);
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("IOException while deleting class files");
+        }
     }
 
     private static void deleteFiles(List<Path> copiedFiles) {
@@ -77,7 +112,7 @@ public class PA4 {
             return process.waitFor();
         }
         catch (IOException e){
-            System.out.println("IO Exception");
+            System.out.println("IO Exception with: "+cmd);
         }
         catch (InterruptedException e){
             System.out.println("Don't interrupt me!");

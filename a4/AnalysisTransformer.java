@@ -17,10 +17,14 @@ import soot.util.Chain;
 public class AnalysisTransformer extends SceneTransformer{
     static CallGraph cg;
     static HashSet<SootMethod> userDefinedMethods = new HashSet<>();
+    AnalysisTransformer(String tcdir){
+        // loadClassFiles(tcdir);
+    }
     @Override
     protected void internalTransform(String arg0, Map<String, String> arg1) {
-        SootMethod mainMethod = fillUserDefMethodsAndGetMainMethod();
-        HashSet<SootMethod> impureMethods = PureMethodClassifier.pureMethodClassification(mainMethod, cg);
+        cg = Scene.v().getCallGraph();
+        Set<SootMethod> mainMethods = fillUserDefMethodsAndGetMainMethods();
+        HashSet<SootMethod> impureMethods = PureMethodClassifier.pureMethodClassification(mainMethods, cg,userDefinedMethods);
         // System.out.println("Impure methods: ");
         // for(SootMethod method:impureMethods){
         //     System.out.println(method.toString()+", ");
@@ -29,16 +33,20 @@ public class AnalysisTransformer extends SceneTransformer{
         for(SootMethod method:impureMethods){
             pureUserDefinedMethods.remove(method);
         }
-        methodTransform(mainMethod.getActiveBody(),pureUserDefinedMethods);
+        // System.out.println("Pure methods: ");
+        // for(SootMethod method:pureUserDefinedMethods){
+        //     System.out.println(method.toString()+", ");
+        // }
+        for(SootMethod mainMethod:mainMethods){
+            methodTransform(mainMethod.getActiveBody(),pureUserDefinedMethods);
+        }
         
     }
 
-    private SootMethod fillUserDefMethodsAndGetMainMethod() {
-        cg = Scene.v().getCallGraph();
+    private Set<SootMethod> fillUserDefMethodsAndGetMainMethods() {
         // Get the main method
-        SootClass mainClass = Scene.v().getMainClass();
+        Set<SootMethod> mainMethods = new HashSet<>();
         Chain<SootClass> classes = Scene.v().getClasses();
-        SootMethod mainMethod = null;
         for(SootClass classInstance:classes){
             //ignore java lang classes
             if(!classInstance.isApplicationClass()){
@@ -47,14 +55,32 @@ public class AnalysisTransformer extends SceneTransformer{
             List<SootMethod> methods = classInstance.getMethods();
             for(SootMethod method:methods){
                 if(!method.isConstructor()){
-                    if(method.isMain()&&classInstance.equals(mainClass)){
-                        mainMethod = method;
+                    if(method.isMain()){
+                        mainMethods.add(method);
                     }
                     userDefinedMethods.add(method);
                 }
             }
         }
-        return mainMethod;
+        // Queue<SootMethod> reachables = new ArrayDeque<>(mainMethods);
+        // while(reachables.size()>0){
+        //     SootMethod method = reachables.remove();
+        //     Iterator<Edge> iter = cg.edgesOutOf(method);
+        //     while(iter.hasNext()){
+        //         Edge e = iter.next();
+        //         if(e.tgt().getDeclaringClass().isApplicationClass()){
+        //             if(!userDefinedMethods.contains(e.tgt())){
+        //                 userDefinedMethods.add(e.tgt());
+        //                 reachables.add(e.tgt());
+        //             }
+        //         }
+        //     }
+        // }
+        System.out.println("UDMS: ");
+        for(SootMethod method:userDefinedMethods){
+            System.out.println("\t"+method.toString());
+        }
+        return mainMethods;
     }
     public static class SootMethodComparator implements Comparator<SootMethod>{
 
@@ -66,6 +92,7 @@ public class AnalysisTransformer extends SceneTransformer{
     }
     
     protected void methodTransform(Body body, HashSet<SootMethod> pureUserDefinedMethods) {
+        System.out.println("Processing: "+body.getMethod().toString());
         ArrayList<Local> locals = new ArrayList<Local>(body.getLocals());
         ConstantPropagation cp = new ConstantPropagation(new BriefUnitGraph(body), locals, pureUserDefinedMethods,cg);
         // cp.printAnalysis();

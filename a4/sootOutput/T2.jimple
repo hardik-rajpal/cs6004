@@ -1,0 +1,50 @@
+public class T2 extends java.lang.Object
+{
+    static int global;
+
+    public void <init>()
+    {
+        T2 r0;
+
+        r0 := @this: T2;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    static double foo(double, double)
+    {
+        double d0, d1, $d2, d4;
+        byte $b0;
+
+        d0 := @parameter0: double;
+
+        d1 := @parameter1: double;
+
+        d4 = d0 + 1.0;
+
+        $b0 = d4 cmpl d1;
+
+        if $b0 != 0 goto label1;
+
+     label1:
+        $d2 = d0 + d1;
+
+        return $d2;
+    }
+
+    public static void main(java.lang.String[])
+    {
+        java.io.PrintStream $r0;
+        java.lang.String[] r1;
+
+        r1 := @parameter0: java.lang.String[];
+
+        $r0 = <java.lang.System: java.io.PrintStream out>;
+
+        virtualinvoke $r0.<java.io.PrintStream: void println(double)>(24.0);
+
+        return;
+    }
+}
