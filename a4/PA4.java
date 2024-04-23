@@ -21,7 +21,7 @@ public class PA4 {
         String tcdir = "./testcases";
         String[] sootArgs = {
             "-cp", classPath, "-pp", // sets the class path for Soot
-            "-w","-f","J",//TODO: modify to produce bytecode
+            "-w","-f","c",//TODO: modify to produce bytecode
             "-keep-line-number", // preserves line numbers in input Java files  
             "-main-class","testcasePlaceholder",
             "testcasePlaceholder2"
@@ -49,7 +49,7 @@ public class PA4 {
                 String className = fname.split(Pattern.quote("."))[0];
                 sootArgs[sootArgs.length-1] = className;
                 sootArgs[sootArgs.length-2] = className;
-                // if(className.equals("T5")){
+                // if(className.equals("T6")){
                     callSoot(sootArgs,analysisTransformer);
                 // }
             }

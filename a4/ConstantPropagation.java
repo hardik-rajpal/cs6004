@@ -159,7 +159,7 @@ public class ConstantPropagation extends ForwardFlowAnalysis<Unit,HashMap<Local,
                     InvokeExpr expr = Utils.getInvokeExprFromInvokeUnit(unit);
                     TreeSet<SootMethod> methods = Utils.getSootMethodsFromInvokeUnit(unit, cg);
                     List<Value> args = (expr.getArgs());
-                    System.out.println("invoke: "+unit.toString());
+                    System.out.println("invoke: "+unit.toString()+", #methods: "+methods.size());
                     if(!argsAreConstant(args,in)){
                         out.put((Local)lhs, ConstantValue.makeBot());
                         System.out.println("non constant args");
@@ -169,7 +169,7 @@ public class ConstantPropagation extends ForwardFlowAnalysis<Unit,HashMap<Local,
                         ConstantValue cv = new ConstantValue();
                         for(SootMethod method:methods){
                             ConstantValue methodCV = getConstantValueFromMethodEval(in, lhs, args, method);
-                            cv = cv.meet(methodCV);                            
+                            cv = cv.meet(methodCV);
                         }
                         out.put((Local)lhs,cv);
                     }

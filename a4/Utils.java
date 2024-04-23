@@ -13,6 +13,7 @@ import soot.Type;
 import soot.Unit;
 import soot.Value;
 import soot.jimple.InvokeExpr;
+import soot.jimple.internal.AbstractInstanceInvokeExpr;
 import soot.jimple.internal.JAssignStmt;
 import soot.jimple.internal.JDynamicInvokeExpr;
 import soot.jimple.internal.JInterfaceInvokeExpr;
@@ -28,6 +29,14 @@ public class Utils {
         return expression instanceof JInterfaceInvokeExpr || expression instanceof JVirtualInvokeExpr
                 || expression instanceof JStaticInvokeExpr || expression instanceof JDynamicInvokeExpr
                 || expression instanceof JSpecialInvokeExpr;
+    }
+    public static Value getReceiverOfInvokeUnit(Unit u){
+        InvokeExpr expr = Utils.getInvokeExprFromInvokeUnit(u);
+        if(expr instanceof JVirtualInvokeExpr || expr instanceof JInterfaceInvokeExpr){
+            AbstractInstanceInvokeExpr iiexpr =(AbstractInstanceInvokeExpr)expr;
+            return iiexpr.getBase();
+        }
+        return null;
     }
     public static boolean isInvokeStmt(Unit u) {
         boolean ans = false;

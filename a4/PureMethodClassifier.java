@@ -8,7 +8,10 @@ import java.util.TreeSet;
 import soot.Local;
 import soot.SootMethod;
 import soot.Unit;
+import soot.Value;
 import soot.ValueBox;
+import soot.jimple.FieldRef;
+import soot.jimple.StaticFieldRef;
 import soot.jimple.toolkits.callgraph.CallGraph;
 import soot.jimple.toolkits.callgraph.Edge;
 
@@ -28,19 +31,22 @@ public class PureMethodClassifier {
         for (Unit unit : method.getActiveBody().getUnits()) {
             if (Utils.isInvokeStmt(unit)) {
                 TreeSet<SootMethod> callees = Utils.getSootMethodsFromInvokeUnit(unit, cg);
+                Value receiver = Utils.getReceiverOfInvokeUnit(unit);
+                if(receiver!=null){
+                    System.out.println(unit.toString()+" "+receiver.toString()+", "+receiver.getClass().toString());
+                }
                 if (callees.size() == 0) {
                     System.out.println("No callees for: " + unit.toString());
-                    continue;
+                    //conservative approach:
+                    impureMethods.add(method);
                 } else if (callees.size() > 1) {
                     impureMethods.add(method);
-                    break;
                 } else {
                     SootMethod callee = callees.first();
                     if (!userDefinedMethods.contains(callee)) {
-                        System.out.println(method.toString() + "impure because of: " + unit.toString());
+                        // System.out.println(method.toString() + "impure because of: " + unit.toString());
                         impureMethods.add(method);
-                        printImpureMethods();
-                        break;
+                        // printImpureMethods();
                     } else {
                         //user defined callee, process for purity check.
                         processMethod(callee);
@@ -48,18 +54,15 @@ public class PureMethodClassifier {
                             // callee has been processed.
                             if (impureMethods.contains(callee)) {
                                 impureMethods.add(method);
-                                break;
                             }
                             // else, it's a pure function call
                         }
                     }
                 }
-            } else {
-                if (!isPureUnit(unit)) {
-                    // System.out.println("impure: "+unit.toString());
-                    impureMethods.add(method);
-                    break;
-                }
+            }
+            if (!isPureUnit(unit)) {
+                // System.out.println("impure: "+unit.toString());
+                impureMethods.add(method);
             }
         }
         processingMethods.put(method, 1);
@@ -85,6 +88,18 @@ public class PureMethodClassifier {
         for (ValueBox defBox : defBoxes) {
             if (!(defBox.getValue() instanceof Local)) {
                 return false;
+            }
+        }
+        List<ValueBox> useBoxes = unit.getUseBoxes();
+        for(ValueBox useBox:useBoxes){
+            if(!(useBox.getValue() instanceof Local)){
+                if(useBox.getValue() instanceof StaticFieldRef){
+                    return false;
+                }
+                else if(useBox.getValue() instanceof FieldRef){
+                    return false;
+                }
+                System.out.println(unit.toString()+" usebox: "+useBox.getValue().getClass().toString());
             }
         }
         return true;
