@@ -1,0 +1,124 @@
+Classfile /C:/CODE/atgit/cs6004/test/Test2.class
+  Last modified May 4, 2024; size 609 bytes
+  MD5 checksum f2e39a23d832a07a97b5fd6449c0b875
+  Compiled from "Test2.java"
+public class Test2
+  minor version: 0
+  major version: 52
+  flags: ACC_PUBLIC, ACC_SUPER
+Constant pool:
+   #1 = Methodref          #8.#20         // java/lang/Object."<init>":()V
+   #2 = Methodref          #21.#22        // java/lang/Math.random:()D
+   #3 = Methodref          #7.#23         // Test2.getA:()D
+   #4 = Methodref          #21.#24        // java/lang/Math.round:(D)J
+   #5 = Fieldref           #25.#26        // java/lang/System.out:Ljava/io/PrintStream;
+   #6 = Methodref          #27.#28        // java/io/PrintStream.println:(I)V
+   #7 = Class              #29            // Test2
+   #8 = Class              #30            // java/lang/Object
+   #9 = Utf8               <init>
+  #10 = Utf8               ()V
+  #11 = Utf8               Code
+  #12 = Utf8               LineNumberTable
+  #13 = Utf8               getA
+  #14 = Utf8               ()D
+  #15 = Utf8               main
+  #16 = Utf8               ([Ljava/lang/String;)V
+  #17 = Utf8               StackMapTable
+  #18 = Utf8               SourceFile
+  #19 = Utf8               Test2.java
+  #20 = NameAndType        #9:#10         // "<init>":()V
+  #21 = Class              #31            // java/lang/Math
+  #22 = NameAndType        #32:#14        // random:()D
+  #23 = NameAndType        #13:#14        // getA:()D
+  #24 = NameAndType        #33:#34        // round:(D)J
+  #25 = Class              #35            // java/lang/System
+  #26 = NameAndType        #36:#37        // out:Ljava/io/PrintStream;
+  #27 = Class              #38            // java/io/PrintStream
+  #28 = NameAndType        #39:#40        // println:(I)V
+  #29 = Utf8               Test2
+  #30 = Utf8               java/lang/Object
+  #31 = Utf8               java/lang/Math
+  #32 = Utf8               random
+  #33 = Utf8               round
+  #34 = Utf8               (D)J
+  #35 = Utf8               java/lang/System
+  #36 = Utf8               out
+  #37 = Utf8               Ljava/io/PrintStream;
+  #38 = Utf8               java/io/PrintStream
+  #39 = Utf8               println
+  #40 = Utf8               (I)V
+{
+  public Test2();
+    descriptor: ()V
+    flags: ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+         4: return
+      LineNumberTable:
+        line 1: 0
+
+  static double getA();
+    descriptor: ()D
+    flags: ACC_STATIC
+    Code:
+      stack=2, locals=0, args_size=0
+         0: invokestatic  #2                  // Method java/lang/Math.random:()D
+         3: dreturn
+      LineNumberTable:
+        line 3: 0
+
+  public static void main(java.lang.String[]);
+    descriptor: ([Ljava/lang/String;)V
+    flags: ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=2, locals=4, args_size=1
+         0: invokestatic  #3                  // Method getA:()D
+         3: invokestatic  #4                  // Method java/lang/Math.round:(D)J
+         6: l2i
+         7: istore_1
+         8: iload_1
+         9: iconst_1
+        10: if_icmpne     18
+        13: iconst_2
+        14: istore_2
+        15: goto          20
+        18: iconst_3
+        19: istore_2
+        20: iload_2
+        21: iconst_1
+        22: if_icmpne     30
+        25: iconst_2
+        26: istore_1
+        27: goto          32
+        30: iconst_5
+        31: istore_1
+        32: iconst_1
+        33: istore_3
+        34: getstatic     #5                  // Field java/lang/System.out:Ljava/io/PrintStream;
+        37: iload_3
+        38: invokevirtual #6                  // Method java/io/PrintStream.println:(I)V
+        41: return
+      LineNumberTable:
+        line 7: 0
+        line 8: 8
+        line 9: 13
+        line 12: 18
+        line 14: 20
+        line 15: 25
+        line 18: 30
+        line 20: 32
+        line 21: 34
+        line 22: 41
+      StackMapTable: number_of_entries = 4
+        frame_type = 252 /* append */
+          offset_delta = 18
+          locals = [ int ]
+        frame_type = 252 /* append */
+          offset_delta = 1
+          locals = [ int ]
+        frame_type = 9 /* same */
+        frame_type = 1 /* same */
+}
+SourceFile: "Test2.java"

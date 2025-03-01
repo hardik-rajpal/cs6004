@@ -1,6 +1,9 @@
 
 public class Test{
     public static class Base{
+        void callerNotOverridden(){
+            overridden();
+        }
         void overridden(){
             System.out.println("Base function to be overridden");
         }
@@ -20,7 +23,9 @@ public class Test{
 
     }
     public static void main (String[] args){
-        Derived2 d2 = new Derived2();
-        Derived d = (Derived)(d2);
+        Derived d = new Derived();
+        Base b = (new Base());
+        b.callerNotOverridden();
+        d.callerNotOverridden();
     }
 }
